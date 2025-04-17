@@ -114,7 +114,7 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@pinia/nuxt',
     ['./modules/build/icon_resize', iconConfig],
-    ['modules/build/pwa', { swPath: 'serviceworker.js' }]
+    ['./modules/build/pwa', { swPath: 'serviceworker.js' }]
   ],
 
   /*
