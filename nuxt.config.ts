@@ -53,7 +53,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       PACKAGE_VERSION: version,
-      PLATFORM: AppPlatform.web,
+      PLATFORM: AppPlatform.mobile,
       URL: 'https://focustide.app'
     }
   },
@@ -68,6 +68,7 @@ export default defineNuxtConfig({
   },
 
   app: {
+    buildAssetsDir: '/_nuxt/',
     head: {
       title: 'FocusTide',
       meta: [
@@ -84,6 +85,9 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', href: '/favicon.svg' }
+      ],
+      script: [
+        { src: '/serviceworker-setup.js' }
       ]
     }
   },
