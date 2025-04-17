@@ -211,6 +211,41 @@
           "_description": "用 :very_check_mark: 代替 完成"
         }
       },
+      "whiteNoise": {
+        "_section": "白噪音",
+        "enabled": {
+          "_title": "启用白噪音",
+          "_description": "播放环境声音以帮助您集中注意力"
+        },
+        "type": {
+          "_title": "白噪音类型",
+          "_description": "选择环境声音的类型",
+          "_values": {
+            "rain": "雨声",
+            "forest": "森林",
+            "ocean": "海洋",
+            "fan": "风扇",
+            "fireplace": "壁炉",
+            "cafe": "咖啡馆"
+          },
+          "_valueDescription": {
+            "rain": "轻柔的雨声",
+            "forest": "森林环境声",
+            "ocean": "海浪声",
+            "fan": "风扇声",
+            "fireplace": "壁炉噼啪声",
+            "cafe": "咖啡馆环境声"
+          }
+        },
+        "volume": {
+          "_title": "白噪音音量",
+          "_description": "调整白噪音的音量"
+        },
+        "playDuringWork": {
+          "_title": "仅在工作期间播放",
+          "_description": "仅在工作会话期间播放白噪音"
+        }
+      },
       "visuals": {
         "theme": {
           "_title": "主题设置",

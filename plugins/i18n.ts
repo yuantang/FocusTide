@@ -89,6 +89,9 @@ export default defineNuxtPlugin(({ vueApp, $pinia }) => {
     if (Object.keys(languages).includes(newLocale)) {
       // Update app locale
       i18n.global.locale.value = newLocale
+
+      // Force reload messages to ensure all translations are loaded
+      i18n.global.setLocaleMessage(newLocale, messages[newLocale])
     }
   }
 

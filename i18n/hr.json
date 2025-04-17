@@ -211,6 +211,41 @@
           "_description": "Prikaži ✔ umjesto „Gotovo”"
         }
       },
+      "whiteNoise": {
+        "_section": "Bijeli šum",
+        "enabled": {
+          "_title": "Aktiviraj bijeli šum",
+          "_description": "Reproduciraj ambijentalne zvukove za bolju koncentraciju"
+        },
+        "type": {
+          "_title": "Vrsta bijelog šuma",
+          "_description": "Odaberi vrstu ambijentalnog zvuka",
+          "_values": {
+            "rain": "Kiša",
+            "forest": "Šuma",
+            "ocean": "Ocean",
+            "fan": "Ventilator",
+            "fireplace": "Kamin",
+            "cafe": "Kafić"
+          },
+          "_valueDescription": {
+            "rain": "Blaga kiša",
+            "forest": "Ambijent šume",
+            "ocean": "Morski valovi",
+            "fan": "Zvuk ventilatora",
+            "fireplace": "Pucketanje kamina",
+            "cafe": "Ambijent kafića"
+          }
+        },
+        "volume": {
+          "_title": "Glasnoća bijelog šuma",
+          "_description": "Prilagodi glasnoću bijelog šuma"
+        },
+        "playDuringWork": {
+          "_title": "Reproduciraj samo tijekom rada",
+          "_description": "Reproduciraj bijeli šum samo tijekom radnih sesija"
+        }
+      },
       "visuals": {
         "theme": {
           "_title": "Postavke teme",

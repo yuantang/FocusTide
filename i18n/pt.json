@@ -211,6 +211,41 @@
           "_description": "Mostrar ✔ ao invés de \"done\""
         }
       },
+      "whiteNoise": {
+        "_section": "Ruído Branco",
+        "enabled": {
+          "_title": "Ativar ruído branco",
+          "_description": "Reproduzir sons ambientes para ajudar na concentração"
+        },
+        "type": {
+          "_title": "Tipo de ruído branco",
+          "_description": "Escolha o tipo de som ambiente",
+          "_values": {
+            "rain": "Chuva",
+            "forest": "Floresta",
+            "ocean": "Oceano",
+            "fan": "Ventilador",
+            "fireplace": "Lareira",
+            "cafe": "Café"
+          },
+          "_valueDescription": {
+            "rain": "Chuva suave",
+            "forest": "Ambiente de floresta",
+            "ocean": "Ondas do oceano",
+            "fan": "Ruído de ventilador",
+            "fireplace": "Crepitar de lareira",
+            "cafe": "Ambiente de café"
+          }
+        },
+        "volume": {
+          "_title": "Volume do ruído branco",
+          "_description": "Ajustar o volume do ruído branco"
+        },
+        "playDuringWork": {
+          "_title": "Reproduzir apenas durante o trabalho",
+          "_description": "Reproduzir ruído branco apenas durante as sessões de trabalho"
+        }
+      },
       "visuals": {
         "theme": {
           "_title": "Configurações de tema",

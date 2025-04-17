@@ -227,6 +227,41 @@
           "_description": "Show ✔ instead of \"done\""
         }
       },
+      "whiteNoise": {
+        "_section": "White Noise",
+        "enabled": {
+          "_title": "Enable white noise",
+          "_description": "Play ambient sounds to help you focus"
+        },
+        "type": {
+          "_title": "White noise type",
+          "_description": "Choose the type of ambient sound",
+          "_values": {
+            "rain": "Rain",
+            "forest": "Forest",
+            "ocean": "Ocean",
+            "fan": "Fan",
+            "fireplace": "Fireplace",
+            "cafe": "Cafe"
+          },
+          "_valueDescription": {
+            "rain": "Gentle rainfall",
+            "forest": "Forest ambience",
+            "ocean": "Ocean waves",
+            "fan": "Fan noise",
+            "fireplace": "Crackling fireplace",
+            "cafe": "Coffee shop ambience"
+          }
+        },
+        "volume": {
+          "_title": "White noise volume",
+          "_description": "Adjust the volume of the white noise"
+        },
+        "playDuringWork": {
+          "_title": "Play only during work",
+          "_description": "Only play white noise during work sessions"
+        }
+      },
       "visuals": {
         "theme": {
           "_title": "Theme settings",

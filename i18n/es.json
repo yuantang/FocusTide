@@ -211,6 +211,41 @@
           "_description": "Mostrar ✔ en vez de \"hecho\""
         }
       },
+      "whiteNoise": {
+        "_section": "Ruido Blanco",
+        "enabled": {
+          "_title": "Activar ruido blanco",
+          "_description": "Reproducir sonidos ambientales para ayudar a concentrarse"
+        },
+        "type": {
+          "_title": "Tipo de ruido blanco",
+          "_description": "Elija el tipo de sonido ambiental",
+          "_values": {
+            "rain": "Lluvia",
+            "forest": "Bosque",
+            "ocean": "Océano",
+            "fan": "Ventilador",
+            "fireplace": "Chimenea",
+            "cafe": "Cafetería"
+          },
+          "_valueDescription": {
+            "rain": "Lluvia suave",
+            "forest": "Ambiente de bosque",
+            "ocean": "Olas del mar",
+            "fan": "Ruido de ventilador",
+            "fireplace": "Crepitar de chimenea",
+            "cafe": "Ambiente de cafetería"
+          }
+        },
+        "volume": {
+          "_title": "Volumen del ruido blanco",
+          "_description": "Ajustar el volumen del ruido blanco"
+        },
+        "playDuringWork": {
+          "_title": "Reproducir solo durante el trabajo",
+          "_description": "Reproducir ruido blanco solo durante las sesiones de trabajo"
+        }
+      },
       "visuals": {
         "theme": {
           "_title": "Ajustes de tema",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconX as CloseIcon, IconAdjustments as TabIconGeneral, IconAlarm as TabIconSchedule, IconArtboard as TabIconVisuals, IconInfoCircle as InfoIcon, IconInfoCircle as TabIconAbout } from '@tabler/icons-vue'
+import { IconX as CloseIcon, IconAdjustments as TabIconGeneral, IconAlarm as TabIconSchedule, IconArtboard as TabIconVisuals, IconInfoCircle as InfoIcon, IconInfoCircle as TabIconAbout, IconVolume as VolumeIcon } from '@tabler/icons-vue'
 
 import { ButtonImportance } from '../base/types/button'
 import ThemeSettings from './theme/themeSettings.vue'
@@ -11,7 +11,7 @@ import ImportButton from '@/components/settings/importButton.vue'
 import AboutTab from '~~/components/settings/aboutTab.vue'
 
 import presetTimers from '~~/assets/settings/timerPresets'
-import { useSettings } from '~~/stores/settings'
+import { useSettings, WhiteNoiseType, SoundSet } from '~~/stores/settings'
 import { NotificationPermission, useNotifications } from '~~/stores/notifications'
 import { useMobileSettings } from '~~/stores/platforms/mobileSettings'
 
@@ -86,6 +86,29 @@ notificationsStore.updateEnabled()
               />
               <SettingsItem :type="Control.Option" :choices="{musical: SoundSet.Musical, sharp: SoundSet.Sharp}" path="audio.soundSet" />
             </template>
+
+            <Divider />
+            <div class="flex flex-row items-center px-3 py-2 mb-2 space-x-2 rounded-lg bg-primary/10 dark:bg-gray-700">
+              <VolumeIcon size="24" />
+              <span class="font-medium">{{ $t('settings.values.whiteNoise._section') }}</span>
+            </div>
+            <SettingsItem :type="Control.Check" path="whiteNoise.enabled" />
+            <SettingsItem
+              :type="Control.Option"
+              :choices="{rain: WhiteNoiseType.Rain, forest: WhiteNoiseType.Forest, ocean: WhiteNoiseType.Ocean, fan: WhiteNoiseType.Fan, fireplace: WhiteNoiseType.Fireplace, cafe: WhiteNoiseType.Cafe}"
+              path="whiteNoise.type"
+              :disabled="!settingsStore.whiteNoise.enabled"
+            />
+            <SettingsItem :type="Control.Check" path="whiteNoise.playDuringWork" :disabled="!settingsStore.whiteNoise.enabled" />
+            <SettingsItem
+              :type="Control.Number"
+              path="whiteNoise.volume"
+              :min="0"
+              :max="1"
+              :step="0.1"
+              :decimals="1"
+              :disabled="!settingsStore.whiteNoise.enabled"
+            />
 
             <template v-if="isMobile">
               <Divider />

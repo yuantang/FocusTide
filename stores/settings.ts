@@ -23,6 +23,15 @@ export enum SoundSet {
   Sharp = 'sharp'
 }
 
+export enum WhiteNoiseType {
+  Rain = 'rain',
+  Forest = 'forest',
+  Ocean = 'ocean',
+  Fan = 'fan',
+  Fireplace = 'fireplace',
+  Cafe = 'cafe'
+}
+
 export enum Section {
   work = 'work',
   shortpause = 'shortpause',
@@ -75,6 +84,12 @@ export interface Settings {
     audio: {
       volume: number,
       soundSet: SoundSet
+    },
+    whiteNoise: {
+      enabled: boolean,
+      type: WhiteNoiseType,
+      volume: number,
+      playDuringWork: boolean
     },
     timerControls: {
       enableKeyboardShortcuts: boolean
@@ -155,6 +170,12 @@ export const useSettings = defineStore('settings', {
     audio: {
       volume: 0.9,
       soundSet: SoundSet.Musical
+    },
+    whiteNoise: {
+      enabled: false,
+      type: WhiteNoiseType.Rain,
+      volume: 0.5,
+      playDuringWork: true
     },
     timerControls: {
       enableKeyboardShortcuts: true

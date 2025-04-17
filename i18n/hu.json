@@ -225,6 +225,41 @@
           "_description": "Mutasson ✔ emojit a \"kész\" helyett az alkalmazás"
         }
       },
+      "whiteNoise": {
+        "_section": "Fehér zaj",
+        "enabled": {
+          "_title": "Fehér zaj bekapcsolása",
+          "_description": "Környezeti hangok lejátszása a koncentráció segítésére"
+        },
+        "type": {
+          "_title": "Fehér zaj típusa",
+          "_description": "Válassza ki a környezeti hang típusát",
+          "_values": {
+            "rain": "Eső",
+            "forest": "Erdő",
+            "ocean": "Óceán",
+            "fan": "Ventilátor",
+            "fireplace": "Kandalló",
+            "cafe": "Kávézó"
+          },
+          "_valueDescription": {
+            "rain": "Enyhe esőzés",
+            "forest": "Erdő hangulat",
+            "ocean": "Tengeri hullámok",
+            "fan": "Ventilátor zaj",
+            "fireplace": "Kandalló pattogás",
+            "cafe": "Kávézó hangulat"
+          }
+        },
+        "volume": {
+          "_title": "Fehér zaj hangerő",
+          "_description": "A fehér zaj hangerő beállítása"
+        },
+        "playDuringWork": {
+          "_title": "Csak munka közben játssza le",
+          "_description": "Fehér zaj lejátszása csak a munkaszakaszok alatt"
+        }
+      },
       "visuals": {
         "theme": {
           "_title": "Téma beállítások",

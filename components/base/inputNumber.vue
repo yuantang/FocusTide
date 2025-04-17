@@ -12,6 +12,10 @@ const props = defineProps({
     type: Number,
     default: Infinity
   },
+  step: {
+    type: Number,
+    default: 1
+  },
   prefix: {
     type: String,
     default: ''
@@ -23,30 +27,42 @@ const props = defineProps({
   valueClass: {
     type: String,
     default: ''
+  },
+  decimals: {
+    type: Number,
+    default: 0
   }
 })
 
 const state = reactive({
-  value: JSON.parse(JSON.stringify(props.value)) as number
+  value: JSON.parse(JSON.stringify(props.value)) as number,
+  displayValue: formatValue(props.value)
 })
+
+function formatValue(value: number): string {
+  return value.toFixed(props.decimals)
+}
 
 watch(() => state.value, (newValue) => {
   if (newValue !== null && newValue !== undefined && !isNaN(newValue) && isFinite(newValue) && newValue <= props.max && newValue >= props.min) {
+    state.displayValue = formatValue(newValue)
     emit('input', newValue)
   }
 })
 
 watch(() => props.value, (newValue) => {
   state.value = newValue
+  state.displayValue = formatValue(newValue)
 })
 
 const emit = defineEmits<{(event: 'input', value: number): void }>()
 
 const updateInput = (newValue: string) => {
-  const newValueNumber = Number.parseInt(newValue)
+  const newValueNumber = parseFloat(newValue)
 
   if (!isNaN(newValueNumber)) {
     state.value = newValueNumber
+    state.displayValue = formatValue(newValueNumber)
   }
 }
 </script>
@@ -58,10 +74,11 @@ const updateInput = (newValue: string) => {
       :value="state.value"
       :min="props.min"
       :max="props.max"
+      :step="props.step"
       type="range"
       @input="(e) => updateInput((e.target as HTMLInputElement).value)"
     >
-    <span class="min-w-[2ch] text-center" :class="props.valueClass" v-text="`${props.prefix}${state.value}${props.postfix}`" />
+    <span class="min-w-[3ch] text-center" :class="props.valueClass" v-text="`${props.prefix}${state.displayValue}${props.postfix}`" />
   </div>
 </template>
 

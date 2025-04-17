@@ -193,6 +193,41 @@
           "_title": "Utilisez tick emoji dans le titre"
         }
       },
+      "whiteNoise": {
+        "_section": "Bruit Blanc",
+        "enabled": {
+          "_title": "Activer le bruit blanc",
+          "_description": "Jouer des sons ambiants pour aider à se concentrer"
+        },
+        "type": {
+          "_title": "Type de bruit blanc",
+          "_description": "Choisissez le type de son ambiant",
+          "_values": {
+            "rain": "Pluie",
+            "forest": "Forêt",
+            "ocean": "Océan",
+            "fan": "Ventilateur",
+            "fireplace": "Cheminée",
+            "cafe": "Café"
+          },
+          "_valueDescription": {
+            "rain": "Pluie douce",
+            "forest": "Ambiance de forêt",
+            "ocean": "Vagues de l'océan",
+            "fan": "Bruit de ventilateur",
+            "fireplace": "Crépitement de cheminée",
+            "cafe": "Ambiance de café"
+          }
+        },
+        "volume": {
+          "_title": "Volume du bruit blanc",
+          "_description": "Ajuster le volume du bruit blanc"
+        },
+        "playDuringWork": {
+          "_title": "Jouer uniquement pendant le travail",
+          "_description": "Jouer le bruit blanc uniquement pendant les sessions de travail"
+        }
+      },
       "visuals": {
         "darkMode": {
           "_description": "Moins lumineux, tout aussi productif",

@@ -26,7 +26,9 @@ interface Props {
   disabled?: boolean,
   choices?: Record<string, unknown>,
   min?: number,
-  max?: number
+  max?: number,
+  step?: number,
+  decimals?: number
 }
 
 const props = defineProps<Props>()
@@ -95,6 +97,8 @@ const isSideControls = computed(() => ![Control.Option, Control.Empty].includes(
           :disabled="props.disabled"
           :min="props.min"
           :max="props.max"
+          :step="props.step"
+          :decimals="props.decimals"
           :choices="props.choices"
           class="ml-auto"
           :value="value"
