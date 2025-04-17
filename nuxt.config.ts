@@ -53,7 +53,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       PACKAGE_VERSION: version,
-      PLATFORM: AppPlatform.mobile,
+      PLATFORM: AppPlatform.web,
       URL: 'https://focustide.app'
     }
   },
@@ -81,10 +81,13 @@ export default defineNuxtConfig({
         { hid: 'twitter:image', name: 'twitter:image', content: '/img/ogImage.png' },
         { hid: 'og:image', property: 'og:image', content: '/img/ogImage.png' },
         { hid: 'og:image:url', property: 'og:image:url', content: '/img/ogImage.png' },
-        { hid: 'og:url', property: 'og:url', content: import.meta.env.URL ? import.meta.env.URL : 'https://another-pomodoro.netlify.app' }
+        { hid: 'og:url', property: 'og:url', content: import.meta.env.URL ? import.meta.env.URL : 'https://focustide.app' }
       ],
       link: [
-        { rel: 'icon', href: '/favicon.svg' }
+        { rel: 'icon', href: '/favicon.svg' },
+        { rel: 'preload', href: '/icons/icon-apple-192.png', as: 'image' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }
       ],
       script: [
         { src: '/serviceworker-setup.js' }

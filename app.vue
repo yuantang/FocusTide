@@ -72,9 +72,14 @@ if (!import.meta.server) {
 onMounted(() => {
   if (typeof window !== 'undefined') {
     if ('serviceWorker' in navigator) {
-      const registerSw = () => {
-        console.debug('Registering service worker at /serviceworker.js')
-        navigator.serviceWorker.register('/serviceworker.js')
+      const registerSw = async () => {
+        try {
+          console.debug('Registering service worker at /serviceworker.js')
+          const registration = await navigator.serviceWorker.register('/serviceworker.js')
+          console.debug('Service worker registered successfully:', registration.scope)
+        } catch (error) {
+          console.error('Service worker registration failed:', error)
+        }
       }
 
       if (document.readyState === 'complete') {

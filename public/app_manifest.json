@@ -3,7 +3,7 @@
   "name": "FocusTide: modern & simple Pomodoro app",
   "short_name": "FocusTide",
   "description": "Modern and customisable productivity timer, right in your browser!",
-  "start_url": "/timer?pwa=true",
+  "start_url": "/?pwa=true",
   "theme_color": "#F87171",
   "background_color": "#FEE2E2",
   "orientation": "any",
@@ -24,7 +24,7 @@
       "sizes": "1140x2280",
       "type": "image/jpg",
       "platform": "narrow",
-      "label": "AnotherPomdoro comes with a built-in to-do manager"
+      "label": "FocusTide comes with a built-in to-do manager"
     },
     {
       "src": "/assets/img/screenshots/stores/mobile_2.jpg",
