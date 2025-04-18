@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IconVolume, IconVolumeOff, IconWaves } from '@tabler/icons-vue'
 import { useSettings, WhiteNoiseType } from '~~/stores/settings'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const settingsStore = useSettings()
@@ -82,26 +82,28 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="fixed bottom-20 right-6 z-30">
-    <div
-      class="relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg cursor-pointer transition-all duration-300 hover:scale-110"
-      :class="[
-        isPlaying ? currentWhiteNoiseTypeClass : 'bg-gray-200 dark:bg-gray-700',
-        isAnimating ? 'scale-90' : ''
-      ]"
-      @click="toggleWhiteNoise"
-      :title="currentWhiteNoiseTypeName"
-    >
-      <IconVolume v-if="isPlaying" size="20" class="text-white" />
-      <IconVolumeOff v-else size="20" class="text-gray-500 dark:text-gray-300" />
+  <Transition name="fade">
+    <div class="fixed bottom-24 right-6 z-30">
+      <div
+        class="relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg cursor-pointer transition-all duration-500 hover:scale-110 backdrop-blur-sm"
+        :class="[
+          isPlaying ? currentWhiteNoiseTypeClass : 'bg-gray-200/80 dark:bg-gray-700/80',
+          isAnimating ? 'scale-90' : ''
+        ]"
+        @click="toggleWhiteNoise"
+        :title="currentWhiteNoiseTypeName"
+      >
+        <IconVolume v-if="isPlaying" size="20" class="text-white z-10 relative" />
+        <IconVolumeOff v-else size="20" class="text-gray-500 dark:text-gray-300 z-10 relative" />
 
-      <!-- 波浪动画 -->
-      <div v-if="isPlaying" class="absolute inset-0 flex items-center justify-center">
-        <div class="absolute w-12 h-12 rounded-full opacity-75 animate-ping" :class="currentWhiteNoiseTypeClass"></div>
-        <div class="absolute w-10 h-10 rounded-full opacity-50 animate-ping animation-delay-300" :class="currentWhiteNoiseTypeClass"></div>
+        <!-- 波浪动画 -->
+        <div v-if="isPlaying" class="absolute inset-0 flex items-center justify-center overflow-hidden rounded-full">
+          <div class="absolute w-12 h-12 rounded-full opacity-30 animate-pulse-slow" :class="currentWhiteNoiseTypeClass"></div>
+          <div class="absolute w-10 h-10 rounded-full opacity-20 animate-pulse-slow animation-delay-500" :class="currentWhiteNoiseTypeClass"></div>
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped>
@@ -109,18 +111,33 @@ onMounted(() => {
   animation-delay: 300ms;
 }
 
-@keyframes ping {
-  0% {
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
     transform: scale(1);
-    opacity: 0.8;
+    opacity: 0.3;
   }
-  75%, 100% {
-    transform: scale(2);
-    opacity: 0;
+  50% {
+    transform: scale(1.3);
+    opacity: 0.1;
   }
 }
 
-.animate-ping {
-  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>

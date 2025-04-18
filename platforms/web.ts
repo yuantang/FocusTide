@@ -281,11 +281,20 @@ export function useWeb () {
    * @returns Current playing state after toggle
    */
   const toggleWhiteNoise = () => {
+    console.log('Toggle white noise called, current state:', state.isWhiteNoisePlaying)
+
+    // 如果白噪音类型与设置中的不一致，先加载新的白噪音
+    if (state.currentWhiteNoiseType !== settingsStore.whiteNoise.type) {
+      loadWhiteNoise(settingsStore.whiteNoise.type)
+    }
+
     if (state.whiteNoise && state.whiteNoise.playing) {
       stopWhiteNoise()
+      console.log('White noise stopped')
       return false
     } else {
       playWhiteNoise()
+      console.log('White noise started')
       return true
     }
   }

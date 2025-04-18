@@ -37,7 +37,15 @@ const whiteNoiseState = ref(webPlatform.isWhiteNoisePlaying())
 
 // 切换白噪音播放状态
 const toggleWhiteNoise = () => {
+  // 先检查白噪音是否已加载
+  if (!settingsStore.whiteNoise.enabled) {
+    settingsStore.whiteNoise.enabled = true
+  }
+
+  // 切换白噪音播放状态
   whiteNoiseState.value = webPlatform.toggleWhiteNoise()
+
+  console.log('White noise toggled, new state:', whiteNoiseState.value)
 }
 
 const iconSvg = computed(() => `data:image/svg+xml,
