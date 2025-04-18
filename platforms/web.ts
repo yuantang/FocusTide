@@ -32,7 +32,8 @@ export function useWeb () {
       shortpause: null as SoundSettings | null,
       longpause: null as SoundSettings | null
     },
-    whiteNoise: null as WhiteNoiseSettings | null
+    whiteNoise: null as WhiteNoiseSettings | null,
+    isWhiteNoisePlaying: false
   })
 
   const lastEvent = computed(() => {
@@ -68,8 +69,8 @@ export function useWeb () {
   })
 
   watch(() => settingsStore.whiteNoise.volume, (newVolume) => {
-    if (state.whiteNoise && state.whiteNoise.playing && state.whiteNoise.gainNode) {
-      state.whiteNoise.gainNode.gain.value = newVolume
+    if (state.whiteNoise && state.whiteNoise.playing && state.whiteNoise.source) {
+      state.whiteNoise.source.volume = newVolume
     }
   })
 
@@ -268,10 +269,33 @@ export function useWeb () {
         source.play().catch(e => console.error('Error playing audio:', e))
 
         state.whiteNoise.playing = true
+        state.isWhiteNoisePlaying = true
       } catch (err) {
         console.error('Error playing white noise:', err)
       }
     }
+  }
+
+  /**
+   * Toggle white noise playback
+   * @returns Current playing state after toggle
+   */
+  const toggleWhiteNoise = () => {
+    if (state.whiteNoise && state.whiteNoise.playing) {
+      stopWhiteNoise()
+      return false
+    } else {
+      playWhiteNoise()
+      return true
+    }
+  }
+
+  /**
+   * Check if white noise is currently playing
+   * @returns Boolean indicating if white noise is playing
+   */
+  const isWhiteNoisePlaying = () => {
+    return state.isWhiteNoisePlaying
   }
 
   /**
@@ -286,9 +310,16 @@ export function useWeb () {
           state.whiteNoise.source.currentTime = 0
         }
         state.whiteNoise.playing = false
+        state.isWhiteNoisePlaying = false
       } catch (err) {
         console.warn('Error stopping white noise:', err)
       }
     }
+  }
+
+  // 返回公共方法
+  return {
+    toggleWhiteNoise,
+    isWhiteNoisePlaying
   }
 }
