@@ -13,9 +13,6 @@ interface SoundSettings {
 
 interface WhiteNoiseSettings {
   source?: HTMLAudioElement,
-  audioContext?: AudioContext,
-  gainNode?: GainNode,
-  noiseNode?: AudioBufferSourceNode,
   ready: boolean,
   playing: boolean
 }
@@ -189,55 +186,65 @@ export function useWeb () {
   }
 
   /**
-   * Create a white noise generator using Web Audio API
-   * @param type Type of white noise to create
+   * Load white noise audio file
+   * @param type Type of white noise to load
    */
   const loadWhiteNoise = (type = settingsStore.whiteNoise.type) => {
     if (state.currentWhiteNoiseType === type && state.whiteNoise !== null) { return }
 
     try {
-      // Clean up previous audio context if it exists
-      if (state.whiteNoise && state.whiteNoise.audioContext) {
-        if (state.whiteNoise.playing) {
-          stopWhiteNoise()
-        }
-        if (state.whiteNoise.noiseNode) {
-          state.whiteNoise.noiseNode.disconnect()
-        }
-        if (state.whiteNoise.gainNode) {
-          state.whiteNoise.gainNode.disconnect()
-        }
+      // Clean up previous audio if it exists
+      if (state.whiteNoise && state.whiteNoise.playing) {
+        stopWhiteNoise()
       }
 
-      // Create new audio context
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-      const gainNode = audioContext.createGain()
-      gainNode.gain.value = settingsStore.whiteNoise.volume
-      gainNode.connect(audioContext.destination)
+      // Create new audio element with absolute path
+      const audioPath = `${window.location.origin}/audio/whitenoise/${type}.mp3`
+      console.log(`Loading white noise: ${audioPath}`)
+      const source = new Audio(audioPath)
+      source.loop = true
+
+      // Add error event listener
+      source.addEventListener('error', (e) => {
+        console.error(`Error loading white noise: ${type}`, e)
+      })
 
       const newSound = {
-        audioContext,
-        gainNode,
-        ready: true,
+        source,
+        ready: false,
         playing: false
       }
+
+      // Set up event listener for when audio is ready
+      source.addEventListener('canplay', () => {
+        console.log(`White noise ready: ${type}`)
+        newSound.ready = true
+        // If we should be playing, start playing once ready
+        if (settingsStore.whiteNoise.enabled &&
+            (settingsStore.whiteNoise.playDuringWork === false ||
+             scheduleStore.getCurrentItem.type === 'work')) {
+          playWhiteNoise()
+        }
+      })
 
       state.whiteNoise = newSound
       state.currentWhiteNoiseType = type
     } catch (err) {
-      console.warn(err)
+      console.error(`Exception loading white noise: ${type}`, err)
     }
   }
 
   /**
-   * Generate and play white noise based on the selected type
+   * Play white noise audio file
    */
   const playWhiteNoise = () => {
     if (!settingsStore.whiteNoise.enabled) { return }
 
     // Load white noise if not already loaded
     if (state.currentWhiteNoiseType !== settingsStore.whiteNoise.type || state.whiteNoise === null) {
+      console.log(`Need to load white noise: ${settingsStore.whiteNoise.type}`)
       loadWhiteNoise(settingsStore.whiteNoise.type)
+      return // loadWhiteNoise will call playWhiteNoise when ready
     }
 
     if (state.whiteNoise !== null && settingsStore.permissions.audio) {
@@ -245,65 +252,24 @@ export function useWeb () {
       if (state.whiteNoise.playing) { return }
 
       try {
-        const { audioContext, gainNode } = state.whiteNoise
-        if (!audioContext || !gainNode) return
-
-        // Create noise buffer
-        const bufferSize = 2 * audioContext.sampleRate
-        const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate)
-        const output = noiseBuffer.getChannelData(0)
-
-        // Generate different types of noise based on the selected type
-        const type = settingsStore.whiteNoise.type
-
-        // Fill the buffer with noise
-        for (let i = 0; i < bufferSize; i++) {
-          switch (type) {
-            case 'rain':
-              // Rain noise - slightly filtered white noise with occasional louder drops
-              output[i] = Math.random() * 0.5 + (Math.random() > 0.99 ? Math.random() * 0.5 : 0)
-              break
-            case 'forest':
-              // Forest noise - filtered noise with occasional chirps
-              output[i] = Math.random() * 0.3 + (Math.random() > 0.995 ? Math.random() * 0.7 : 0)
-              break
-            case 'ocean':
-              // Ocean waves - low frequency modulated noise
-              output[i] = Math.random() * 0.5 * (0.5 + 0.5 * Math.sin(i / 48000))
-              break
-            case 'fan':
-              // Fan noise - consistent white noise
-              output[i] = Math.random() * 0.5
-              break
-            case 'fireplace':
-              // Fireplace - crackling noise
-              output[i] = Math.random() * 0.3 + (Math.random() > 0.997 ? Math.random() * 0.7 : 0)
-              break
-            case 'cafe':
-              // Cafe - ambient noise with occasional peaks
-              output[i] = Math.random() * 0.2 + (Math.random() > 0.99 ? Math.random() * 0.3 : 0)
-              break
-            default:
-              // Default white noise
-              output[i] = Math.random() * 2 - 1
-          }
+        const { source } = state.whiteNoise
+        if (!source) {
+          console.error('No source available for white noise')
+          return
+        }
+        if (!state.whiteNoise.ready) {
+          console.log('White noise not ready yet')
+          return
         }
 
-        // Create noise source
-        const noiseSource = audioContext.createBufferSource()
-        noiseSource.buffer = noiseBuffer
-        noiseSource.loop = true
-        noiseSource.connect(gainNode)
-        noiseSource.start()
+        console.log(`Playing white noise: ${state.currentWhiteNoiseType}`)
+        // Set volume and play
+        source.volume = settingsStore.whiteNoise.volume
+        source.play().catch(e => console.error('Error playing audio:', e))
 
-        // Store the noise source for later stopping
-        state.whiteNoise.noiseNode = noiseSource
         state.whiteNoise.playing = true
-
-        // Update volume
-        gainNode.gain.value = settingsStore.whiteNoise.volume
       } catch (err) {
-        console.warn('Error playing white noise:', err)
+        console.error('Error playing white noise:', err)
       }
     }
   }
@@ -314,9 +280,10 @@ export function useWeb () {
   const stopWhiteNoise = () => {
     if (state.whiteNoise !== null && state.whiteNoise.playing) {
       try {
-        if (state.whiteNoise.noiseNode) {
-          state.whiteNoise.noiseNode.stop()
-          state.whiteNoise.noiseNode.disconnect()
+        if (state.whiteNoise.source) {
+          state.whiteNoise.source.pause()
+          // Reset to beginning
+          state.whiteNoise.source.currentTime = 0
         }
         state.whiteNoise.playing = false
       } catch (err) {
