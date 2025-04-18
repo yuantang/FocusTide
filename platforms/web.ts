@@ -290,20 +290,13 @@ export function useWeb () {
 
     try {
       if (state.whiteNoise && state.whiteNoise.playing) {
+        // 如果正在播放，则停止
         stopWhiteNoise()
         console.log('White noise stopped')
         return false
       } else {
-        // 确保白噪音已加载
-        if (!state.whiteNoise || !state.whiteNoise.ready) {
-          loadWhiteNoise(settingsStore.whiteNoise.type)
-          // 等待一下加载
-          setTimeout(() => {
-            playWhiteNoise()
-          }, 100)
-        } else {
-          playWhiteNoise()
-        }
+        // 如果没有播放，则开始播放
+        playWhiteNoise()
         console.log('White noise started')
         return true
       }

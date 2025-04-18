@@ -55,15 +55,15 @@ onMounted(() => {
   <div class="fixed bottom-24 right-6 z-30">
     <button
       class="relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg cursor-pointer transition-all duration-300 hover:scale-110 focus:outline-none"
-      :class="isPlaying ? currentWhiteNoiseTypeClass : 'bg-gray-200 dark:bg-gray-700'"
+      :class="props.isPlaying ? currentWhiteNoiseTypeClass : 'bg-gray-200 dark:bg-gray-700'"
       @click="toggleWhiteNoise"
-      :aria-label="isPlaying ? '暂停白噪音' : '播放白噪音'"
+      :aria-label="props.isPlaying ? '暂停白噪音' : '播放白噪音'"
     >
-      <IconVolume v-if="isPlaying" size="20" class="text-white" />
-      <IconVolumeOff v-else size="20" class="text-gray-500 dark:text-gray-300" />
-      
+      <IconVolume v-if="props.isPlaying" size="20" class="text-white z-10" />
+      <IconVolumeOff v-else size="20" class="text-gray-500 dark:text-gray-300 z-10" />
+
       <!-- 简单的脉动动画 -->
-      <div v-if="isPlaying" class="absolute inset-0 rounded-full animate-pulse opacity-70" :class="currentWhiteNoiseTypeClass"></div>
+      <div v-if="props.isPlaying" class="absolute inset-0 rounded-full animate-pulse opacity-70" :class="currentWhiteNoiseTypeClass"></div>
     </button>
   </div>
 </template>
