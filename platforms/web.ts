@@ -288,14 +288,28 @@ export function useWeb () {
       loadWhiteNoise(settingsStore.whiteNoise.type)
     }
 
-    if (state.whiteNoise && state.whiteNoise.playing) {
-      stopWhiteNoise()
-      console.log('White noise stopped')
+    try {
+      if (state.whiteNoise && state.whiteNoise.playing) {
+        stopWhiteNoise()
+        console.log('White noise stopped')
+        return false
+      } else {
+        // 确保白噪音已加载
+        if (!state.whiteNoise || !state.whiteNoise.ready) {
+          loadWhiteNoise(settingsStore.whiteNoise.type)
+          // 等待一下加载
+          setTimeout(() => {
+            playWhiteNoise()
+          }, 100)
+        } else {
+          playWhiteNoise()
+        }
+        console.log('White noise started')
+        return true
+      }
+    } catch (err) {
+      console.error('Error toggling white noise:', err)
       return false
-    } else {
-      playWhiteNoise()
-      console.log('White noise started')
-      return true
     }
   }
 
