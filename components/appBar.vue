@@ -3,13 +3,31 @@ import { IconSettings, IconChecklist } from '@tabler/icons-vue'
 import { ButtonImportance, ButtonTheme } from './base/types/button'
 import CButton from '~~/components/base/uiButton.vue'
 import ScheduleView from '@/components/schedule/scheduleDisplay.vue'
+import WhiteNoiseTopControl from '@/components/whiteNoise/whiteNoiseTopControl.vue'
 import { useOpenPanels } from '@/stores/openpanels'
 import { useSchedule } from '~~/stores/schedule'
 import { useSettings } from '~~/stores/settings'
+import { useWeb } from '~~/platforms/web'
 
 const openPanels = useOpenPanels()
 const scheduleStore = useSchedule()
 const settingsStore = useSettings()
+const webPlatform = useWeb()
+
+// 白噪音播放状态
+const whiteNoiseState = ref(false)
+
+// 在组件挂载时检查白噪音状态
+onMounted(() => {
+  // 检查白噪音是否正在播放
+  whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+})
+
+// 切换白噪音播放状态
+const toggleWhiteNoise = () => {
+  // 切换白噪音播放状态
+  whiteNoiseState.value = webPlatform.toggleWhiteNoise()
+}
 </script>
 
 <template>
@@ -35,6 +53,13 @@ const settingsStore = useSettings()
     >
       <IconChecklist size="24" class="inline-block" />
     </CButton>
+    <!-- 白噪音控制按钮 -->
+    <WhiteNoiseTopControl
+      v-if="settingsStore.whiteNoise.enabled"
+      :is-playing="whiteNoiseState"
+      @toggle="toggleWhiteNoise"
+      class="mr-2"
+    />
     <CButton
       circle
       :aria-label="$t('appbar.settings')"

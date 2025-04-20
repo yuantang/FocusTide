@@ -57,13 +57,13 @@ export function useWeb () {
     }
   })
 
+  // 只在白噪音设置变化时更新状态，不再根据专注/休息状态自动切换
   watch(() => settingsStore.whiteNoise.enabled, (enabled) => {
     if (enabled) {
+      // 如果启用了白噪音，则加载白噪音
       loadWhiteNoise(settingsStore.whiteNoise.type)
-      if (scheduleStore.getCurrentItem.type === 'work' && settingsStore.whiteNoise.playDuringWork) {
-        playWhiteNoise()
-      }
     } else {
+      // 如果禁用了白噪音，则停止播放
       stopWhiteNoise()
     }
   })
@@ -74,15 +74,7 @@ export function useWeb () {
     }
   })
 
-  watch(() => scheduleStore.getCurrentItem.type, (newType) => {
-    if (settingsStore.whiteNoise.enabled && settingsStore.whiteNoise.playDuringWork) {
-      if (newType === 'work') {
-        playWhiteNoise()
-      } else {
-        stopWhiteNoise()
-      }
-    }
-  })
+  // 移除根据专注/休息状态自动切换白噪音的逻辑
 
   eventsStore.$subscribe(() => {
     if (eventsStore.lastEvent !== null && eventsStore.lastEvent._event === EventType.NOTIFICATIONS_ENABLED && window.Notification && window.Notification.permission === 'default') {
@@ -105,9 +97,6 @@ export function useWeb () {
     // Load white noise if enabled
     if (settingsStore.whiteNoise.enabled) {
       loadWhiteNoise(settingsStore.whiteNoise.type)
-      if (scheduleStore.getCurrentItem.type === 'work' && settingsStore.whiteNoise.playDuringWork) {
-        playWhiteNoise()
-      }
     }
 
     // Check Visibility and register in store
@@ -220,12 +209,8 @@ export function useWeb () {
       source.addEventListener('canplay', () => {
         console.log(`White noise ready: ${type}`)
         newSound.ready = true
-        // If we should be playing, start playing once ready
-        if (settingsStore.whiteNoise.enabled &&
-            (settingsStore.whiteNoise.playDuringWork === false ||
-             scheduleStore.getCurrentItem.type === 'work')) {
-          playWhiteNoise()
-        }
+        // 如果白噪音已启用，则准备好供用户手动播放
+        console.log('White noise ready for playback')
       })
 
       state.whiteNoise = newSound

@@ -12,7 +12,7 @@ import { useMobile } from '~~/platforms/mobile'
 import TimerSwitch from '@/components/timer/display/_timerSwitch.vue'
 import TimerProgress from '@/components/timer/timerProgress.vue'
 import TimerControls from '@/components/timer/controls/controlsNew.vue'
-import WhiteNoiseControlSimple from '@/components/whiteNoise/whiteNoiseControlSimple.vue'
+import WhiteNoiseTopControl from '@/components/whiteNoise/whiteNoiseTopControl.vue'
 import { AppPlatform } from '~~/platforms/platforms'
 
 import { useMobileSettings } from '~~/stores/platforms/mobileSettings'
@@ -30,30 +30,6 @@ const scheduleStore = useSchedule()
 const runtimeConfig = useRuntimeConfig()
 
 const { t } = useI18n()
-
-// 获取白噪音控制函数
-const webPlatform = useWeb()
-const whiteNoiseState = ref(false)
-
-// 在组件挂载时检查白噪音状态
-onMounted(() => {
-  // 检查白噪音是否正在播放
-  whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
-})
-
-// 切换白噪音播放状态
-const toggleWhiteNoise = () => {
-  // 先检查白噪音是否已启用
-  if (!settingsStore.whiteNoise.enabled) {
-    settingsStore.whiteNoise.enabled = true
-  }
-
-  // 切换白噪音播放状态
-  const newState = webPlatform.toggleWhiteNoise()
-  whiteNoiseState.value = newState
-
-  console.log('White noise toggled, new state:', whiteNoiseState.value)
-}
 
 const iconSvg = computed(() => `data:image/svg+xml,
 <svg
@@ -188,11 +164,6 @@ const progressBarSchedules = computed(() => {
       </div>
       <client-only>
         <TutorialView />
-        <WhiteNoiseControlSimple
-          v-if="settingsStore.whiteNoise.enabled || whiteNoiseState"
-          :is-playing="whiteNoiseState"
-          @toggle="toggleWhiteNoise"
-        />
       </client-only>
     </section>
   </Layout>
