@@ -1,6 +1,7 @@
 <script setup>
 import { IconSettings, IconChecklist } from '@tabler/icons-vue'
 import { ButtonImportance, ButtonTheme } from './base/types/button'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import CButton from '~~/components/base/uiButton.vue'
 import ScheduleView from '@/components/schedule/scheduleDisplay.vue'
 import WhiteNoiseTopControl from '@/components/whiteNoise/whiteNoiseTopControl.vue'
@@ -21,6 +22,24 @@ const whiteNoiseState = ref(false)
 onMounted(() => {
   // 检查白噪音是否正在播放
   whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+})
+
+// 定期检查白噪音状态，确保显示状态与实际播放状态一致
+const updateInterval = setInterval(() => {
+  whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+}, 1000)
+
+// 监听白噪音类型变化
+watch(() => settingsStore.whiteNoise.type, () => {
+  // 当类型变化时，更新状态
+  setTimeout(() => {
+    whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+  }, 500) // 等待一下，确保状态已更新
+})
+
+// 在组件卸载时清除定时器
+onUnmounted(() => {
+  clearInterval(updateInterval)
 })
 
 // 切换白噪音播放状态
