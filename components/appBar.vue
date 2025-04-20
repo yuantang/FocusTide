@@ -25,9 +25,19 @@ onMounted(() => {
 })
 
 // 定期检查白噪音状态，确保显示状态与实际播放状态一致
-const updateInterval = setInterval(() => {
+const updateInterval = ref<number | null>(null)
+
+onMounted(() => {
+  // 检查白噪音是否正在播放
   whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
-}, 1000)
+
+  // 在客户端创建定时器
+  if (process.client) {
+    updateInterval.value = window.setInterval(() => {
+      whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+    }, 1000)
+  }
+})
 
 // 监听白噪音类型变化
 watch(() => settingsStore.whiteNoise.type, () => {
@@ -39,7 +49,10 @@ watch(() => settingsStore.whiteNoise.type, () => {
 
 // 在组件卸载时清除定时器
 onUnmounted(() => {
-  clearInterval(updateInterval)
+  if (process.client && updateInterval.value !== null) {
+    window.clearInterval(updateInterval.value)
+    updateInterval.value = null
+  }
 })
 
 // 切换白噪音播放状态
