@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { reactive, computed, ref } from 'vue'
 import { prebuiltThemes } from './prebuiltThemes'
 import ColorChanger from './colorChanger.vue'
 import ThemePreview from './themePreview.vue'
