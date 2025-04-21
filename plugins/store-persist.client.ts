@@ -1,6 +1,8 @@
 import { defineNuxtPlugin, useRouter } from '#app'
-import { PiniaPluginContext, Store } from 'pinia'
 import { useMain, flags } from '~~/stores/main'
+import type { PiniaPluginContext } from 'pinia'
+
+type Store = any
 
 interface BreakingChange {
   from?: string,

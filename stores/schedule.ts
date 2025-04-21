@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
-import { ColorMethod, Section, Settings, useSettings } from './settings'
+import { ColorMethod, Section, useSettings } from './settings'
+
+type Settings = any
 
 export enum ETimerState {
   STOPPED,

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { IconSettings, IconChecklist } from '@tabler/icons-vue'
 import { ButtonImportance, ButtonTheme } from './base/types/button'
 import { ref, watch, onMounted, onUnmounted } from 'vue'
