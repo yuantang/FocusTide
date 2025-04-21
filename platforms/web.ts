@@ -99,7 +99,12 @@ export function useWeb () {
 
       // 如果之前正在播放，先停止当前的白噪音
       if (state.whiteNoise && state.whiteNoise.source) {
-        state.whiteNoise.source.pause()
+        try {
+          state.whiteNoise.source.pause()
+          state.whiteNoise.source.currentTime = 0
+        } catch (e) {
+          console.error('Error pausing previous white noise:', e)
+        }
       }
 
       // 创建新的音频元素
@@ -116,11 +121,37 @@ export function useWeb () {
 
       // 如果之前正在播放，则继续播放新的白噪音
       if (wasPlaying) {
-        source.volume = settingsStore.whiteNoise.volume
-        source.play()
-        state.whiteNoise.playing = true
-        state.isWhiteNoisePlaying = true
-        console.log('Resumed white noise playback with new type')
+        try {
+          source.volume = settingsStore.whiteNoise.volume
+
+          // 先设置状态
+          state.whiteNoise.playing = true
+          state.isWhiteNoisePlaying = true
+
+          // 尝试播放
+          const playPromise = source.play()
+
+          // 处理播放承诺
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              console.error('Error playing new white noise type:', error)
+              // 如果播放失败，重置状态
+              if (state.whiteNoise) {
+                state.whiteNoise.playing = false
+              }
+              state.isWhiteNoisePlaying = false
+            });
+          }
+
+          console.log('Resumed white noise playback with new type')
+        } catch (e) {
+          console.error('Error resuming white noise with new type:', e)
+          // 如果出错，重置状态
+          if (state.whiteNoise) {
+            state.whiteNoise.playing = false
+          }
+          state.isWhiteNoisePlaying = false
+        }
       }
     }
   })
@@ -260,16 +291,21 @@ export function useWeb () {
         // 如果正在播放，则停止
         console.log('Stopping white noise...')
 
-        // 先重置状态
+        // 停止音频
+        if (state.whiteNoise && state.whiteNoise.source) {
+          try {
+            state.whiteNoise.source.pause()
+            state.whiteNoise.source.currentTime = 0
+            console.log('Audio paused successfully')
+          } catch (e) {
+            console.error('Error pausing audio:', e)
+          }
+        }
+
+        // 重置状态
         state.isWhiteNoisePlaying = false
         if (state.whiteNoise) {
           state.whiteNoise.playing = false
-        }
-
-        // 然后停止音频
-        if (state.whiteNoise && state.whiteNoise.source) {
-          state.whiteNoise.source.pause()
-          state.whiteNoise.source.currentTime = 0
         }
 
         console.log('White noise stopped')
@@ -299,15 +335,37 @@ export function useWeb () {
 
         // 设置音量并播放
         if (state.whiteNoise && state.whiteNoise.source) {
-          state.whiteNoise.source.volume = settingsStore.whiteNoise.volume
-          state.whiteNoise.source.play()
+          try {
+            state.whiteNoise.source.volume = settingsStore.whiteNoise.volume
 
-          // 设置状态
-          state.whiteNoise.playing = true
-          state.isWhiteNoisePlaying = true
+            // 先设置状态，然后播放
+            state.whiteNoise.playing = true
+            state.isWhiteNoisePlaying = true
 
-          console.log('White noise started')
-          return true
+            // 尝试播放
+            const playPromise = state.whiteNoise.source.play()
+
+            // 处理播放承诺
+            if (playPromise !== undefined) {
+              playPromise.catch(error => {
+                console.error('Error playing audio:', error)
+                // 如果播放失败，重置状态
+                if (state.whiteNoise) {
+                  state.whiteNoise.playing = false
+                }
+                state.isWhiteNoisePlaying = false
+              });
+            }
+
+            console.log('White noise started')
+            return true
+          } catch (e) {
+            console.error('Error starting white noise:', e)
+            // 如果出错，重置状态
+            state.whiteNoise.playing = false
+            state.isWhiteNoisePlaying = false
+            return false
+          }
         }
 
         return false

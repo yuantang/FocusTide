@@ -18,14 +18,9 @@ const webPlatform = useWeb()
 // 白噪音播放状态
 const whiteNoiseState = ref(false)
 
-// 在组件挂载时检查白噪音状态
-onMounted(() => {
-  // 检查白噪音是否正在播放
-  whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
-})
-
 // 白噪音状态管理
 
+// 在组件挂载时检查白噪音状态
 onMounted(() => {
   console.log('App bar mounted, initializing white noise state')
 

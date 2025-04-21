@@ -56,6 +56,7 @@ watch(() => props.isPlaying, (newValue) => {
 
 // 切换白噪音播放状态
 const toggleWhiteNoise = () => {
+  console.log('White noise control button clicked, current state:', localIsPlaying.value)
   isAnimating.value = true
   setTimeout(() => {
     isAnimating.value = false
