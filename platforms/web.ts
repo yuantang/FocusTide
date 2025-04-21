@@ -200,7 +200,7 @@ export function useWeb () {
       }
 
       // Create new audio element with absolute path
-      const audioPath = `${window.location.origin}/audio/whitenoise/${type}.mp3`
+      const audioPath = `/audio/whitenoise/${type}.mp3`
       console.log(`Loading white noise: ${audioPath}`)
       const source = new Audio(audioPath)
       source.loop = true
