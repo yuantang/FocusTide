@@ -329,19 +329,25 @@ export function useWeb () {
    * @returns Current playing state after toggle
    */
   const toggleWhiteNoise = () => {
-    console.log('Toggle white noise called, current state:', state.isWhiteNoisePlaying)
+    console.log('Toggle white noise called, current state:', state.isWhiteNoisePlaying,
+                'whiteNoise playing:', state.whiteNoise?.playing,
+                'whiteNoise ready:', state.whiteNoise?.ready,
+                'whiteNoise type:', state.currentWhiteNoiseType)
 
     try {
-      if (state.isWhiteNoisePlaying) {
+      // 强制切换状态，不依赖当前状态
+      if (state.isWhiteNoisePlaying || (state.whiteNoise && state.whiteNoise.playing)) {
         // 如果正在播放，则停止
+        console.log('Stopping white noise...')
         stopWhiteNoise()
-        console.log('White noise stopped')
+        console.log('White noise stopped, state after stop:', state.isWhiteNoisePlaying)
         return false
       } else {
         // 如果没有播放，则开始播放
+        console.log('Starting white noise...')
         // 直接调用playWhiteNoise函数，该函数会处理所有的加载和播放逻辑
         playWhiteNoise()
-        console.log('White noise started')
+        console.log('White noise started, state after start:', state.isWhiteNoisePlaying)
         return true
       }
     } catch (err) {
@@ -360,6 +366,21 @@ export function useWeb () {
    * @returns Boolean indicating if white noise is playing
    */
   const isWhiteNoisePlaying = () => {
+    // 检查实际播放状态和状态标志
+    const actuallyPlaying = state.whiteNoise && state.whiteNoise.playing && state.whiteNoise.source && !state.whiteNoise.source.paused ? true : false
+
+    // 如果状态不一致，则同步状态
+    if (actuallyPlaying !== state.isWhiteNoisePlaying) {
+      console.log('White noise state inconsistency detected:',
+                  'isWhiteNoisePlaying:', state.isWhiteNoisePlaying,
+                  'actually playing:', actuallyPlaying,
+                  'fixing...')
+      state.isWhiteNoisePlaying = actuallyPlaying
+      if (state.whiteNoise) {
+        state.whiteNoise.playing = actuallyPlaying
+      }
+    }
+
     return state.isWhiteNoisePlaying
   }
 
@@ -369,6 +390,10 @@ export function useWeb () {
   const stopWhiteNoise = () => {
     // 无论当前状态如何，都尝试停止白噪音
     try {
+      console.log('Stopping white noise, current state:',
+                  'isWhiteNoisePlaying:', state.isWhiteNoisePlaying,
+                  'whiteNoise playing:', state.whiteNoise?.playing)
+
       // 先重置状态，确保即使音频播放失败也能正确显示状态
       state.isWhiteNoisePlaying = false
 
@@ -376,13 +401,25 @@ export function useWeb () {
         state.whiteNoise.playing = false
 
         if (state.whiteNoise.source) {
-          state.whiteNoise.source.pause()
-          // Reset to beginning
-          state.whiteNoise.source.currentTime = 0
+          try {
+            // 尝试停止音频播放
+            state.whiteNoise.source.pause()
+            // Reset to beginning
+            state.whiteNoise.source.currentTime = 0
+            console.log('Audio element paused successfully')
+          } catch (audioErr) {
+            console.warn('Error pausing audio element:', audioErr)
+          }
+        } else {
+          console.warn('No audio source available to stop')
         }
+      } else {
+        console.warn('No white noise object available to stop')
       }
 
-      console.log('White noise stopped successfully')
+      console.log('White noise stopped successfully, state after stop:',
+                  'isWhiteNoisePlaying:', state.isWhiteNoisePlaying,
+                  'whiteNoise playing:', state.whiteNoise?.playing)
     } catch (err) {
       console.warn('Error stopping white noise:', err)
       // 出错时仍然尝试重置状态
