@@ -55,10 +55,34 @@ export function useWeb () {
   watch(() => settingsStore.whiteNoise.enabled, (enabled) => {
     if (enabled) {
       // 如果启用了白噪音，则加载白噪音
-      loadWhiteNoise(settingsStore.whiteNoise.type)
+      // 但不自动播放，需要用户点击播放按钮
+      if (state.currentWhiteNoiseType !== settingsStore.whiteNoise.type || !state.whiteNoise) {
+        const audioPath = `/audio/whitenoise/${settingsStore.whiteNoise.type}.mp3`
+        console.log(`Loading white noise from: ${audioPath}`)
+
+        // 创建新的音频元素
+        const source = new Audio(audioPath)
+        source.loop = true
+
+        // 创建新的白噪音对象
+        state.whiteNoise = {
+          source,
+          ready: true,
+          playing: false
+        }
+        state.currentWhiteNoiseType = settingsStore.whiteNoise.type
+      }
     } else {
       // 如果禁用了白噪音，则停止播放
-      stopWhiteNoise()
+      // 重置状态
+      state.isWhiteNoisePlaying = false
+      if (state.whiteNoise) {
+        state.whiteNoise.playing = false
+        if (state.whiteNoise.source) {
+          state.whiteNoise.source.pause()
+          state.whiteNoise.source.currentTime = 0
+        }
+      }
     }
   })
 
@@ -69,18 +93,34 @@ export function useWeb () {
       const wasPlaying = state.isWhiteNoisePlaying
       console.log(`White noise type changed to ${newType}, was playing: ${wasPlaying}`)
 
-      // 如果之前没有播放，只需要加载新的白噪音
-      if (!wasPlaying) {
-        loadWhiteNoise(newType)
-      } else {
-        // 如果之前正在播放，先停止当前的白噪音，然后加载新的白噪音并播放
-        if (state.whiteNoise && state.whiteNoise.source) {
-          state.whiteNoise.source.pause()
-        }
+      // 创建新的音频元素
+      const audioPath = `/audio/whitenoise/${newType}.mp3`
+      console.log(`Loading white noise from: ${audioPath}`)
 
-        // 设置播放状态为true，这样loadWhiteNoise函数会在加载完成后自动播放
+      // 如果之前正在播放，先停止当前的白噪音
+      if (state.whiteNoise && state.whiteNoise.source) {
+        state.whiteNoise.source.pause()
+      }
+
+      // 创建新的音频元素
+      const source = new Audio(audioPath)
+      source.loop = true
+
+      // 创建新的白噪音对象
+      state.whiteNoise = {
+        source,
+        ready: true,
+        playing: false
+      }
+      state.currentWhiteNoiseType = newType
+
+      // 如果之前正在播放，则继续播放新的白噪音
+      if (wasPlaying) {
+        source.volume = settingsStore.whiteNoise.volume
+        source.play()
+        state.whiteNoise.playing = true
         state.isWhiteNoisePlaying = true
-        loadWhiteNoise(newType)
+        console.log('Resumed white noise playback with new type')
       }
     }
   })
@@ -113,7 +153,20 @@ export function useWeb () {
 
     // Load white noise if enabled
     if (settingsStore.whiteNoise.enabled) {
-      loadWhiteNoise(settingsStore.whiteNoise.type)
+      // 创建新的音频元素
+      const audioPath = `/audio/whitenoise/${settingsStore.whiteNoise.type}.mp3`
+      console.log(`Loading white noise from: ${audioPath}`)
+
+      const source = new Audio(audioPath)
+      source.loop = true
+
+      // 创建新的白噪音对象
+      state.whiteNoise = {
+        source,
+        ready: true,
+        playing: false
+      }
+      state.currentWhiteNoiseType = settingsStore.whiteNoise.type
     }
 
     // Check Visibility and register in store
@@ -192,163 +245,72 @@ export function useWeb () {
     }
   }
 
-  /**
-   * Load white noise audio file
-   * @param type Type of white noise to load
-   */
-  const loadWhiteNoise = (type = settingsStore.whiteNoise.type) => {
-    if (state.currentWhiteNoiseType === type && state.whiteNoise !== null && state.whiteNoise.ready) { return }
 
-    try {
-      // 记录当前的播放状态，以便在加载新的白噪音后继续播放
-      const wasPlaying = state.isWhiteNoisePlaying
-      console.log(`Loading white noise: ${type}, was playing: ${wasPlaying}`)
-
-      // 暂停当前的音频，但不重置状态
-      if (state.whiteNoise && state.whiteNoise.source) {
-        state.whiteNoise.source.pause()
-      }
-
-      // Create new audio element with absolute path
-      const audioPath = `/audio/whitenoise/${type}.mp3`
-      console.log(`Loading white noise from: ${audioPath}`)
-      const source = new Audio(audioPath)
-      source.loop = true
-
-      // 预加载音频
-      source.load()
-
-      // Add error event listener
-      source.addEventListener('error', (e) => {
-        console.error(`Error loading white noise: ${type}`, e)
-        // 加载出错时重置状态
-        state.isWhiteNoisePlaying = false
-      })
-
-      const newSound = {
-        source,
-        ready: false,
-        playing: false // 初始化为非播放状态，等待准备完成后再决定是否播放
-      } as { source: HTMLAudioElement; ready: boolean; playing: boolean }
-
-      // Set up event listener for when audio is ready
-      source.addEventListener('canplay', () => {
-        console.log(`White noise ready: ${type}`)
-        newSound.ready = true
-
-        // 如果之前是播放状态，则自动播放新的白噪音
-        if (wasPlaying) {
-          console.log('Resuming white noise playback with new type')
-          source.volume = settingsStore.whiteNoise.volume
-          try {
-            source.play()
-            newSound.playing = true
-            state.isWhiteNoisePlaying = true
-            console.log('White noise playback resumed successfully')
-          } catch (e) {
-            console.error('Error playing audio:', e)
-            newSound.playing = false
-            state.isWhiteNoisePlaying = false
-          }
-        }
-      })
-
-      state.whiteNoise = newSound
-      state.currentWhiteNoiseType = type
-
-      // 不要在这里设置 isWhiteNoisePlaying，因为音频可能还没有准备好
-      // 如果之前是播放状态，则保持播放状态，等待canplay事件中的实际播放
-    } catch (err) {
-      console.error(`Exception loading white noise: ${type}`, err)
-      state.isWhiteNoisePlaying = false
-    }
-  }
-
-  /**
-   * Play white noise audio file
-   */
-  const playWhiteNoise = () => {
-    if (!settingsStore.whiteNoise.enabled) {
-      state.isWhiteNoisePlaying = false
-      return
-    }
-
-    // Load white noise if not already loaded
-    if (state.currentWhiteNoiseType !== settingsStore.whiteNoise.type || state.whiteNoise === null) {
-      console.log(`Need to load white noise: ${settingsStore.whiteNoise.type}`)
-      // 设置播放状态为true，这样loadWhiteNoise函数会在加载完成后自动播放
-      state.isWhiteNoisePlaying = true
-      loadWhiteNoise(settingsStore.whiteNoise.type)
-      return // loadWhiteNoise will handle playback when ready
-    }
-
-    if (state.whiteNoise !== null && settingsStore.permissions.audio) {
-      // If already playing, don't restart
-      if (state.whiteNoise.playing) {
-        state.isWhiteNoisePlaying = true
-        return
-      }
-
-      try {
-        const { source } = state.whiteNoise
-        if (!source) {
-          console.error('No source available for white noise')
-          state.isWhiteNoisePlaying = false
-          return
-        }
-        if (!state.whiteNoise.ready) {
-          console.log('White noise not ready yet, setting state to play when ready')
-          // 设置播放状态为true，等待音频准备好后自动播放
-          state.isWhiteNoisePlaying = true
-          return
-        }
-
-        console.log(`Playing white noise: ${state.currentWhiteNoiseType}`)
-        // Set volume and play
-        source.volume = settingsStore.whiteNoise.volume
-        try {
-          source.play()
-          state.whiteNoise.playing = true
-          state.isWhiteNoisePlaying = true
-          console.log('White noise playback started successfully')
-        } catch (e) {
-          console.error('Error playing audio:', e)
-          state.whiteNoise.playing = false
-          state.isWhiteNoisePlaying = false
-        }
-      } catch (err) {
-        console.error('Error playing white noise:', err)
-        state.whiteNoise.playing = false
-        state.isWhiteNoisePlaying = false
-      }
-    }
-  }
 
   /**
    * Toggle white noise playback
    * @returns Current playing state after toggle
    */
   const toggleWhiteNoise = () => {
-    console.log('Toggle white noise called, current state:', state.isWhiteNoisePlaying,
-                'whiteNoise playing:', state.whiteNoise?.playing,
-                'whiteNoise ready:', state.whiteNoise?.ready,
-                'whiteNoise type:', state.currentWhiteNoiseType)
+    console.log('Toggle white noise called, current state:', state.isWhiteNoisePlaying)
 
     try {
-      // 强制切换状态，不依赖当前状态
-      if (state.isWhiteNoisePlaying || (state.whiteNoise && state.whiteNoise.playing)) {
+      // 简化逻辑，只关注播放/暂停状态
+      if (state.isWhiteNoisePlaying) {
         // 如果正在播放，则停止
         console.log('Stopping white noise...')
-        stopWhiteNoise()
-        console.log('White noise stopped, state after stop:', state.isWhiteNoisePlaying)
+
+        // 先重置状态
+        state.isWhiteNoisePlaying = false
+        if (state.whiteNoise) {
+          state.whiteNoise.playing = false
+        }
+
+        // 然后停止音频
+        if (state.whiteNoise && state.whiteNoise.source) {
+          state.whiteNoise.source.pause()
+          state.whiteNoise.source.currentTime = 0
+        }
+
+        console.log('White noise stopped')
         return false
       } else {
         // 如果没有播放，则开始播放
         console.log('Starting white noise...')
-        // 直接调用playWhiteNoise函数，该函数会处理所有的加载和播放逻辑
-        playWhiteNoise()
-        console.log('White noise started, state after start:', state.isWhiteNoisePlaying)
-        return true
+
+        // 确保白噪音已加载
+        if (!state.whiteNoise || !state.whiteNoise.source || state.currentWhiteNoiseType !== settingsStore.whiteNoise.type) {
+          // 加载当前选择的白噪音类型
+          const audioPath = `/audio/whitenoise/${settingsStore.whiteNoise.type}.mp3`
+          console.log(`Loading white noise from: ${audioPath}`)
+
+          // 创建新的音频元素
+          const source = new Audio(audioPath)
+          source.loop = true
+
+          // 创建新的白噪音对象
+          state.whiteNoise = {
+            source,
+            ready: true,
+            playing: false
+          }
+          state.currentWhiteNoiseType = settingsStore.whiteNoise.type
+        }
+
+        // 设置音量并播放
+        if (state.whiteNoise && state.whiteNoise.source) {
+          state.whiteNoise.source.volume = settingsStore.whiteNoise.volume
+          state.whiteNoise.source.play()
+
+          // 设置状态
+          state.whiteNoise.playing = true
+          state.isWhiteNoisePlaying = true
+
+          console.log('White noise started')
+          return true
+        }
+
+        return false
       }
     } catch (err) {
       console.error('Error toggling white noise:', err)
@@ -366,69 +328,11 @@ export function useWeb () {
    * @returns Boolean indicating if white noise is playing
    */
   const isWhiteNoisePlaying = () => {
-    // 检查实际播放状态和状态标志
-    const actuallyPlaying = state.whiteNoise && state.whiteNoise.playing && state.whiteNoise.source && !state.whiteNoise.source.paused ? true : false
-
-    // 如果状态不一致，则同步状态
-    if (actuallyPlaying !== state.isWhiteNoisePlaying) {
-      console.log('White noise state inconsistency detected:',
-                  'isWhiteNoisePlaying:', state.isWhiteNoisePlaying,
-                  'actually playing:', actuallyPlaying,
-                  'fixing...')
-      state.isWhiteNoisePlaying = actuallyPlaying
-      if (state.whiteNoise) {
-        state.whiteNoise.playing = actuallyPlaying
-      }
-    }
-
+    // 直接返回状态标志
     return state.isWhiteNoisePlaying
   }
 
-  /**
-   * Stop the white noise playback
-   */
-  const stopWhiteNoise = () => {
-    // 无论当前状态如何，都尝试停止白噪音
-    try {
-      console.log('Stopping white noise, current state:',
-                  'isWhiteNoisePlaying:', state.isWhiteNoisePlaying,
-                  'whiteNoise playing:', state.whiteNoise?.playing)
 
-      // 先重置状态，确保即使音频播放失败也能正确显示状态
-      state.isWhiteNoisePlaying = false
-
-      if (state.whiteNoise) {
-        state.whiteNoise.playing = false
-
-        if (state.whiteNoise.source) {
-          try {
-            // 尝试停止音频播放
-            state.whiteNoise.source.pause()
-            // Reset to beginning
-            state.whiteNoise.source.currentTime = 0
-            console.log('Audio element paused successfully')
-          } catch (audioErr) {
-            console.warn('Error pausing audio element:', audioErr)
-          }
-        } else {
-          console.warn('No audio source available to stop')
-        }
-      } else {
-        console.warn('No white noise object available to stop')
-      }
-
-      console.log('White noise stopped successfully, state after stop:',
-                  'isWhiteNoisePlaying:', state.isWhiteNoisePlaying,
-                  'whiteNoise playing:', state.whiteNoise?.playing)
-    } catch (err) {
-      console.warn('Error stopping white noise:', err)
-      // 出错时仍然尝试重置状态
-      if (state.whiteNoise) {
-        state.whiteNoise.playing = false
-      }
-      state.isWhiteNoisePlaying = false
-    }
-  }
 
   // 返回公共方法
   return {

@@ -24,68 +24,25 @@ onMounted(() => {
   whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
 })
 
-// 定期检查白噪音状态，确保显示状态与实际播放状态一致
-const updateInterval = ref<number | null>(null)
+// 白噪音状态管理
 
 onMounted(() => {
   console.log('App bar mounted, initializing white noise state')
 
   // 检查白噪音是否正在播放
-  const initialState = webPlatform.isWhiteNoisePlaying()
-  console.log('Initial white noise state:', initialState)
-  whiteNoiseState.value = initialState
-
-  // 在客户端创建定时器，更频繁地检查状态
-  if (process.client) {
-    // 清除可能存在的旧定时器
-    if (updateInterval.value !== null) {
-      window.clearInterval(updateInterval.value)
-    }
-
-    // 创建新定时器，更频繁地检查状态
-    updateInterval.value = window.setInterval(() => {
-      const currentState = webPlatform.isWhiteNoisePlaying()
-      if (currentState !== whiteNoiseState.value) {
-        console.log('White noise state changed from timer check:',
-                    'old:', whiteNoiseState.value,
-                    'new:', currentState)
-        whiteNoiseState.value = currentState
-      }
-    }, 200) // 更频繁地检查状态，确保 UI 响应更快
-  }
+  whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+  console.log('Initial white noise state:', whiteNoiseState.value)
 })
 
 // 监听白噪音类型变化
 watch(() => settingsStore.whiteNoise.type, (newType) => {
   console.log('White noise type changed to:', newType)
 
-  // 当类型变化时，立即更新状态，然后再次检查以确保状态一致
-  const currentState = webPlatform.isWhiteNoisePlaying()
-  console.log('Current white noise state after type change:', currentState)
-  whiteNoiseState.value = currentState
-
-  // 定义检查函数
-  const checkState = () => {
-    const state = webPlatform.isWhiteNoisePlaying()
-    console.log('Checking white noise state after type change:', state)
-    whiteNoiseState.value = state
-  }
-
-  // 在类型变化后多次检查状态，确保 UI 与实际状态一致
-  setTimeout(checkState, 100)
-  setTimeout(checkState, 300)
-  setTimeout(checkState, 500)
-  setTimeout(checkState, 1000)
-  setTimeout(checkState, 2000) // 添加更长的检查时间，确保状态最终一致
+  // 当类型变化时，更新状态
+  whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
 })
 
-// 在组件卸载时清除定时器
-onUnmounted(() => {
-  if (process.client && updateInterval.value !== null) {
-    window.clearInterval(updateInterval.value)
-    updateInterval.value = null
-  }
-})
+
 
 // 切换白噪音播放状态
 const toggleWhiteNoise = () => {
@@ -97,19 +54,6 @@ const toggleWhiteNoise = () => {
 
   // 立即更新状态
   whiteNoiseState.value = newState
-
-  // 在切换后多次检查状态，确保 UI 与实际状态一致
-  const checkStates = () => {
-    const currentState = webPlatform.isWhiteNoisePlaying()
-    console.log('Checking white noise state:', currentState)
-    whiteNoiseState.value = currentState
-  }
-
-  // 多次检查状态，确保 UI 与实际状态一致
-  setTimeout(checkStates, 100)
-  setTimeout(checkStates, 300)
-  setTimeout(checkStates, 500)
-  setTimeout(checkStates, 1000)
 }
 </script>
 
