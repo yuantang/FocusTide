@@ -31,20 +31,31 @@ onMounted(() => {
   // 检查白噪音是否正在播放
   whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
 
-  // 在客户端创建定时器
+  // 在客户端创建定时器，更频繁地检查状态
   if (process.client) {
     updateInterval.value = window.setInterval(() => {
       whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
-    }, 1000)
+    }, 200) // 更频繁地检查状态，确保 UI 响应更快
   }
 })
 
 // 监听白噪音类型变化
 watch(() => settingsStore.whiteNoise.type, () => {
-  // 当类型变化时，更新状态
+  // 当类型变化时，立即更新状态，然后再次检查以确保状态一致
+  whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+
+  // 在类型变化后多次检查状态，确保 UI 与实际状态一致
   setTimeout(() => {
     whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
-  }, 500) // 等待一下，确保状态已更新
+  }, 100)
+
+  setTimeout(() => {
+    whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+  }, 500)
+
+  setTimeout(() => {
+    whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+  }, 1000)
 })
 
 // 在组件卸载时清除定时器
@@ -58,7 +69,17 @@ onUnmounted(() => {
 // 切换白噪音播放状态
 const toggleWhiteNoise = () => {
   // 切换白噪音播放状态
-  whiteNoiseState.value = webPlatform.toggleWhiteNoise()
+  const newState = webPlatform.toggleWhiteNoise()
+  whiteNoiseState.value = newState
+
+  // 在切换后多次检查状态，确保 UI 与实际状态一致
+  setTimeout(() => {
+    whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+  }, 100)
+
+  setTimeout(() => {
+    whiteNoiseState.value = webPlatform.isWhiteNoisePlaying()
+  }, 500)
 }
 </script>
 
