@@ -233,6 +233,34 @@
         "enabled": {
           "_title": "Enable white noise",
           "_description": "Play ambient sounds to help you focus"
+        },
+        "type": {
+          "_title": "White noise type",
+          "_description": "Choose the type of ambient sound",
+          "_values": {
+            "rain": "Rain",
+            "forest": "Forest",
+            "ocean": "Ocean",
+            "fan": "Fan",
+            "fireplace": "Fireplace",
+            "cafe": "Cafe"
+          },
+          "_valueDescription": {
+            "rain": "Gentle rainfall",
+            "forest": "Forest ambience",
+            "ocean": "Ocean waves",
+            "fan": "Fan noise",
+            "fireplace": "Crackling fireplace",
+            "cafe": "Coffee shop ambience"
+          }
+        },
+        "volume": {
+          "_title": "White noise volume",
+          "_description": "Adjust the volume of the white noise"
+        },
+        "playDuringWork": {
+          "_title": "Play only during work",
+          "_description": "Only play white noise during work sessions"
         }
       },
       "statistics": {
@@ -448,34 +476,6 @@
           "highInterruptions": "You have frequent interruptions during focus. Consider using Do Not Disturb mode or finding a quieter environment.",
           "bestTimeOfDay": "You're most productive around {time}. Try to schedule important tasks during this time.",
           "bestDayOfWeek": "Your most productive day is {day}. Consider planning important work on this day."
-        },
-        "type": {
-          "_title": "White noise type",
-          "_description": "Choose the type of ambient sound",
-          "_values": {
-            "rain": "Rain",
-            "forest": "Forest",
-            "ocean": "Ocean",
-            "fan": "Fan",
-            "fireplace": "Fireplace",
-            "cafe": "Cafe"
-          },
-          "_valueDescription": {
-            "rain": "Gentle rainfall",
-            "forest": "Forest ambience",
-            "ocean": "Ocean waves",
-            "fan": "Fan noise",
-            "fireplace": "Crackling fireplace",
-            "cafe": "Coffee shop ambience"
-          }
-        },
-        "volume": {
-          "_title": "White noise volume",
-          "_description": "Adjust the volume of the white noise"
-        },
-        "playDuringWork": {
-          "_title": "Play only during work",
-          "_description": "Only play white noise during work sessions"
         }
       },
       "visuals": {
