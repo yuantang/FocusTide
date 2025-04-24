@@ -43,6 +43,12 @@ watch(() => settingsStore.whiteNoise.type, (newType) => {
 const toggleWhiteNoise = () => {
   console.log('App bar toggle white noise called, current state:', whiteNoiseState.value)
 
+  // 如果白噪音功能未启用，则启用它
+  if (!settingsStore.whiteNoise.enabled) {
+    console.log('Enabling white noise feature')
+    settingsStore.whiteNoise.enabled = true
+  }
+
   // 切换白噪音播放状态
   const newState = webPlatform.toggleWhiteNoise()
   console.log('Toggle white noise returned:', newState)
@@ -77,9 +83,8 @@ const toggleWhiteNoise = () => {
     >
       <IconChecklist size="24" class="inline-block" />
     </CButton>
-    <!-- 白噪音控制按钮 -->
+    <!-- 白噪音控制按钮 - 始终显示，不受 enabled 设置控制 -->
     <WhiteNoiseTopControl
-      v-if="settingsStore.whiteNoise.enabled"
       :is-playing="whiteNoiseState"
       @toggle="toggleWhiteNoise"
       class="mr-2"

@@ -4,6 +4,7 @@ import { TimerState, useSchedule } from '~~/stores/schedule'
 import { SectionEndAction, useSettings } from '~~/stores/settings'
 import { useTasklist } from '~~/stores/tasklist'
 import { useEvents, EventType } from '~~/stores/events'
+import { useFocusStats } from '~~/stores/focusStats'
 
 interface TickState {
   lastUpdate: number
@@ -16,6 +17,7 @@ export function useTicker () {
   const scheduleStore = useSchedule()
   const tasklistStore = useTasklist()
   const eventsStore = useEvents()
+  const focusStatsStore = useFocusStats()
 
   const state = reactive<TickState>({
     /** Timestamp of the last tick */
@@ -154,6 +156,10 @@ export function useTicker () {
       // timer completed, notify participants
       eventsStore.recordEvent(EventType.TIMER_FINISH)
 
+      // 记录专注会话完成
+      eventsStore.recordEvent(EventType.SESSION_END, { completed: true })
+      focusStatsStore.endSession(true)
+
       if (settingsStore.sectionEndAction === SectionEndAction.Stop) {
         scheduleStore.timerState = TimerState.COMPLETED
       } else if (settingsStore.sectionEndAction === SectionEndAction.Skip) {
@@ -171,6 +177,12 @@ export function useTicker () {
       length: timeOriginal.value,
       type: scheduleStore.getCurrentItem.type
     })
+
+    // 记录专注会话开始
+    const currentType = scheduleStore.getCurrentItem.type
+    eventsStore.recordEvent(EventType.SESSION_START, { type: currentType })
+    focusStatsStore.startSession(currentType)
+
     scheduleNextTick({ decrement: false })
   }
 
@@ -180,12 +192,20 @@ export function useTicker () {
 
     eventsStore.recordEvent(stop ? EventType.TIMER_STOP : EventType.TIMER_PAUSE)
 
+    // 记录专注会话结束或中断
     if (stop) {
+      eventsStore.recordEvent(EventType.SESSION_END, { completed: false })
+      focusStatsStore.endSession(false)
+
       scheduleStore.lockInfo({
         length: undefined,
         type: undefined
       })
       resetTimer()
+    } else {
+      // 暂停时记录中断
+      eventsStore.recordEvent(EventType.SESSION_INTERRUPT)
+      focusStatsStore.recordInterruption()
     }
   }
 }

@@ -87,18 +87,17 @@ onMounted(() => {
       <IconVolume v-if="props.isPlaying" size="18" class="text-white z-10 transition-all duration-300" :class="isHovering ? 'scale-110' : ''" />
       <IconVolumeOff v-else size="18" class="text-gray-500 dark:text-gray-300 z-10 transition-all duration-300" :class="isHovering ? 'scale-110' : ''" />
 
-      <!-- 波纹动画 -->
+      <!-- 波纹动画 - 简化版本，只有一个波纹 -->
       <div v-if="props.isPlaying" class="absolute inset-0 flex items-center justify-center">
         <div class="absolute w-full h-full rounded-full opacity-20 animate-ripple" :class="currentWhiteNoiseTypeClass"></div>
-        <div class="absolute w-full h-full rounded-full opacity-10 animate-ripple animation-delay-500" :class="currentWhiteNoiseTypeClass"></div>
       </div>
 
       <!-- 悬停效果 -->
       <div v-if="isHovering" class="absolute inset-0 bg-black/10 dark:bg-white/10 rounded-full"></div>
     </button>
 
-    <!-- 播放状态指示器 -->
-    <div v-if="props.isPlaying" class="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-green-500 border border-white dark:border-gray-800 animate-pulse-slow"></div>
+    <!-- 播放状态指示器 - 更小更精简 -->
+    <div v-if="props.isPlaying" class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-500 border border-white dark:border-gray-800 animate-pulse-slow"></div>
   </div>
 </template>
 

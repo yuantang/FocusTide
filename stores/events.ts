@@ -30,6 +30,9 @@ export enum EventType {
   APP_STARTED = 'app.start',
   APP_ERROR = 'app.error',
   NOTIFICATIONS_ENABLED = 'permission.notification',
+  SESSION_START = 'session.start',
+  SESSION_END = 'session.end',
+  SESSION_INTERRUPT = 'session.interrupt',
   OTHER = 'other'
 }
 

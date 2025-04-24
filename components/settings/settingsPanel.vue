@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconX as CloseIcon, IconAdjustments as TabIconGeneral, IconAlarm as TabIconSchedule, IconArtboard as TabIconVisuals, IconInfoCircle as InfoIcon, IconInfoCircle as TabIconAbout, IconVolume as VolumeIcon } from '@tabler/icons-vue'
+import { IconX as CloseIcon, IconAdjustments as TabIconGeneral, IconAlarm as TabIconSchedule, IconArtboard as TabIconVisuals, IconInfoCircle as InfoIcon, IconInfoCircle as TabIconAbout, IconVolume as VolumeIcon, IconChartBar as TabIconStats } from '@tabler/icons-vue'
 
 import { ButtonImportance } from '../base/types/button'
 import ThemeSettings from './theme/themeSettings.vue'
@@ -9,6 +9,7 @@ import ExportButton from '@/components/settings/exportButton.vue'
 import ImportButton from '@/components/settings/importButton.vue'
 
 import AboutTab from '~~/components/settings/aboutTab.vue'
+import FocusStatistics from '~~/components/settings/statistics/focusStatistics.vue'
 
 import presetTimers from '~~/assets/settings/timerPresets'
 import { useSettings, WhiteNoiseType, SoundSet } from '~~/stores/settings'
@@ -189,8 +190,13 @@ notificationsStore.updateEnabled()
             <!-- TODO Audio volume control -->
           </div>
 
-          <!-- About page -->
+          <!-- 统计页面 -->
           <div v-else-if="state.activeTab === 4" :key="4" class="settings-tab">
+            <FocusStatistics />
+          </div>
+
+          <!-- About page -->
+          <div v-else-if="state.activeTab === 5" :key="5" class="settings-tab">
             <AboutTab />
           </div>
         </Transition>
@@ -213,7 +219,12 @@ notificationsStore.updateEnabled()
             <TabIconVisuals size="24" role="presentation" />
           </template>
         </TabHeader>
-        <TabHeader :active="state.activeTab === 4" :text="$t('settings.tabs.about')" @click="state.activeTab = 4">
+        <TabHeader :active="state.activeTab === 4" :text="$t('settings.tabs.statistics')" @click="state.activeTab = 4">
+          <template #icon>
+            <TabIconStats size="24" role="presentation" />
+          </template>
+        </TabHeader>
+        <TabHeader :active="state.activeTab === 5" :text="$t('settings.tabs.about')" @click="state.activeTab = 5">
           <template #icon>
             <TabIconAbout size="24" role="presentation" />
           </template>
