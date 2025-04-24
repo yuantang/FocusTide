@@ -72,13 +72,13 @@ const getCellColor = (value: number) => {
 // 获取星期几的标签
 const getDayLabel = (day: number) => {
   const days = [
-    '周日',
-    '周一',
-    '周二',
-    '周三',
-    '周四',
-    '周五',
-    '周六'
+    t('settings.statistics.days.sunday'),
+    t('settings.statistics.days.monday'),
+    t('settings.statistics.days.tuesday'),
+    t('settings.statistics.days.wednesday'),
+    t('settings.statistics.days.thursday'),
+    t('settings.statistics.days.friday'),
+    t('settings.statistics.days.saturday')
   ]
 
   return days[day]
@@ -86,7 +86,7 @@ const getDayLabel = (day: number) => {
 
 // 获取小时的标签
 const getHourLabel = (hour: number) => {
-  return `${hour}:00`
+  return t('settings.statistics.heatmap.hourFormat', { hour })
 }
 
 // 检查是否有数据
@@ -97,11 +97,11 @@ const hasData = computed(() => {
 
 <template>
   <div class="focus-heatmap">
-    <h3 class="text-lg font-medium mb-2">专注热力图</h3>
+    <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.heatmap.title') }}</h3>
 
     <div v-if="hasData" class="heatmap-container bg-surface-light dark:bg-surface-dark p-4 rounded-lg">
       <div class="heatmap-description text-sm text-gray-500 dark:text-gray-400 mb-4">
-        热力图显示了您在一周中不同时间段的专注次数，帮助您发现最佳专注时间。
+        {{ $t('settings.statistics.heatmap.description') }}
       </div>
 
       <!-- 热力图 -->
@@ -134,7 +134,7 @@ const hasData = computed(() => {
               :key="`cell-${dayIndex}-${hourIndex}`"
               class="heatmap-cell"
               :class="getCellColor(value)"
-              :title="`${getDayLabel(dayIndex)} ${getHourLabel(hourIndex)}: ${value} 次专注`"
+              :title="$t('settings.statistics.heatmap.cellTitle', { day: getDayLabel(dayIndex), hour: getHourLabel(hourIndex), value, sessions: $t('settings.statistics.heatmap.sessions') })"
             >
               <span v-if="value > 0" class="cell-value">{{ value }}</span>
             </div>
@@ -145,39 +145,39 @@ const hasData = computed(() => {
       <!-- 图例 -->
       <div class="heatmap-legend mt-4">
         <div class="legend-title text-sm text-gray-500 dark:text-gray-400 mb-1">
-          图例（专注次数）
+          {{ $t('settings.statistics.heatmap.legend') }}
         </div>
         <div class="legend-items flex items-center">
           <div class="legend-item flex items-center mr-4">
             <div class="legend-color bg-gray-100 dark:bg-gray-800 w-4 h-4 mr-1"></div>
-            <span class="text-xs">0</span>
+            <span class="text-xs">{{ $t('settings.statistics.heatmap.legend_0') }}</span>
           </div>
           <div class="legend-item flex items-center mr-4">
             <div class="legend-color bg-green-100 dark:bg-green-900 w-4 h-4 mr-1"></div>
-            <span class="text-xs">1-2</span>
+            <span class="text-xs">{{ $t('settings.statistics.heatmap.legend_1_2') }}</span>
           </div>
           <div class="legend-item flex items-center mr-4">
             <div class="legend-color bg-green-200 dark:bg-green-800 w-4 h-4 mr-1"></div>
-            <span class="text-xs">3-4</span>
+            <span class="text-xs">{{ $t('settings.statistics.heatmap.legend_3_4') }}</span>
           </div>
           <div class="legend-item flex items-center mr-4">
             <div class="legend-color bg-green-300 dark:bg-green-700 w-4 h-4 mr-1"></div>
-            <span class="text-xs">5-6</span>
+            <span class="text-xs">{{ $t('settings.statistics.heatmap.legend_5_6') }}</span>
           </div>
           <div class="legend-item flex items-center mr-4">
             <div class="legend-color bg-green-400 dark:bg-green-600 w-4 h-4 mr-1"></div>
-            <span class="text-xs">7-8</span>
+            <span class="text-xs">{{ $t('settings.statistics.heatmap.legend_7_8') }}</span>
           </div>
           <div class="legend-item flex items-center">
             <div class="legend-color bg-green-500 dark:bg-green-500 w-4 h-4 mr-1"></div>
-            <span class="text-xs">9+</span>
+            <span class="text-xs">{{ $t('settings.statistics.heatmap.legend_9_plus') }}</span>
           </div>
         </div>
       </div>
     </div>
 
     <div v-else class="no-data-message p-6 text-center bg-surface-light dark:bg-surface-dark rounded-lg">
-      <p>暂无数据，请先完成一次专注。</p>
+      <p>{{ $t('settings.statistics.noDataMessage') }}</p>
     </div>
   </div>
 </template>
