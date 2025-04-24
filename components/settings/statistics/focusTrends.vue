@@ -129,45 +129,45 @@ const getTrendColor = (trend: number, inverse: boolean = false) => {
 
 // 格式化趋势变化
 const formatTrend = (trend: number): string => {
-  if (Math.abs(trend) < 0.05) return t('settings.statistics.trends.stable')
+  if (Math.abs(trend) < 0.05) return t('settings.values.statistics.trends.stable')
 
   const percentage = Math.abs(Math.round(trend * 100))
 
   if (trend > 0) {
-    return t('settings.statistics.trends.increasing', { percentage })
+    return t('settings.values.statistics.trends.increasing', { percentage })
   } else {
-    return t('settings.statistics.trends.decreasing', { percentage })
+    return t('settings.values.statistics.trends.decreasing', { percentage })
   }
 }
 
 // 获取趋势描述
 const getDurationTrendDesc = computed(() => {
   if (Math.abs(durationTrend.value) < 0.05) {
-    return t('settings.statistics.trends.durationStable')
+    return t('settings.values.statistics.trends.durationStable')
   } else if (durationTrend.value > 0) {
-    return t('settings.statistics.trends.durationIncreasing')
+    return t('settings.values.statistics.trends.durationIncreasing')
   } else {
-    return t('settings.statistics.trends.durationDecreasing')
+    return t('settings.values.statistics.trends.durationDecreasing')
   }
 })
 
 const getSessionsTrendDesc = computed(() => {
   if (Math.abs(sessionsTrend.value) < 0.05) {
-    return t('settings.statistics.trends.sessionsStable')
+    return t('settings.values.statistics.trends.sessionsStable')
   } else if (sessionsTrend.value > 0) {
-    return t('settings.statistics.trends.sessionsIncreasing')
+    return t('settings.values.statistics.trends.sessionsIncreasing')
   } else {
-    return t('settings.statistics.trends.sessionsDecreasing')
+    return t('settings.values.statistics.trends.sessionsDecreasing')
   }
 })
 
 const getCompletionTrendDesc = computed(() => {
   if (Math.abs(completionTrend.value) < 0.05) {
-    return t('settings.statistics.trends.completionStable')
+    return t('settings.values.statistics.trends.completionStable')
   } else if (completionTrend.value > 0) {
-    return t('settings.statistics.trends.completionIncreasing')
+    return t('settings.values.statistics.trends.completionIncreasing')
   } else {
-    return t('settings.statistics.trends.completionDecreasing')
+    return t('settings.values.statistics.trends.completionDecreasing')
   }
 })
 
@@ -184,14 +184,14 @@ const hasData = computed(() => {
 
 <template>
   <div class="focus-trends">
-    <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.trends.title') }}</h3>
+    <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.trends.title') }}</h3>
 
     <div v-if="hasData" class="trends-container">
       <div v-if="hasEnoughData" class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm overflow-hidden mb-6">
         <div class="trends-header bg-primary/10 dark:bg-primary-dark/20 px-4 py-3">
           <h4 class="text-base font-medium flex items-center">
-            {{ $t('settings.statistics.trends.recentTrends') }}
-            <span class="text-xs text-gray-500 dark:text-gray-400 ml-2">{{ $t('settings.statistics.trends.last14days') }}</span>
+            {{ $t('settings.values.statistics.trends.recentTrends') }}
+            <span class="text-xs text-gray-500 dark:text-gray-400 ml-2">{{ $t('settings.values.statistics.trends.last14days') }}</span>
           </h4>
         </div>
 
@@ -200,7 +200,7 @@ const hasData = computed(() => {
             <!-- 专注时长趋势 -->
             <div class="trend-card p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <div class="flex justify-between items-start">
-                <div class="text-sm font-medium">{{ $t('settings.statistics.trends.focusDuration') }}</div>
+                <div class="text-sm font-medium">{{ $t('settings.values.statistics.trends.focusDuration') }}</div>
                 <div class="flex items-center gap-1" :class="getTrendColor(durationTrend)">
                   <component :is="getTrendIcon(durationTrend)" size="18" />
                   <span class="text-sm font-medium">{{ formatTrend(durationTrend) }}</span>
@@ -215,7 +215,7 @@ const hasData = computed(() => {
             <!-- 专注次数趋势 -->
             <div class="trend-card p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <div class="flex justify-between items-start">
-                <div class="text-sm font-medium">{{ $t('settings.statistics.trends.focusSessions') }}</div>
+                <div class="text-sm font-medium">{{ $t('settings.values.statistics.trends.focusSessions') }}</div>
                 <div class="flex items-center gap-1" :class="getTrendColor(sessionsTrend)">
                   <component :is="getTrendIcon(sessionsTrend)" size="18" />
                   <span class="text-sm font-medium">{{ formatTrend(sessionsTrend) }}</span>
@@ -230,7 +230,7 @@ const hasData = computed(() => {
             <!-- 完成率趋势 -->
             <div class="trend-card p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <div class="flex justify-between items-start">
-                <div class="text-sm font-medium">{{ $t('settings.statistics.trends.completionRate') }}</div>
+                <div class="text-sm font-medium">{{ $t('settings.values.statistics.trends.completionRate') }}</div>
                 <div class="flex items-center gap-1" :class="getTrendColor(completionTrend)">
                   <component :is="getTrendIcon(completionTrend)" size="18" />
                   <span class="text-sm font-medium">{{ formatTrend(completionTrend) }}</span>
@@ -249,12 +249,12 @@ const hasData = computed(() => {
         <div class="flex justify-center mb-2">
           <IconInfoCircle size="24" class="text-blue-500 dark:text-blue-400" />
         </div>
-        <p class="text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.trends.notEnoughData') }}</p>
+        <p class="text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.trends.notEnoughData') }}</p>
       </div>
     </div>
 
     <div v-else class="no-data-message p-6 text-center bg-surface-light dark:bg-surface-dark rounded-lg">
-      <p>{{ $t('settings.statistics.noDataMessage') }}</p>
+      <p>{{ $t('settings.values.statistics.noDataMessage') }}</p>
     </div>
   </div>
 </template>

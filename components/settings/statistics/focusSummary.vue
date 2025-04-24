@@ -13,9 +13,9 @@ const formatDuration = (ms: number): string => {
   const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60))
 
   if (hours > 0) {
-    return `${hours}${t('settings.statistics.hours')} ${minutes}${t('settings.statistics.minutes')}`
+    return `${hours}${t('settings.values.statistics.hours')} ${minutes}${t('settings.values.statistics.minutes')}`
   } else {
-    return `${minutes}${t('settings.statistics.minutes')}`
+    return `${minutes}${t('settings.values.statistics.minutes')}`
   }
 }
 
@@ -181,13 +181,13 @@ const todayData = computed(() => {
 
 <template>
   <div class="focus-summary">
-    <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.summary.title') }}</h3>
+    <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.summary.title') }}</h3>
 
     <div v-if="hasData" class="summary-container">
       <!-- 今日摘要 -->
       <div class="today-summary bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm overflow-hidden mb-6">
         <div class="summary-header bg-primary/10 dark:bg-primary-dark/20 px-4 py-3">
-          <h4 class="text-base font-medium">{{ $t('settings.statistics.summary.today') }}</h4>
+          <h4 class="text-base font-medium">{{ $t('settings.values.statistics.summary.today') }}</h4>
         </div>
 
         <div class="summary-body p-4">
@@ -195,7 +195,7 @@ const todayData = computed(() => {
             <div class="summary-item">
               <div class="flex items-center gap-2">
                 <IconClock size="18" class="text-primary dark:text-primary-dark" />
-                <span class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.summary.focusTime') }}</span>
+                <span class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.summary.focusTime') }}</span>
               </div>
               <div class="text-xl font-bold mt-1">{{ formatDuration(todayData.totalDuration) }}</div>
             </div>
@@ -203,7 +203,7 @@ const todayData = computed(() => {
             <div class="summary-item">
               <div class="flex items-center gap-2">
                 <IconCheck size="18" class="text-green-500 dark:text-green-400" />
-                <span class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.summary.sessions') }}</span>
+                <span class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.summary.sessions') }}</span>
               </div>
               <div class="text-xl font-bold mt-1">{{ todayData.completedSessions }} / {{ todayData.totalSessions }}</div>
             </div>
@@ -211,7 +211,7 @@ const todayData = computed(() => {
             <div class="summary-item">
               <div class="flex items-center gap-2">
                 <IconX size="18" class="text-red-500 dark:text-red-400" />
-                <span class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.summary.completion') }}</span>
+                <span class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.summary.completion') }}</span>
               </div>
               <div class="text-xl font-bold mt-1">{{ formatPercentage(todayData.completionRate) }}</div>
             </div>
@@ -222,7 +222,7 @@ const todayData = computed(() => {
       <!-- 本周与上周对比 -->
       <div class="weekly-comparison bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm overflow-hidden mb-6">
         <div class="summary-header bg-primary/10 dark:bg-primary-dark/20 px-4 py-3">
-          <h4 class="text-base font-medium">{{ $t('settings.statistics.summary.weeklyComparison') }}</h4>
+          <h4 class="text-base font-medium">{{ $t('settings.values.statistics.summary.weeklyComparison') }}</h4>
         </div>
 
         <div class="summary-body p-4">
@@ -230,7 +230,7 @@ const todayData = computed(() => {
             <!-- 专注时长对比 -->
             <div class="comparison-item p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <div class="flex justify-between items-center mb-2">
-                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.summary.focusTime') }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.summary.focusTime') }}</div>
                 <div class="flex items-center gap-1" :class="getChangeColor(weeklyChanges.durationChange)">
                   <component :is="getChangeIcon(weeklyChanges.durationChange)" size="16" />
                   <span class="text-xs font-medium">{{ formatChange(weeklyChanges.durationChange) }}</span>
@@ -239,12 +239,12 @@ const todayData = computed(() => {
 
               <div class="flex justify-between items-end">
                 <div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.summary.thisWeek') }}</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.summary.thisWeek') }}</div>
                   <div class="text-lg font-bold">{{ formatDuration(thisWeekData.totalDuration) }}</div>
                 </div>
 
                 <div class="text-right">
-                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.summary.lastWeek') }}</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.summary.lastWeek') }}</div>
                   <div class="text-base text-gray-600 dark:text-gray-400">{{ formatDuration(lastWeekData.totalDuration) }}</div>
                 </div>
               </div>
@@ -253,7 +253,7 @@ const todayData = computed(() => {
             <!-- 专注次数对比 -->
             <div class="comparison-item p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <div class="flex justify-between items-center mb-2">
-                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.summary.sessions') }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.summary.sessions') }}</div>
                 <div class="flex items-center gap-1" :class="getChangeColor(weeklyChanges.sessionsChange)">
                   <component :is="getChangeIcon(weeklyChanges.sessionsChange)" size="16" />
                   <span class="text-xs font-medium">{{ formatChange(weeklyChanges.sessionsChange) }}</span>
@@ -262,12 +262,12 @@ const todayData = computed(() => {
 
               <div class="flex justify-between items-end">
                 <div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.summary.thisWeek') }}</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.summary.thisWeek') }}</div>
                   <div class="text-lg font-bold">{{ thisWeekData.completedSessions }} / {{ thisWeekData.totalSessions }}</div>
                 </div>
 
                 <div class="text-right">
-                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.summary.lastWeek') }}</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.summary.lastWeek') }}</div>
                   <div class="text-base text-gray-600 dark:text-gray-400">{{ lastWeekData.completedSessions }} / {{ lastWeekData.totalSessions }}</div>
                 </div>
               </div>
@@ -276,7 +276,7 @@ const todayData = computed(() => {
             <!-- 完成率对比 -->
             <div class="comparison-item p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <div class="flex justify-between items-center mb-2">
-                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.summary.completion') }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.summary.completion') }}</div>
                 <div class="flex items-center gap-1" :class="getChangeColor(weeklyChanges.completionRateChange)">
                   <component :is="getChangeIcon(weeklyChanges.completionRateChange)" size="16" />
                   <span class="text-xs font-medium">{{ formatChange(weeklyChanges.completionRateChange) }}</span>
@@ -285,12 +285,12 @@ const todayData = computed(() => {
 
               <div class="flex justify-between items-end">
                 <div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.summary.thisWeek') }}</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.summary.thisWeek') }}</div>
                   <div class="text-lg font-bold">{{ formatPercentage(thisWeekData.completionRate) }}</div>
                 </div>
 
                 <div class="text-right">
-                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.summary.lastWeek') }}</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.summary.lastWeek') }}</div>
                   <div class="text-base text-gray-600 dark:text-gray-400">{{ formatPercentage(lastWeekData.completionRate) }}</div>
                 </div>
               </div>
@@ -301,7 +301,7 @@ const todayData = computed(() => {
     </div>
 
     <div v-else class="no-data-message p-6 text-center bg-surface-light dark:bg-surface-dark rounded-lg">
-      <p>{{ $t('settings.statistics.noDataMessage') }}</p>
+      <p>{{ $t('settings.values.statistics.noDataMessage') }}</p>
     </div>
   </div>
 </template>

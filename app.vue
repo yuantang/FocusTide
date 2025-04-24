@@ -76,12 +76,10 @@ onMounted(() => {
       const registerSw = async () => {
         try {
           console.debug('Registering service worker at /serviceworker.js')
-          // 先加载设置脚本
-          await import('/serviceworker-setup.js')
-          // 然后注册服务工作器
+          // 注册服务工作器
           const registration = await navigator.serviceWorker.register('/serviceworker.js', {
             scope: '/',
-            type: 'classic' // 明确指定类型为classic而非module
+            type: 'classic'
           })
           console.debug('Service worker registered successfully:', registration.scope)
         } catch (error) {

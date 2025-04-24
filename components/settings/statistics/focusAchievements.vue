@@ -13,9 +13,9 @@ const formatDuration = (ms: number): string => {
   const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60))
 
   if (hours > 0) {
-    return `${hours}${t('settings.statistics.hours')} ${minutes}${t('settings.statistics.minutes')}`
+    return `${hours}${t('settings.values.statistics.hours')} ${minutes}${t('settings.values.statistics.minutes')}`
   } else {
-    return `${minutes}${t('settings.statistics.minutes')}`
+    return `${minutes}${t('settings.values.statistics.minutes')}`
   }
 }
 
@@ -25,40 +25,40 @@ const totalTimeAchievement = computed(() => {
 
   if (totalHours >= 100) {
     return {
-      title: t('settings.statistics.achievements.timeGrandmaster'),
-      description: t('settings.statistics.achievements.timeGrandmasterDesc'),
+      title: t('settings.values.statistics.achievements.timeGrandmaster'),
+      description: t('settings.values.statistics.achievements.timeGrandmasterDesc'),
       icon: 'trophy',
       level: 4,
       progress: 100
     }
   } else if (totalHours >= 50) {
     return {
-      title: t('settings.statistics.achievements.timeMaster'),
-      description: t('settings.statistics.achievements.timeMasterDesc'),
+      title: t('settings.values.statistics.achievements.timeMaster'),
+      description: t('settings.values.statistics.achievements.timeMasterDesc'),
       icon: 'medal',
       level: 3,
       progress: Math.min(100, (totalHours - 50) / 50 * 100)
     }
   } else if (totalHours >= 20) {
     return {
-      title: t('settings.statistics.achievements.timeExpert'),
-      description: t('settings.statistics.achievements.timeExpertDesc'),
+      title: t('settings.values.statistics.achievements.timeExpert'),
+      description: t('settings.values.statistics.achievements.timeExpertDesc'),
       icon: 'medal',
       level: 2,
       progress: Math.min(100, (totalHours - 20) / 30 * 100)
     }
   } else if (totalHours >= 5) {
     return {
-      title: t('settings.statistics.achievements.timeAdept'),
-      description: t('settings.statistics.achievements.timeAdeptDesc'),
+      title: t('settings.values.statistics.achievements.timeAdept'),
+      description: t('settings.values.statistics.achievements.timeAdeptDesc'),
       icon: 'medal',
       level: 1,
       progress: Math.min(100, (totalHours - 5) / 15 * 100)
     }
   } else {
     return {
-      title: t('settings.statistics.achievements.timeNovice'),
-      description: t('settings.statistics.achievements.timeNoviceDesc'),
+      title: t('settings.values.statistics.achievements.timeNovice'),
+      description: t('settings.values.statistics.achievements.timeNoviceDesc'),
       icon: 'clock',
       level: 0,
       progress: Math.min(100, totalHours / 5 * 100)
@@ -72,40 +72,40 @@ const sessionCountAchievement = computed(() => {
 
   if (totalSessions >= 200) {
     return {
-      title: t('settings.statistics.achievements.countGrandmaster'),
-      description: t('settings.statistics.achievements.countGrandmasterDesc'),
+      title: t('settings.values.statistics.achievements.countGrandmaster'),
+      description: t('settings.values.statistics.achievements.countGrandmasterDesc'),
       icon: 'trophy',
       level: 4,
       progress: 100
     }
   } else if (totalSessions >= 100) {
     return {
-      title: t('settings.statistics.achievements.countMaster'),
-      description: t('settings.statistics.achievements.countMasterDesc'),
+      title: t('settings.values.statistics.achievements.countMaster'),
+      description: t('settings.values.statistics.achievements.countMasterDesc'),
       icon: 'medal',
       level: 3,
       progress: Math.min(100, (totalSessions - 100) / 100 * 100)
     }
   } else if (totalSessions >= 50) {
     return {
-      title: t('settings.statistics.achievements.countExpert'),
-      description: t('settings.statistics.achievements.countExpertDesc'),
+      title: t('settings.values.statistics.achievements.countExpert'),
+      description: t('settings.values.statistics.achievements.countExpertDesc'),
       icon: 'medal',
       level: 2,
       progress: Math.min(100, (totalSessions - 50) / 50 * 100)
     }
   } else if (totalSessions >= 20) {
     return {
-      title: t('settings.statistics.achievements.countAdept'),
-      description: t('settings.statistics.achievements.countAdeptDesc'),
+      title: t('settings.values.statistics.achievements.countAdept'),
+      description: t('settings.values.statistics.achievements.countAdeptDesc'),
       icon: 'medal',
       level: 1,
       progress: Math.min(100, (totalSessions - 20) / 30 * 100)
     }
   } else {
     return {
-      title: t('settings.statistics.achievements.countNovice'),
-      description: t('settings.statistics.achievements.countNoviceDesc'),
+      title: t('settings.values.statistics.achievements.countNovice'),
+      description: t('settings.values.statistics.achievements.countNoviceDesc'),
       icon: 'target',
       level: 0,
       progress: Math.min(100, totalSessions / 20 * 100)
@@ -119,40 +119,40 @@ const streakAchievement = computed(() => {
 
   if (streakDays >= 30) {
     return {
-      title: t('settings.statistics.achievements.streakGrandmaster'),
-      description: t('settings.statistics.achievements.streakGrandmasterDesc'),
+      title: t('settings.values.statistics.achievements.streakGrandmaster'),
+      description: t('settings.values.statistics.achievements.streakGrandmasterDesc'),
       icon: 'trophy',
       level: 4,
       progress: 100
     }
   } else if (streakDays >= 14) {
     return {
-      title: t('settings.statistics.achievements.streakMaster'),
-      description: t('settings.statistics.achievements.streakMasterDesc'),
+      title: t('settings.values.statistics.achievements.streakMaster'),
+      description: t('settings.values.statistics.achievements.streakMasterDesc'),
       icon: 'medal',
       level: 3,
       progress: Math.min(100, (streakDays - 14) / 16 * 100)
     }
   } else if (streakDays >= 7) {
     return {
-      title: t('settings.statistics.achievements.streakExpert'),
-      description: t('settings.statistics.achievements.streakExpertDesc'),
+      title: t('settings.values.statistics.achievements.streakExpert'),
+      description: t('settings.values.statistics.achievements.streakExpertDesc'),
       icon: 'medal',
       level: 2,
       progress: Math.min(100, (streakDays - 7) / 7 * 100)
     }
   } else if (streakDays >= 3) {
     return {
-      title: t('settings.statistics.achievements.streakAdept'),
-      description: t('settings.statistics.achievements.streakAdeptDesc'),
+      title: t('settings.values.statistics.achievements.streakAdept'),
+      description: t('settings.values.statistics.achievements.streakAdeptDesc'),
       icon: 'medal',
       level: 1,
       progress: Math.min(100, (streakDays - 3) / 4 * 100)
     }
   } else {
     return {
-      title: t('settings.statistics.achievements.streakNovice'),
-      description: t('settings.statistics.achievements.streakNoviceDesc'),
+      title: t('settings.values.statistics.achievements.streakNovice'),
+      description: t('settings.values.statistics.achievements.streakNoviceDesc'),
       icon: 'flame',
       level: 0,
       progress: Math.min(100, streakDays / 3 * 100)
@@ -166,40 +166,40 @@ const qualityAchievement = computed(() => {
 
   if (qualityScore >= 90) {
     return {
-      title: t('settings.statistics.achievements.qualityGrandmaster'),
-      description: t('settings.statistics.achievements.qualityGrandmasterDesc'),
+      title: t('settings.values.statistics.achievements.qualityGrandmaster'),
+      description: t('settings.values.statistics.achievements.qualityGrandmasterDesc'),
       icon: 'trophy',
       level: 4,
       progress: 100
     }
   } else if (qualityScore >= 80) {
     return {
-      title: t('settings.statistics.achievements.qualityMaster'),
-      description: t('settings.statistics.achievements.qualityMasterDesc'),
+      title: t('settings.values.statistics.achievements.qualityMaster'),
+      description: t('settings.values.statistics.achievements.qualityMasterDesc'),
       icon: 'medal',
       level: 3,
       progress: Math.min(100, (qualityScore - 80) / 10 * 100)
     }
   } else if (qualityScore >= 70) {
     return {
-      title: t('settings.statistics.achievements.qualityExpert'),
-      description: t('settings.statistics.achievements.qualityExpertDesc'),
+      title: t('settings.values.statistics.achievements.qualityExpert'),
+      description: t('settings.values.statistics.achievements.qualityExpertDesc'),
       icon: 'medal',
       level: 2,
       progress: Math.min(100, (qualityScore - 70) / 10 * 100)
     }
   } else if (qualityScore >= 60) {
     return {
-      title: t('settings.statistics.achievements.qualityAdept'),
-      description: t('settings.statistics.achievements.qualityAdeptDesc'),
+      title: t('settings.values.statistics.achievements.qualityAdept'),
+      description: t('settings.values.statistics.achievements.qualityAdeptDesc'),
       icon: 'medal',
       level: 1,
       progress: Math.min(100, (qualityScore - 60) / 10 * 100)
     }
   } else {
     return {
-      title: t('settings.statistics.achievements.qualityNovice'),
-      description: t('settings.statistics.achievements.qualityNoviceDesc'),
+      title: t('settings.values.statistics.achievements.qualityNovice'),
+      description: t('settings.values.statistics.achievements.qualityNoviceDesc'),
       icon: 'target',
       level: 0,
       progress: Math.min(100, qualityScore / 60 * 100)
@@ -275,7 +275,7 @@ const hasData = computed(() => {
 
 <template>
   <div class="focus-achievements">
-    <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.achievements.title') }}</h3>
+    <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.achievements.title') }}</h3>
 
     <div v-if="hasData" class="achievements-container">
       <!-- 成就列表 -->
@@ -312,7 +312,7 @@ const hasData = computed(() => {
     </div>
 
     <div v-else class="no-data-message p-6 text-center bg-surface-light dark:bg-surface-dark rounded-lg">
-      <p>{{ $t('settings.statistics.noDataMessage') }}</p>
+      <p>{{ $t('settings.values.statistics.noDataMessage') }}</p>
     </div>
   </div>
 </template>

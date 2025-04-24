@@ -30,12 +30,12 @@ const exportAsCSV = () => {
   // CSV 标题行
   const headers = [
     'ID',
-    t('settings.statistics.export.startTime'),
-    t('settings.statistics.export.endTime'),
-    t('settings.statistics.export.duration'),
-    t('settings.statistics.export.type'),
-    t('settings.statistics.export.completed'),
-    t('settings.statistics.export.interruptions')
+    t('settings.values.statistics.export.startTime'),
+    t('settings.values.statistics.export.endTime'),
+    t('settings.values.statistics.export.duration'),
+    t('settings.values.statistics.export.type'),
+    t('settings.values.statistics.export.completed'),
+    t('settings.values.statistics.export.interruptions')
   ]
 
   // 转换会话数据为CSV行
@@ -45,7 +45,7 @@ const exportAsCSV = () => {
     formatDate(session.endTime),
     formatDuration(session.duration),
     t(`section.${session.type}`),
-    session.completed ? t('settings.statistics.export.yes') : t('settings.statistics.export.no'),
+    session.completed ? t('settings.values.statistics.export.yes') : t('settings.values.statistics.export.no'),
     session.interruptions.toString()
   ])
 
@@ -118,10 +118,10 @@ const hasData = computed(() => {
 
 <template>
   <div class="focus-export">
-    <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.export.title') }}</h3>
+    <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.export.title') }}</h3>
 
     <div class="export-options bg-surface-light dark:bg-surface-dark p-4 rounded-lg mb-4">
-      <p class="text-sm mb-3">{{ $t('settings.statistics.export.description') }}</p>
+      <p class="text-sm mb-3">{{ $t('settings.values.statistics.export.description') }}</p>
 
       <div class="format-selector flex gap-2 mb-4">
         <Button
@@ -159,11 +159,11 @@ const hasData = computed(() => {
         <template #pre>
           <IconDownload size="18" />
         </template>
-        {{ $t('settings.statistics.export.downloadButton') }}
+        {{ $t('settings.values.statistics.export.downloadButton') }}
       </Button>
 
       <p v-if="!hasData" class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-        {{ $t('settings.statistics.export.noDataMessage') }}
+        {{ $t('settings.values.statistics.export.noDataMessage') }}
       </p>
     </div>
   </div>

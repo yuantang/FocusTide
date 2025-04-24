@@ -53,12 +53,12 @@ const getStarRating = (score: number) => {
 
 // 获取评分等级描述
 const getRatingLevel = (score: number) => {
-  if (score >= 90) return t('settings.statistics.ratings.excellent')
-  if (score >= 80) return t('settings.statistics.ratings.veryGood')
-  if (score >= 70) return t('settings.statistics.ratings.good')
-  if (score >= 60) return t('settings.statistics.ratings.fair')
-  if (score >= 50) return t('settings.statistics.ratings.needsImprovement')
-  return t('settings.statistics.ratings.poor')
+  if (score >= 90) return t('settings.values.statistics.ratings.excellent')
+  if (score >= 80) return t('settings.values.statistics.ratings.veryGood')
+  if (score >= 70) return t('settings.values.statistics.ratings.good')
+  if (score >= 60) return t('settings.values.statistics.ratings.fair')
+  if (score >= 50) return t('settings.values.statistics.ratings.needsImprovement')
+  return t('settings.values.statistics.ratings.poor')
 }
 
 // 获取评分颜色
@@ -79,13 +79,13 @@ const hasData = computed(() => {
 
 <template>
   <div class="focus-ratings">
-    <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.ratings.title') }}</h3>
+    <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.ratings.title') }}</h3>
 
     <div v-if="hasData" class="ratings-container">
       <!-- 总体评分 -->
       <div class="overall-rating bg-surface-light dark:bg-surface-dark p-4 rounded-lg mb-4">
         <div class="text-center mb-2">
-          <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.ratings.overall') }}</div>
+          <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.ratings.overall') }}</div>
           <div class="text-3xl font-bold" :class="getRatingColor(overallRating)">{{ overallRating }}</div>
           <div class="text-sm font-medium" :class="getRatingColor(overallRating)">{{ getRatingLevel(overallRating) }}</div>
         </div>
@@ -109,7 +109,7 @@ const hasData = computed(() => {
         <!-- 专注质量评分 -->
         <div class="rating-card bg-surface-light dark:bg-surface-dark p-4 rounded-lg">
           <div class="text-center">
-            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.ratings.quality') }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.ratings.quality') }}</div>
             <div class="text-2xl font-bold" :class="getRatingColor(qualityRating)">{{ qualityRating }}</div>
             <div class="text-xs font-medium" :class="getRatingColor(qualityRating)">{{ getRatingLevel(qualityRating) }}</div>
           </div>
@@ -131,7 +131,7 @@ const hasData = computed(() => {
         <!-- 专注效率评分 -->
         <div class="rating-card bg-surface-light dark:bg-surface-dark p-4 rounded-lg">
           <div class="text-center">
-            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.ratings.efficiency') }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.ratings.efficiency') }}</div>
             <div class="text-2xl font-bold" :class="getRatingColor(efficiencyRating)">{{ efficiencyRating }}</div>
             <div class="text-xs font-medium" :class="getRatingColor(efficiencyRating)">{{ getRatingLevel(efficiencyRating) }}</div>
           </div>
@@ -153,7 +153,7 @@ const hasData = computed(() => {
         <!-- 专注习惯评分 -->
         <div class="rating-card bg-surface-light dark:bg-surface-dark p-4 rounded-lg">
           <div class="text-center">
-            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.statistics.ratings.habit') }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.values.statistics.ratings.habit') }}</div>
             <div class="text-2xl font-bold" :class="getRatingColor(habitRating)">{{ habitRating }}</div>
             <div class="text-xs font-medium" :class="getRatingColor(habitRating)">{{ getRatingLevel(habitRating) }}</div>
           </div>
@@ -175,7 +175,7 @@ const hasData = computed(() => {
     </div>
 
     <div v-else class="no-data-message p-6 text-center bg-surface-light dark:bg-surface-dark rounded-lg">
-      <p>{{ $t('settings.statistics.noDataMessage') }}</p>
+      <p>{{ $t('settings.values.statistics.noDataMessage') }}</p>
     </div>
   </div>
 </template>

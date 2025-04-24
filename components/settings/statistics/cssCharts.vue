@@ -124,11 +124,11 @@ const formatPercentage = (value: number): string => {
     <div v-if="hasData">
       <!-- 专注时长趋势图 -->
       <div class="chart-container mb-6">
-        <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.charts.focusTrend') }}</h3>
+        <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.charts.focusTrend') }}</h3>
         <div class="chart-wrapper bg-surface-light dark:bg-surface-dark p-4 rounded-lg">
           <div class="chart-grid">
             <div class="chart-y-axis">
-              <div class="chart-y-label">{{ $t('settings.statistics.charts.durationMinutes') }}</div>
+              <div class="chart-y-label">{{ $t('settings.values.statistics.charts.durationMinutes') }}</div>
               <div class="chart-y-ticks">
                 <div class="chart-y-tick">{{ maxDuration }}</div>
                 <div class="chart-y-tick">{{ Math.round(maxDuration * 0.75) }}</div>
@@ -158,11 +158,11 @@ const formatPercentage = (value: number): string => {
       
       <!-- 专注分布热力图 -->
       <div class="chart-container mb-6">
-        <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.charts.hourlyDistribution') }}</h3>
+        <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.charts.hourlyDistribution') }}</h3>
         <div class="chart-wrapper bg-surface-light dark:bg-surface-dark p-4 rounded-lg">
           <div class="chart-grid">
             <div class="chart-y-axis">
-              <div class="chart-y-label">{{ $t('settings.statistics.charts.durationMinutes') }}</div>
+              <div class="chart-y-label">{{ $t('settings.values.statistics.charts.durationMinutes') }}</div>
               <div class="chart-y-ticks">
                 <div class="chart-y-tick">{{ maxHourlyDuration }}</div>
                 <div class="chart-y-tick">{{ Math.round(maxHourlyDuration * 0.75) }}</div>
@@ -192,7 +192,7 @@ const formatPercentage = (value: number): string => {
       
       <!-- 专注完成率图表 -->
       <div class="chart-container mb-6">
-        <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.charts.completionRate') }}</h3>
+        <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.charts.completionRate') }}</h3>
         <div class="chart-wrapper bg-surface-light dark:bg-surface-dark p-4 rounded-lg">
           <div class="completion-rates">
             <div 
@@ -215,7 +215,7 @@ const formatPercentage = (value: number): string => {
     </div>
     
     <div v-else class="no-data-message p-6 text-center">
-      <p>{{ $t('settings.statistics.noDataMessage') }}</p>
+      <p>{{ $t('settings.values.statistics.noDataMessage') }}</p>
     </div>
   </div>
 </template>

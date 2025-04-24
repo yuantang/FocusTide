@@ -140,17 +140,17 @@ onMounted(() => {
 
 <template>
   <div class="focus-goals">
-    <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.goals.title') }}</h3>
+    <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.goals.title') }}</h3>
 
     <div class="goals-container">
       <!-- 目标设置表单 -->
       <div class="goals-form bg-surface-light dark:bg-surface-dark p-4 rounded-lg mb-4">
-        <h4 class="text-md font-medium mb-3">{{ $t('settings.statistics.goals.setGoals') }}</h4>
+        <h4 class="text-md font-medium mb-3">{{ $t('settings.values.statistics.goals.setGoals') }}</h4>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <!-- 每日时长目标 -->
           <div class="goal-input">
-            <label class="block text-sm mb-1">{{ $t('settings.statistics.goals.dailyTimeGoal') }}</label>
+            <label class="block text-sm mb-1">{{ $t('settings.values.statistics.goals.dailyTimeGoal') }}</label>
             <div class="flex items-center">
               <IconClock size="18" class="mr-2 text-primary dark:text-primary-dark" />
               <input
@@ -160,13 +160,13 @@ onMounted(() => {
                 step="5"
                 class="w-full p-2 rounded-md bg-surface-variant dark:bg-surface-darkvariant"
               />
-              <span class="ml-2 text-sm">{{ $t('settings.statistics.minutes') }}</span>
+              <span class="ml-2 text-sm">{{ $t('settings.values.statistics.minutes') }}</span>
             </div>
           </div>
 
           <!-- 每周时长目标 -->
           <div class="goal-input">
-            <label class="block text-sm mb-1">{{ $t('settings.statistics.goals.weeklyTimeGoal') }}</label>
+            <label class="block text-sm mb-1">{{ $t('settings.values.statistics.goals.weeklyTimeGoal') }}</label>
             <div class="flex items-center">
               <IconCalendar size="18" class="mr-2 text-primary dark:text-primary-dark" />
               <input
@@ -176,13 +176,13 @@ onMounted(() => {
                 step="30"
                 class="w-full p-2 rounded-md bg-surface-variant dark:bg-surface-darkvariant"
               />
-              <span class="ml-2 text-sm">{{ $t('settings.statistics.minutes') }}</span>
+              <span class="ml-2 text-sm">{{ $t('settings.values.statistics.minutes') }}</span>
             </div>
           </div>
 
           <!-- 每日次数目标 -->
           <div class="goal-input">
-            <label class="block text-sm mb-1">{{ $t('settings.statistics.goals.dailySessionsGoal') }}</label>
+            <label class="block text-sm mb-1">{{ $t('settings.values.statistics.goals.dailySessionsGoal') }}</label>
             <div class="flex items-center">
               <IconTarget size="18" class="mr-2 text-primary dark:text-primary-dark" />
               <input
@@ -192,13 +192,13 @@ onMounted(() => {
                 step="1"
                 class="w-full p-2 rounded-md bg-surface-variant dark:bg-surface-darkvariant"
               />
-              <span class="ml-2 text-sm">{{ $t('settings.statistics.goals.sessions') }}</span>
+              <span class="ml-2 text-sm">{{ $t('settings.values.statistics.goals.sessions') }}</span>
             </div>
           </div>
 
           <!-- 每周次数目标 -->
           <div class="goal-input">
-            <label class="block text-sm mb-1">{{ $t('settings.statistics.goals.weeklySessionsGoal') }}</label>
+            <label class="block text-sm mb-1">{{ $t('settings.values.statistics.goals.weeklySessionsGoal') }}</label>
             <div class="flex items-center">
               <IconTarget size="18" class="mr-2 text-primary dark:text-primary-dark" />
               <input
@@ -208,7 +208,7 @@ onMounted(() => {
                 step="1"
                 class="w-full p-2 rounded-md bg-surface-variant dark:bg-surface-darkvariant"
               />
-              <span class="ml-2 text-sm">{{ $t('settings.statistics.goals.sessions') }}</span>
+              <span class="ml-2 text-sm">{{ $t('settings.values.statistics.goals.sessions') }}</span>
             </div>
           </div>
         </div>
@@ -222,20 +222,20 @@ onMounted(() => {
           <template #pre>
             <IconCheck size="18" />
           </template>
-          {{ $t('settings.statistics.goals.saveGoals') }}
+          {{ $t('settings.values.statistics.goals.saveGoals') }}
         </Button>
       </div>
 
       <!-- 目标进度 -->
       <div class="goals-progress bg-surface-light dark:bg-surface-dark p-4 rounded-lg">
-        <h4 class="text-md font-medium mb-3">{{ $t('settings.statistics.goals.progress') }}</h4>
+        <h4 class="text-md font-medium mb-3">{{ $t('settings.values.statistics.goals.progress') }}</h4>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- 今日时长目标进度 -->
           <div class="goal-progress">
             <div class="flex justify-between mb-1">
-              <span class="text-sm">{{ $t('settings.statistics.goals.todayTimeProgress') }}</span>
-              <span class="text-sm font-medium">{{ todayFocusMinutes }} / {{ dailyGoalMinutes }} {{ $t('settings.statistics.minutes') }}</span>
+              <span class="text-sm">{{ $t('settings.values.statistics.goals.todayTimeProgress') }}</span>
+              <span class="text-sm font-medium">{{ todayFocusMinutes }} / {{ dailyGoalMinutes }} {{ $t('settings.values.statistics.minutes') }}</span>
             </div>
             <div class="w-full bg-surface-variant dark:bg-surface-darkvariant rounded-full h-2.5">
               <div
@@ -248,8 +248,8 @@ onMounted(() => {
           <!-- 本周时长目标进度 -->
           <div class="goal-progress">
             <div class="flex justify-between mb-1">
-              <span class="text-sm">{{ $t('settings.statistics.goals.weekTimeProgress') }}</span>
-              <span class="text-sm font-medium">{{ thisWeekFocusMinutes }} / {{ weeklyGoalMinutes }} {{ $t('settings.statistics.minutes') }}</span>
+              <span class="text-sm">{{ $t('settings.values.statistics.goals.weekTimeProgress') }}</span>
+              <span class="text-sm font-medium">{{ thisWeekFocusMinutes }} / {{ weeklyGoalMinutes }} {{ $t('settings.values.statistics.minutes') }}</span>
             </div>
             <div class="w-full bg-surface-variant dark:bg-surface-darkvariant rounded-full h-2.5">
               <div
@@ -262,8 +262,8 @@ onMounted(() => {
           <!-- 今日次数目标进度 -->
           <div class="goal-progress">
             <div class="flex justify-between mb-1">
-              <span class="text-sm">{{ $t('settings.statistics.goals.todaySessionsProgress') }}</span>
-              <span class="text-sm font-medium">{{ todayFocusSessions }} / {{ dailyGoalSessions }} {{ $t('settings.statistics.goals.sessions') }}</span>
+              <span class="text-sm">{{ $t('settings.values.statistics.goals.todaySessionsProgress') }}</span>
+              <span class="text-sm font-medium">{{ todayFocusSessions }} / {{ dailyGoalSessions }} {{ $t('settings.values.statistics.goals.sessions') }}</span>
             </div>
             <div class="w-full bg-surface-variant dark:bg-surface-darkvariant rounded-full h-2.5">
               <div
@@ -276,8 +276,8 @@ onMounted(() => {
           <!-- 本周次数目标进度 -->
           <div class="goal-progress">
             <div class="flex justify-between mb-1">
-              <span class="text-sm">{{ $t('settings.statistics.goals.weekSessionsProgress') }}</span>
-              <span class="text-sm font-medium">{{ thisWeekFocusSessions }} / {{ weeklyGoalSessions }} {{ $t('settings.statistics.goals.sessions') }}</span>
+              <span class="text-sm">{{ $t('settings.values.statistics.goals.weekSessionsProgress') }}</span>
+              <span class="text-sm font-medium">{{ thisWeekFocusSessions }} / {{ weeklyGoalSessions }} {{ $t('settings.values.statistics.goals.sessions') }}</span>
             </div>
             <div class="w-full bg-surface-variant dark:bg-surface-darkvariant rounded-full h-2.5">
               <div

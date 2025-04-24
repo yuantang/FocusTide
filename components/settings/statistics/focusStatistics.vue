@@ -22,10 +22,10 @@ const activeTab = ref('overview')
 
 // 时间范围选项
 const timeRanges = computed(() => [
-  { value: 'week', label: t('settings.statistics.timeRanges.week') },
-  { value: 'month', label: t('settings.statistics.timeRanges.month') },
-  { value: 'year', label: t('settings.statistics.timeRanges.year') },
-  { value: 'all', label: t('settings.statistics.timeRanges.allTime') }
+  { value: 'week', label: t('settings.values.statistics.timeRanges.week') },
+  { value: 'month', label: t('settings.values.statistics.timeRanges.month') },
+  { value: 'year', label: t('settings.values.statistics.timeRanges.year') },
+  { value: 'all', label: t('settings.values.statistics.timeRanges.allTime') }
 ])
 
 const selectedRange = ref('week')
@@ -36,9 +36,9 @@ const formatDuration = (ms: number): string => {
   const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60))
 
   if (hours > 0) {
-    return `${hours}${t('settings.statistics.hours')} ${minutes}${t('settings.statistics.minutes')}`
+    return `${hours}${t('settings.values.statistics.hours')} ${minutes}${t('settings.values.statistics.minutes')}`
   } else {
-    return `${minutes}${t('settings.statistics.minutes')}`
+    return `${minutes}${t('settings.values.statistics.minutes')}`
   }
 }
 
@@ -49,22 +49,22 @@ const formatPercentage = (value: number): string => {
 
 // 格式化小时
 const formatHour = (hour: number | null): string => {
-  if (hour === null) return t('settings.statistics.noData')
+  if (hour === null) return t('settings.values.statistics.noData')
   return `${hour}:00 - ${(hour + 1) % 24}:00`
 }
 
 // 格式化星期几
 const formatDay = (day: number | null): string => {
-  if (day === null) return t('settings.statistics.noData')
+  if (day === null) return t('settings.values.statistics.noData')
 
   const days = [
-    t('settings.statistics.days.sunday'),
-    t('settings.statistics.days.monday'),
-    t('settings.statistics.days.tuesday'),
-    t('settings.statistics.days.wednesday'),
-    t('settings.statistics.days.thursday'),
-    t('settings.statistics.days.friday'),
-    t('settings.statistics.days.saturday')
+    t('settings.values.statistics.days.sunday'),
+    t('settings.values.statistics.days.monday'),
+    t('settings.values.statistics.days.tuesday'),
+    t('settings.values.statistics.days.wednesday'),
+    t('settings.values.statistics.days.thursday'),
+    t('settings.values.statistics.days.friday'),
+    t('settings.values.statistics.days.saturday')
   ]
 
   return days[day]
@@ -86,7 +86,7 @@ onMounted(() => {
 <template>
   <div class="focus-statistics">
     <h2 class="text-xl font-bold mb-4">
-      {{ $t('settings.statistics.title') }}
+      {{ $t('settings.values.statistics.title') }}
     </h2>
 
     <div v-if="hasData">
@@ -98,17 +98,17 @@ onMounted(() => {
             v-model="activeTab"
             class="w-full p-2 rounded-lg bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-sm font-medium"
           >
-            <option value="overview">{{ $t('settings.statistics.tabs.overview') }}</option>
-            <option value="summary">{{ $t('settings.statistics.tabs.summary') }}</option>
-            <option value="trends">{{ $t('settings.statistics.tabs.trends') }}</option>
-            <option value="distribution">{{ $t('settings.statistics.tabs.distribution') }}</option>
-            <option value="charts">{{ $t('settings.statistics.tabs.charts') }}</option>
-            <option value="heatmap">{{ $t('settings.statistics.tabs.heatmap') }}</option>
-            <option value="ratings">{{ $t('settings.statistics.tabs.ratings') }}</option>
-            <option value="achievements">{{ $t('settings.statistics.tabs.achievements') }}</option>
-            <option value="goals">{{ $t('settings.statistics.tabs.goals') }}</option>
-            <option value="suggestions">{{ $t('settings.statistics.tabs.suggestions') }}</option>
-            <option value="export">{{ $t('settings.statistics.tabs.export') }}</option>
+            <option value="overview">{{ $t('settings.values.statistics.tabs.overview') }}</option>
+            <option value="summary">{{ $t('settings.values.statistics.tabs.summary') }}</option>
+            <option value="trends">{{ $t('settings.values.statistics.tabs.trends') }}</option>
+            <option value="distribution">{{ $t('settings.values.statistics.tabs.distribution') }}</option>
+            <option value="charts">{{ $t('settings.values.statistics.tabs.charts') }}</option>
+            <option value="heatmap">{{ $t('settings.values.statistics.tabs.heatmap') }}</option>
+            <option value="ratings">{{ $t('settings.values.statistics.tabs.ratings') }}</option>
+            <option value="achievements">{{ $t('settings.values.statistics.tabs.achievements') }}</option>
+            <option value="goals">{{ $t('settings.values.statistics.tabs.goals') }}</option>
+            <option value="suggestions">{{ $t('settings.values.statistics.tabs.suggestions') }}</option>
+            <option value="export">{{ $t('settings.values.statistics.tabs.export') }}</option>
           </select>
         </div>
 
@@ -123,7 +123,7 @@ onMounted(() => {
             @click="activeTab = 'overview'"
           >
             <IconChartBar size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.overview') }}
+            {{ $t('settings.values.statistics.tabs.overview') }}
           </button>
 
           <button
@@ -135,7 +135,7 @@ onMounted(() => {
             @click="activeTab = 'summary'"
           >
             <IconChartPie size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.summary') }}
+            {{ $t('settings.values.statistics.tabs.summary') }}
           </button>
 
           <button
@@ -147,7 +147,7 @@ onMounted(() => {
             @click="activeTab = 'trends'"
           >
             <IconChartAreaLine size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.trends') }}
+            {{ $t('settings.values.statistics.tabs.trends') }}
           </button>
 
           <button
@@ -159,7 +159,7 @@ onMounted(() => {
             @click="activeTab = 'distribution'"
           >
             <IconChartDots size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.distribution') }}
+            {{ $t('settings.values.statistics.tabs.distribution') }}
           </button>
 
           <button
@@ -171,7 +171,7 @@ onMounted(() => {
             @click="activeTab = 'charts'"
           >
             <IconChartLine size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.charts') }}
+            {{ $t('settings.values.statistics.tabs.charts') }}
           </button>
         </div>
 
@@ -186,7 +186,7 @@ onMounted(() => {
             @click="activeTab = 'heatmap'"
           >
             <IconLayoutGrid size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.heatmap') }}
+            {{ $t('settings.values.statistics.tabs.heatmap') }}
           </button>
 
           <button
@@ -198,7 +198,7 @@ onMounted(() => {
             @click="activeTab = 'ratings'"
           >
             <IconStarFilled size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.ratings') }}
+            {{ $t('settings.values.statistics.tabs.ratings') }}
           </button>
 
           <button
@@ -210,7 +210,7 @@ onMounted(() => {
             @click="activeTab = 'achievements'"
           >
             <IconMedal size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.achievements') }}
+            {{ $t('settings.values.statistics.tabs.achievements') }}
           </button>
 
           <button
@@ -222,7 +222,7 @@ onMounted(() => {
             @click="activeTab = 'goals'"
           >
             <IconTarget size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.goals') }}
+            {{ $t('settings.values.statistics.tabs.goals') }}
           </button>
 
           <button
@@ -234,7 +234,7 @@ onMounted(() => {
             @click="activeTab = 'suggestions'"
           >
             <IconBulb size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.suggestions') }}
+            {{ $t('settings.values.statistics.tabs.suggestions') }}
           </button>
 
           <button
@@ -246,7 +246,7 @@ onMounted(() => {
             @click="activeTab = 'export'"
           >
             <IconDownload size="18" class="mr-1" />
-            {{ $t('settings.statistics.tabs.export') }}
+            {{ $t('settings.values.statistics.tabs.export') }}
           </button>
         </div>
       </div>
@@ -260,7 +260,7 @@ onMounted(() => {
               <div class="stat-icon text-primary dark:text-primary-dark">
                 <IconClock size="20" />
               </div>
-              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.statistics.totalFocusTime') }}</div>
+              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.values.statistics.totalFocusTime') }}</div>
             </div>
             <div class="stat-body p-3 text-center">
               <div class="stat-value text-2xl font-bold">{{ formatDuration(focusStatsStore.totalFocusDuration) }}</div>
@@ -272,7 +272,7 @@ onMounted(() => {
               <div class="stat-icon text-primary dark:text-primary-dark">
                 <IconChartBar size="20" />
               </div>
-              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.statistics.totalSessions') }}</div>
+              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.values.statistics.totalSessions') }}</div>
             </div>
             <div class="stat-body p-3 text-center">
               <div class="stat-value text-2xl font-bold">{{ focusStatsStore.totalFocusSessions }}</div>
@@ -284,7 +284,7 @@ onMounted(() => {
               <div class="stat-icon text-primary dark:text-primary-dark">
                 <IconCheckbox size="20" />
               </div>
-              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.statistics.completedSessions') }}</div>
+              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.values.statistics.completedSessions') }}</div>
             </div>
             <div class="stat-body p-3 text-center">
               <div class="stat-value text-2xl font-bold">{{ focusStatsStore.completedFocusSessions }}</div>
@@ -296,7 +296,7 @@ onMounted(() => {
               <div class="stat-icon text-primary dark:text-primary-dark">
                 <IconChartLine size="20" />
               </div>
-              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.statistics.completionRate') }}</div>
+              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.values.statistics.completionRate') }}</div>
             </div>
             <div class="stat-body p-3 text-center">
               <div class="stat-value text-2xl font-bold">{{ formatPercentage(focusStatsStore.focusCompletionRate) }}</div>
@@ -311,12 +311,12 @@ onMounted(() => {
               <IconFlame size="24" />
             </div>
             <div class="ml-2">
-              <h3 class="text-lg font-medium">{{ $t('settings.statistics.streak') }}</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.currentStreak') }}</p>
+              <h3 class="text-lg font-medium">{{ $t('settings.values.statistics.streak') }}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.currentStreak') }}</p>
             </div>
             <div class="ml-auto">
               <div class="text-3xl font-bold text-amber-500 dark:text-amber-400">{{ focusStatsStore.streakDays }}</div>
-              <div class="text-xs text-right text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.streakDays') }}</div>
+              <div class="text-xs text-right text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.streakDays') }}</div>
             </div>
           </div>
         </div>
@@ -325,7 +325,7 @@ onMounted(() => {
         <div class="focus-insights p-4 rounded-xl shadow-sm bg-surface-light dark:bg-surface-dark mb-6">
           <h3 class="text-lg font-medium mb-3 flex items-center">
             <IconBulb size="20" class="text-primary dark:text-primary-dark mr-2" />
-            {{ $t('settings.statistics.insights') }}
+            {{ $t('settings.values.statistics.insights') }}
           </h3>
           <ul class="space-y-3 pl-2">
             <li class="flex items-start gap-3">
@@ -333,8 +333,8 @@ onMounted(() => {
                 <IconClock size="18" />
               </div>
               <div>
-                <div class="font-medium">{{ $t('settings.statistics.mostProductiveTime', { time: formatHour(focusStatsStore.mostProductiveHour) }) }}</div>
-                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.mostProductiveTimeDesc') }}</div>
+                <div class="font-medium">{{ $t('settings.values.statistics.mostProductiveTime', { time: formatHour(focusStatsStore.mostProductiveHour) }) }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.mostProductiveTimeDesc') }}</div>
               </div>
             </li>
             <li class="flex items-start gap-3">
@@ -342,8 +342,8 @@ onMounted(() => {
                 <IconChartBar size="18" />
               </div>
               <div>
-                <div class="font-medium">{{ $t('settings.statistics.mostProductiveDay', { day: formatDay(focusStatsStore.mostProductiveDay) }) }}</div>
-                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.mostProductiveDayDesc') }}</div>
+                <div class="font-medium">{{ $t('settings.values.statistics.mostProductiveDay', { day: formatDay(focusStatsStore.mostProductiveDay) }) }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.mostProductiveDayDesc') }}</div>
               </div>
             </li>
             <li class="flex items-start gap-3">
@@ -351,8 +351,8 @@ onMounted(() => {
                 <IconClock size="18" />
               </div>
               <div>
-                <div class="font-medium">{{ $t('settings.statistics.averageFocusTime', { time: formatDuration(focusStatsStore.averageFocusDuration) }) }}</div>
-                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.statistics.averageFocusTimeDesc') }}</div>
+                <div class="font-medium">{{ $t('settings.values.statistics.averageFocusTime', { time: formatDuration(focusStatsStore.averageFocusDuration) }) }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.averageFocusTimeDesc') }}</div>
               </div>
             </li>
           </ul>
@@ -366,7 +366,7 @@ onMounted(() => {
           <div class="chart-header bg-primary/10 dark:bg-primary-dark/20 px-4 py-3">
             <h3 class="text-lg font-medium flex items-center">
               <IconChartLine size="20" class="text-primary dark:text-primary-dark mr-2" />
-              {{ $t('settings.statistics.charts.title') }}
+              {{ $t('settings.values.statistics.charts.title') }}
             </h3>
 
             <!-- 时间范围选择器 -->
@@ -399,10 +399,10 @@ onMounted(() => {
           <div class="goals-header bg-green-500/10 dark:bg-green-400/20 px-4 py-3">
             <h3 class="text-lg font-medium flex items-center">
               <IconTarget size="20" class="text-green-500 dark:text-green-400 mr-2" />
-              {{ $t('settings.statistics.goals.title') }}
+              {{ $t('settings.values.statistics.goals.title') }}
             </h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {{ $t('settings.statistics.goals.description') }}
+              {{ $t('settings.values.statistics.goals.description') }}
             </p>
           </div>
 
@@ -418,10 +418,10 @@ onMounted(() => {
           <div class="suggestions-header bg-blue-500/10 dark:bg-blue-400/20 px-4 py-3">
             <h3 class="text-lg font-medium flex items-center">
               <IconBulb size="20" class="text-blue-500 dark:text-blue-400 mr-2" />
-              {{ $t('settings.statistics.suggestions.title') }}
+              {{ $t('settings.values.statistics.suggestions.title') }}
             </h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {{ $t('settings.statistics.suggestions.description') }}
+              {{ $t('settings.values.statistics.suggestions.description') }}
             </p>
           </div>
 
@@ -452,10 +452,10 @@ onMounted(() => {
           <div class="heatmap-header bg-primary/10 dark:bg-primary-dark/20 px-4 py-3">
             <h3 class="text-lg font-medium flex items-center">
               <IconLayoutGrid size="20" class="text-primary dark:text-primary-dark mr-2" />
-              {{ $t('settings.statistics.heatmap.title') }}
+              {{ $t('settings.values.statistics.heatmap.title') }}
             </h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {{ $t('settings.statistics.heatmap.description') }}
+              {{ $t('settings.values.statistics.heatmap.description') }}
             </p>
           </div>
 
@@ -471,10 +471,10 @@ onMounted(() => {
           <div class="ratings-header bg-primary/10 dark:bg-primary-dark/20 px-4 py-3">
             <h3 class="text-lg font-medium flex items-center">
               <IconStarFilled size="20" class="text-primary dark:text-primary-dark mr-2" />
-              {{ $t('settings.statistics.ratings.title') }}
+              {{ $t('settings.values.statistics.ratings.title') }}
             </h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {{ $t('settings.statistics.ratings.description') }}
+              {{ $t('settings.values.statistics.ratings.description') }}
             </p>
           </div>
 
@@ -490,10 +490,10 @@ onMounted(() => {
           <div class="achievements-header bg-amber-500/10 dark:bg-amber-400/20 px-4 py-3">
             <h3 class="text-lg font-medium flex items-center">
               <IconMedal size="20" class="text-amber-500 dark:text-amber-400 mr-2" />
-              {{ $t('settings.statistics.achievements.title') }}
+              {{ $t('settings.values.statistics.achievements.title') }}
             </h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {{ $t('settings.statistics.achievements.description') }}
+              {{ $t('settings.values.statistics.achievements.description') }}
             </p>
           </div>
 
@@ -509,10 +509,10 @@ onMounted(() => {
           <div class="export-header bg-gray-500/10 dark:bg-gray-400/20 px-4 py-3">
             <h3 class="text-lg font-medium flex items-center">
               <IconDownload size="20" class="text-gray-500 dark:text-gray-400 mr-2" />
-              {{ $t('settings.statistics.export.title') }}
+              {{ $t('settings.values.statistics.export.title') }}
             </h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {{ $t('settings.statistics.export.description') }}
+              {{ $t('settings.values.statistics.export.description') }}
             </p>
           </div>
 
@@ -529,8 +529,8 @@ onMounted(() => {
           <IconChartBar size="32" />
         </div>
       </div>
-      <h3 class="text-lg font-medium mb-2">{{ $t('settings.statistics.noData') }}</h3>
-      <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto">{{ $t('settings.statistics.noDataMessage') }}</p>
+      <h3 class="text-lg font-medium mb-2">{{ $t('settings.values.statistics.noData') }}</h3>
+      <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto">{{ $t('settings.values.statistics.noDataMessage') }}</p>
     </div>
   </div>
 </template>

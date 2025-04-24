@@ -272,6 +272,62 @@
           "_description": "Kevesebb fényerő, ugyanannyi produktivitás"
         }
       },
+      "statistics": {
+        "_section": "Statisztikák",
+        "title": "Koncentráció Statisztikák",
+        "totalFocusTime": "Összes Koncentrációs Idő",
+        "totalSessions": "Összes Munkamenet",
+        "completedSessions": "Befejezett Munkamenetek",
+        "completionRate": "Befejezési Arány",
+        "streak": "Koncentrációs Sorozat",
+        "currentStreak": "Jelenlegi Sorozat",
+        "streakDays": "nap",
+        "averageFocusTime": "Átlagos Koncentrációs Idő: {time}",
+        "averageFocusTimeDesc": "Az átlagos koncentrációs időtartamod, amely tükrözi a fókusz kitartásodat.",
+        "mostProductiveTime": "Legproduktívabb időszak: {time}",
+        "mostProductiveTimeDesc": "Ebben az időszakban vagy a leghatékonyabb. Tervezz fontos feladatokat erre az időre.",
+        "mostProductiveDay": "Legproduktívabb nap: {day}",
+        "mostProductiveDayDesc": "Ezen a napon vagy a leghatékonyabb. Fontold meg a fontos munkák erre a napra ütemezését.",
+        "insights": "Koncentrációs Betekintések",
+        "noData": "Nincs elérhető adat",
+        "noDataMessage": "Kezdj el koncentrálni, hogy lásd a statisztikáidat itt!",
+        "hours": "ó",
+        "minutes": "p",
+        "tabs": {
+          "overview": "Áttekintés",
+          "summary": "Összegzés",
+          "trends": "Trendek",
+          "distribution": "Eloszlás",
+          "charts": "Diagramok",
+          "heatmap": "Hőtérkép",
+          "ratings": "Értékelések",
+          "achievements": "Eredmények",
+          "goals": "Célok",
+          "suggestions": "Javaslatok",
+          "export": "Exportálás"
+        },
+        "timeRanges": {
+          "week": "Hét",
+          "month": "Hónap",
+          "year": "Év",
+          "allTime": "Összes Idő"
+        },
+        "days": {
+          "sunday": "Vasárnap",
+          "monday": "Hétfő",
+          "tuesday": "Kedd",
+          "wednesday": "Szerda",
+          "thursday": "Csütörtök",
+          "friday": "Péntek",
+          "saturday": "Szombat"
+        },
+        "heatmap": {
+          "title": "Koncentrációs Hőtérkép",
+          "description": "Ez a hőtérkép megmutatja, mikor koncentrálsz a legtöbbet a hét során. A sötétebb színek több koncentrációs munkamenetet jeleznek.",
+          "legend": "Jelmagyarázat",
+          "sessions": "munkamenet"
+        }
+      },
       "reset": {
         "_title": "Alaphelyzetbe állítás",
         "_description": "Az alkalmazás újratöltése után minden beállítás vissza lesz állítva"

@@ -35,13 +35,13 @@ const getHourLabel = (hour: number): string => {
 // 获取星期几标签
 const getDayLabel = (day: number): string => {
   const days = [
-    t('settings.statistics.days.sunday'),
-    t('settings.statistics.days.monday'),
-    t('settings.statistics.days.tuesday'),
-    t('settings.statistics.days.wednesday'),
-    t('settings.statistics.days.thursday'),
-    t('settings.statistics.days.friday'),
-    t('settings.statistics.days.saturday')
+    t('settings.values.statistics.days.sunday'),
+    t('settings.values.statistics.days.monday'),
+    t('settings.values.statistics.days.tuesday'),
+    t('settings.values.statistics.days.wednesday'),
+    t('settings.values.statistics.days.thursday'),
+    t('settings.values.statistics.days.friday'),
+    t('settings.values.statistics.days.saturday')
   ]
 
   return days[day]
