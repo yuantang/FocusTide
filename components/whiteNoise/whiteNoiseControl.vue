@@ -92,6 +92,7 @@ onMounted(() => {
         ]"
         @click="toggleWhiteNoise"
         :title="currentWhiteNoiseTypeName"
+        :aria-label="isPlaying ? $t('settings.whiteNoise.pause') : $t('settings.whiteNoise.play')"
       >
         <IconVolume v-if="isPlaying" size="20" class="text-white z-10 relative" />
         <IconVolumeOff v-else size="20" class="text-gray-500 dark:text-gray-300 z-10 relative" />

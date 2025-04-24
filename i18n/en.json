@@ -261,7 +261,9 @@
         "playDuringWork": {
           "_title": "Play only during work",
           "_description": "Only play white noise during work sessions"
-        }
+        },
+        "play": "Play white noise",
+        "pause": "Pause white noise"
       },
       "statistics": {
         "_section": "Statistics",

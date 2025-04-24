@@ -2,6 +2,9 @@
 import { IconVolume, IconVolumeOff } from '@tabler/icons-vue'
 import { useSettings, WhiteNoiseType } from '~~/stores/settings'
 import { ref, computed, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const settingsStore = useSettings()
 
@@ -81,7 +84,7 @@ onMounted(() => {
       @click="toggleWhiteNoise"
       @mouseenter="isHovering = true"
       @mouseleave="isHovering = false"
-      :aria-label="props.isPlaying ? '暂停白噪音' : '播放白噪音'"
+      :aria-label="props.isPlaying ? $t('settings.whiteNoise.pause') : $t('settings.whiteNoise.play')"
     >
       <!-- 图标 -->
       <IconVolume v-if="props.isPlaying" size="18" class="text-white z-10 transition-all duration-300" :class="isHovering ? 'scale-110' : ''" />
