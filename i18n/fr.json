@@ -250,6 +250,18 @@
         "noDataMessage": "Commencez à vous concentrer pour voir vos statistiques ici!",
         "hours": "h",
         "minutes": "m",
+        "categories": {
+          "overview": "Aperçu",
+          "analysis": "Analyse",
+          "achievements": "Réalisations",
+          "tools": "Outils"
+        },
+        "categoryGroups": {
+          "overviewSummary": "Aperçu et Résumé",
+          "dataAnalysis": "Analyse de Données",
+          "achievementsGoals": "Réalisations et Objectifs",
+          "toolsSuggestions": "Outils et Suggestions"
+        },
         "tabs": {
           "overview": "Aperçu",
           "summary": "Résumé",

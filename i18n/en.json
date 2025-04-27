@@ -286,6 +286,18 @@
         "noDataMessage": "Start focusing to see your statistics here!",
         "hours": "h",
         "minutes": "m",
+        "categories": {
+          "overview": "Overview",
+          "analysis": "Analysis",
+          "achievements": "Achievements",
+          "tools": "Tools"
+        },
+        "categoryGroups": {
+          "overviewSummary": "Overview & Summary",
+          "dataAnalysis": "Data Analysis",
+          "achievementsGoals": "Achievements & Goals",
+          "toolsSuggestions": "Tools & Suggestions"
+        },
         "tabs": {
           "overview": "Overview",
           "summary": "Summary",

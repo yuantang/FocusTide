@@ -268,6 +268,18 @@
         "noDataMessage": "Počni se koncentrirati da bi ovdje vidio/la svoju statistiku!",
         "hours": "h",
         "minutes": "m",
+        "categories": {
+          "overview": "Pregled",
+          "analysis": "Analiza",
+          "achievements": "Postignuća",
+          "tools": "Alati"
+        },
+        "categoryGroups": {
+          "overviewSummary": "Pregled i Sažetak",
+          "dataAnalysis": "Analiza Podataka",
+          "achievementsGoals": "Postignuća i Ciljevi",
+          "toolsSuggestions": "Alati i Prijedlozi"
+        },
         "tabs": {
           "overview": "Pregled",
           "summary": "Sažetak",

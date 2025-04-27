@@ -268,6 +268,18 @@
         "noDataMessage": "Comece a se concentrar para ver suas estatísticas aqui!",
         "hours": "h",
         "minutes": "m",
+        "categories": {
+          "overview": "Visão Geral",
+          "analysis": "Análise",
+          "achievements": "Conquistas",
+          "tools": "Ferramentas"
+        },
+        "categoryGroups": {
+          "overviewSummary": "Visão Geral e Resumo",
+          "dataAnalysis": "Análise de Dados",
+          "achievementsGoals": "Conquistas e Objetivos",
+          "toolsSuggestions": "Ferramentas e Sugestões"
+        },
         "tabs": {
           "overview": "Visão Geral",
           "summary": "Resumo",

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useFocusStats } from '~/stores/focusStats'
-import { IconChartBar, IconChartLine, IconClock, IconCheckbox, IconTarget, IconBulb, IconDownload, IconFlame, IconMedal, IconStarFilled, IconLayoutGrid, IconChartAreaLine, IconChartDots, IconChartPie } from '@tabler/icons-vue'
+import { IconChartBar, IconChartLine, IconClock, IconCheckbox, IconTarget, IconBulb, IconDownload, IconFlame, IconMedal, IconStarFilled, IconLayoutGrid, IconChartAreaLine, IconChartDots, IconChartPie, IconDashboard, IconTools, IconChevronDown } from '@tabler/icons-vue'
 import CssCharts from './cssCharts.vue'
 import FocusExport from './focusExport.vue'
 import FocusGoals from './focusGoals.vue'
@@ -14,11 +14,13 @@ import FocusSummary from './focusSummary.vue'
 import FocusTrends from './focusTrends.vue'
 import FocusDistribution from './focusDistribution.vue'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const focusStatsStore = useFocusStats()
 
 // 活动标签
 const activeTab = ref('overview')
+// 活动分类
+const activeCategory = ref('overview')
 
 // 时间范围选项
 const timeRanges = computed(() => [
@@ -81,6 +83,32 @@ onMounted(() => {
     focusStatsStore.calculateStats()
   }
 })
+
+// 监听标签页变化，自动设置对应的分类
+watch(activeTab, (newTab) => {
+  if (['overview', 'summary'].includes(newTab)) {
+    activeCategory.value = 'overview'
+  } else if (['trends', 'distribution', 'heatmap', 'charts'].includes(newTab)) {
+    activeCategory.value = 'analysis'
+  } else if (['ratings', 'achievements', 'goals'].includes(newTab)) {
+    activeCategory.value = 'achievements'
+  } else if (['suggestions', 'export'].includes(newTab)) {
+    activeCategory.value = 'tools'
+  }
+})
+
+// 监听分类变化，自动选择该分类的第一个标签页
+watch(activeCategory, (newCategory) => {
+  if (newCategory === 'overview' && !['overview', 'summary'].includes(activeTab.value)) {
+    activeTab.value = 'overview'
+  } else if (newCategory === 'analysis' && !['trends', 'distribution', 'heatmap', 'charts'].includes(activeTab.value)) {
+    activeTab.value = 'trends'
+  } else if (newCategory === 'achievements' && !['ratings', 'achievements', 'goals'].includes(activeTab.value)) {
+    activeTab.value = 'ratings'
+  } else if (newCategory === 'tools' && !['suggestions', 'export'].includes(activeTab.value)) {
+    activeTab.value = 'suggestions'
+  }
+})
 </script>
 
 <template>
@@ -92,270 +120,376 @@ onMounted(() => {
     <div v-if="hasData">
       <!-- 导航标签 -->
       <div class="stats-tabs mb-6">
-        <!-- 移动端下拉菜单 -->
-        <div class="md:hidden mb-4">
-          <select
-            v-model="activeTab"
-            class="w-full p-2 rounded-lg bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-sm font-medium"
-          >
-            <option value="overview">{{ $t('settings.values.statistics.tabs.overview') }}</option>
-            <option value="summary">{{ $t('settings.values.statistics.tabs.summary') }}</option>
-            <option value="trends">{{ $t('settings.values.statistics.tabs.trends') }}</option>
-            <option value="distribution">{{ $t('settings.values.statistics.tabs.distribution') }}</option>
-            <option value="charts">{{ $t('settings.values.statistics.tabs.charts') }}</option>
-            <option value="heatmap">{{ $t('settings.values.statistics.tabs.heatmap') }}</option>
-            <option value="ratings">{{ $t('settings.values.statistics.tabs.ratings') }}</option>
-            <option value="achievements">{{ $t('settings.values.statistics.tabs.achievements') }}</option>
-            <option value="goals">{{ $t('settings.values.statistics.tabs.goals') }}</option>
-            <option value="suggestions">{{ $t('settings.values.statistics.tabs.suggestions') }}</option>
-            <option value="export">{{ $t('settings.values.statistics.tabs.export') }}</option>
-          </select>
+        <!-- 移动端导航 -->
+        <div class="md:hidden mb-5">
+          <!-- 分类选择器 -->
+          <div class="category-selector mb-3 flex overflow-x-auto py-1 no-scrollbar">
+            <button
+              v-for="category in ['overview', 'analysis', 'achievements', 'tools']"
+              :key="category"
+              class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium mr-2 transition-colors"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark': activeCategory === category,
+                'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300': activeCategory !== category
+              }"
+              @click="activeCategory = category"
+            >
+              <span v-if="category === 'overview'">{{ $t('settings.values.statistics.categories.overview') }}</span>
+              <span v-else-if="category === 'analysis'">{{ $t('settings.values.statistics.categories.analysis') }}</span>
+              <span v-else-if="category === 'achievements'">{{ $t('settings.values.statistics.categories.achievements') }}</span>
+              <span v-else-if="category === 'tools'">{{ $t('settings.values.statistics.categories.tools') }}</span>
+            </button>
+          </div>
+
+          <!-- 标签选择器 -->
+          <div class="relative">
+            <select
+              v-model="activeTab"
+              class="w-full p-3 pl-10 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium shadow-sm appearance-none"
+            >
+              <optgroup v-if="activeCategory === 'overview'" :label="$t('settings.values.statistics.categoryGroups.overviewSummary')">
+                <option value="overview">{{ $t('settings.values.statistics.tabs.overview') }}</option>
+                <option value="summary">{{ $t('settings.values.statistics.tabs.summary') }}</option>
+              </optgroup>
+              <optgroup v-if="activeCategory === 'analysis'" :label="$t('settings.values.statistics.categoryGroups.dataAnalysis')">
+                <option value="trends">{{ $t('settings.values.statistics.tabs.trends') }}</option>
+                <option value="distribution">{{ $t('settings.values.statistics.tabs.distribution') }}</option>
+                <option value="heatmap">{{ $t('settings.values.statistics.tabs.heatmap') }}</option>
+                <option value="charts">{{ $t('settings.values.statistics.tabs.charts') }}</option>
+              </optgroup>
+              <optgroup v-if="activeCategory === 'achievements'" :label="$t('settings.values.statistics.categoryGroups.achievementsGoals')">
+                <option value="ratings">{{ $t('settings.values.statistics.tabs.ratings') }}</option>
+                <option value="achievements">{{ $t('settings.values.statistics.tabs.achievements') }}</option>
+                <option value="goals">{{ $t('settings.values.statistics.tabs.goals') }}</option>
+              </optgroup>
+              <optgroup v-if="activeCategory === 'tools'" :label="$t('settings.values.statistics.categoryGroups.toolsSuggestions')">
+                <option value="suggestions">{{ $t('settings.values.statistics.tabs.suggestions') }}</option>
+                <option value="export">{{ $t('settings.values.statistics.tabs.export') }}</option>
+              </optgroup>
+            </select>
+            <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary dark:text-primary-dark">
+              <IconChevronDown size="18" />
+            </div>
+          </div>
         </div>
 
-        <!-- 桌面端标签导航 - 第一行 -->
-        <div class="hidden md:grid grid-cols-5 gap-2 mb-3">
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'overview',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'overview'
-            }"
-            @click="activeTab = 'overview'"
-          >
-            <IconChartBar size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.overview') }}
-          </button>
+        <!-- 桌面端分类导航 -->
+        <div class="hidden md:block mb-6">
+          <div class="category-tabs flex justify-center bg-surface-light dark:bg-surface-dark rounded-lg shadow-sm p-1.5 border border-gray-100 dark:border-gray-800">
+            <button
+              class="category-tab py-2.5 px-5 font-medium text-sm transition-all rounded-md flex items-center"
+              :class="{
+                'bg-white dark:bg-gray-800 text-primary dark:text-primary-dark shadow-sm': activeCategory === 'overview',
+                'text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-800/50': activeCategory !== 'overview'
+              }"
+              @click="activeCategory = 'overview'"
+            >
+              <IconDashboard size="18" class="mr-1.5" />
+              {{ $t('settings.values.statistics.categoryGroups.overviewSummary') }}
+            </button>
+            <button
+              class="category-tab py-2.5 px-5 font-medium text-sm transition-all rounded-md flex items-center"
+              :class="{
+                'bg-white dark:bg-gray-800 text-primary dark:text-primary-dark shadow-sm': activeCategory === 'analysis',
+                'text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-800/50': activeCategory !== 'analysis'
+              }"
+              @click="activeCategory = 'analysis'"
+            >
+              <IconChartLine size="18" class="mr-1.5" />
+              {{ $t('settings.values.statistics.categoryGroups.dataAnalysis') }}
+            </button>
+            <button
+              class="category-tab py-2.5 px-5 font-medium text-sm transition-all rounded-md flex items-center"
+              :class="{
+                'bg-white dark:bg-gray-800 text-primary dark:text-primary-dark shadow-sm': activeCategory === 'achievements',
+                'text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-800/50': activeCategory !== 'achievements'
+              }"
+              @click="activeCategory = 'achievements'"
+            >
+              <IconMedal size="18" class="mr-1.5" />
+              {{ $t('settings.values.statistics.categoryGroups.achievementsGoals') }}
+            </button>
+            <button
+              class="category-tab py-2.5 px-5 font-medium text-sm transition-all rounded-md flex items-center"
+              :class="{
+                'bg-white dark:bg-gray-800 text-primary dark:text-primary-dark shadow-sm': activeCategory === 'tools',
+                'text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-800/50': activeCategory !== 'tools'
+              }"
+              @click="activeCategory = 'tools'"
+            >
+              <IconTools size="18" class="mr-1.5" />
+              {{ $t('settings.values.statistics.categoryGroups.toolsSuggestions') }}
+            </button>
+          </div>
 
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'summary',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'summary'
-            }"
-            @click="activeTab = 'summary'"
-          >
-            <IconChartPie size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.summary') }}
-          </button>
+          <!-- 概览与摘要标签页 -->
+          <div v-if="activeCategory === 'overview'" class="tab-buttons flex flex-wrap gap-2 mt-3">
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'overview',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'overview'
+              }"
+              @click="activeTab = 'overview'"
+            >
+              <IconChartBar size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.overview') }}
+            </button>
 
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'trends',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'trends'
-            }"
-            @click="activeTab = 'trends'"
-          >
-            <IconChartAreaLine size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.trends') }}
-          </button>
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'summary',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'summary'
+              }"
+              @click="activeTab = 'summary'"
+            >
+              <IconChartPie size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.summary') }}
+            </button>
+          </div>
 
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'distribution',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'distribution'
-            }"
-            @click="activeTab = 'distribution'"
-          >
-            <IconChartDots size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.distribution') }}
-          </button>
+          <!-- 数据分析标签页 -->
+          <div v-if="activeCategory === 'analysis'" class="tab-buttons flex flex-wrap gap-2 mt-3">
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'trends',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'trends'
+              }"
+              @click="activeTab = 'trends'"
+            >
+              <IconChartAreaLine size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.trends') }}
+            </button>
 
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'charts',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'charts'
-            }"
-            @click="activeTab = 'charts'"
-          >
-            <IconChartLine size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.charts') }}
-          </button>
-        </div>
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'distribution',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'distribution'
+              }"
+              @click="activeTab = 'distribution'"
+            >
+              <IconChartDots size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.distribution') }}
+            </button>
 
-        <!-- 桌面端标签导航 - 第二行 -->
-        <div class="hidden md:grid grid-cols-6 gap-2 mb-4">
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'heatmap',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'heatmap'
-            }"
-            @click="activeTab = 'heatmap'"
-          >
-            <IconLayoutGrid size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.heatmap') }}
-          </button>
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'heatmap',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'heatmap'
+              }"
+              @click="activeTab = 'heatmap'"
+            >
+              <IconLayoutGrid size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.heatmap') }}
+            </button>
 
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'ratings',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'ratings'
-            }"
-            @click="activeTab = 'ratings'"
-          >
-            <IconStarFilled size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.ratings') }}
-          </button>
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'charts',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'charts'
+              }"
+              @click="activeTab = 'charts'"
+            >
+              <IconChartLine size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.charts') }}
+            </button>
+          </div>
 
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'achievements',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'achievements'
-            }"
-            @click="activeTab = 'achievements'"
-          >
-            <IconMedal size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.achievements') }}
-          </button>
+          <!-- 成就与目标标签页 -->
+          <div v-if="activeCategory === 'achievements'" class="tab-buttons flex flex-wrap gap-2 mt-3">
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'ratings',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'ratings'
+              }"
+              @click="activeTab = 'ratings'"
+            >
+              <IconStarFilled size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.ratings') }}
+            </button>
 
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'goals',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'goals'
-            }"
-            @click="activeTab = 'goals'"
-          >
-            <IconTarget size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.goals') }}
-          </button>
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'achievements',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'achievements'
+              }"
+              @click="activeTab = 'achievements'"
+            >
+              <IconMedal size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.achievements') }}
+            </button>
 
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'suggestions',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'suggestions'
-            }"
-            @click="activeTab = 'suggestions'"
-          >
-            <IconBulb size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.suggestions') }}
-          </button>
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'goals',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'goals'
+              }"
+              @click="activeTab = 'goals'"
+            >
+              <IconTarget size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.goals') }}
+            </button>
+          </div>
 
-          <button
-            class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
-            :class="{
-              'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'export',
-              'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'export'
-            }"
-            @click="activeTab = 'export'"
-          >
-            <IconDownload size="18" class="mr-1" />
-            {{ $t('settings.values.statistics.tabs.export') }}
-          </button>
+          <!-- 工具与建议标签页 -->
+          <div v-if="activeCategory === 'tools'" class="tab-buttons flex flex-wrap gap-2 mt-3">
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'suggestions',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'suggestions'
+              }"
+              @click="activeTab = 'suggestions'"
+            >
+              <IconBulb size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.suggestions') }}
+            </button>
+
+            <button
+              class="py-2 px-3 rounded-lg font-medium text-sm transition-colors flex items-center justify-center"
+              :class="{
+                'bg-primary text-white dark:bg-primary-dark dark:text-white': activeTab === 'export',
+                'bg-surface-light dark:bg-surface-dark hover:bg-gray-100 dark:hover:bg-gray-800': activeTab !== 'export'
+              }"
+              @click="activeTab = 'export'"
+            >
+              <IconDownload size="18" class="mr-1" />
+              {{ $t('settings.values.statistics.tabs.export') }}
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- 总览标签页 -->
       <div v-if="activeTab === 'overview'" class="tab-content">
-        <!-- 总览数据 -->
-        <div class="stats-overview grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div class="stat-card bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm overflow-hidden">
-            <div class="stat-header bg-primary/10 dark:bg-primary-dark/20 px-3 py-2 flex items-center">
-              <div class="stat-icon text-primary dark:text-primary-dark">
-                <IconClock size="20" />
+        <!-- 核心数据卡片 - 更加突出的设计 -->
+        <div class="core-stats-card bg-gradient-to-r from-primary/5 to-primary/10 dark:from-primary-dark/10 dark:to-primary-dark/20 rounded-xl shadow-sm overflow-hidden mb-6 border border-primary/10 dark:border-primary-dark/20">
+          <div class="p-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <!-- 总专注时长 -->
+              <div class="stat-item text-center">
+                <div class="stat-icon-wrapper mx-auto mb-2 w-10 h-10 rounded-full bg-primary/20 dark:bg-primary-dark/30 flex items-center justify-center">
+                  <IconClock size="20" class="text-primary dark:text-primary-dark" />
+                </div>
+                <div class="stat-label text-sm text-gray-600 dark:text-gray-400 mb-1">{{ $t('settings.values.statistics.totalFocusTime') }}</div>
+                <div class="stat-value text-2xl font-bold text-gray-800 dark:text-gray-100">{{ formatDuration(focusStatsStore.totalFocusDuration) }}</div>
               </div>
-              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.values.statistics.totalFocusTime') }}</div>
-            </div>
-            <div class="stat-body p-3 text-center">
-              <div class="stat-value text-2xl font-bold">{{ formatDuration(focusStatsStore.totalFocusDuration) }}</div>
-            </div>
-          </div>
 
-          <div class="stat-card bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm overflow-hidden">
-            <div class="stat-header bg-primary/10 dark:bg-primary-dark/20 px-3 py-2 flex items-center">
-              <div class="stat-icon text-primary dark:text-primary-dark">
-                <IconChartBar size="20" />
+              <!-- 总专注次数 -->
+              <div class="stat-item text-center">
+                <div class="stat-icon-wrapper mx-auto mb-2 w-10 h-10 rounded-full bg-blue-500/20 dark:bg-blue-400/30 flex items-center justify-center">
+                  <IconChartBar size="20" class="text-blue-500 dark:text-blue-400" />
+                </div>
+                <div class="stat-label text-sm text-gray-600 dark:text-gray-400 mb-1">{{ $t('settings.values.statistics.totalSessions') }}</div>
+                <div class="stat-value text-2xl font-bold text-gray-800 dark:text-gray-100">{{ focusStatsStore.totalFocusSessions }}</div>
               </div>
-              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.values.statistics.totalSessions') }}</div>
-            </div>
-            <div class="stat-body p-3 text-center">
-              <div class="stat-value text-2xl font-bold">{{ focusStatsStore.totalFocusSessions }}</div>
-            </div>
-          </div>
 
-          <div class="stat-card bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm overflow-hidden">
-            <div class="stat-header bg-primary/10 dark:bg-primary-dark/20 px-3 py-2 flex items-center">
-              <div class="stat-icon text-primary dark:text-primary-dark">
-                <IconCheckbox size="20" />
+              <!-- 完成专注次数 -->
+              <div class="stat-item text-center">
+                <div class="stat-icon-wrapper mx-auto mb-2 w-10 h-10 rounded-full bg-green-500/20 dark:bg-green-400/30 flex items-center justify-center">
+                  <IconCheckbox size="20" class="text-green-500 dark:text-green-400" />
+                </div>
+                <div class="stat-label text-sm text-gray-600 dark:text-gray-400 mb-1">{{ $t('settings.values.statistics.completedSessions') }}</div>
+                <div class="stat-value text-2xl font-bold text-gray-800 dark:text-gray-100">{{ focusStatsStore.completedFocusSessions }}</div>
               </div>
-              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.values.statistics.completedSessions') }}</div>
-            </div>
-            <div class="stat-body p-3 text-center">
-              <div class="stat-value text-2xl font-bold">{{ focusStatsStore.completedFocusSessions }}</div>
-            </div>
-          </div>
 
-          <div class="stat-card bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm overflow-hidden">
-            <div class="stat-header bg-primary/10 dark:bg-primary-dark/20 px-3 py-2 flex items-center">
-              <div class="stat-icon text-primary dark:text-primary-dark">
-                <IconChartLine size="20" />
+              <!-- 完成率 -->
+              <div class="stat-item text-center">
+                <div class="stat-icon-wrapper mx-auto mb-2 w-10 h-10 rounded-full bg-purple-500/20 dark:bg-purple-400/30 flex items-center justify-center">
+                  <IconChartLine size="20" class="text-purple-500 dark:text-purple-400" />
+                </div>
+                <div class="stat-label text-sm text-gray-600 dark:text-gray-400 mb-1">{{ $t('settings.values.statistics.completionRate') }}</div>
+                <div class="stat-value text-2xl font-bold text-gray-800 dark:text-gray-100">{{ formatPercentage(focusStatsStore.focusCompletionRate) }}</div>
               </div>
-              <div class="stat-label ml-2 text-sm font-medium">{{ $t('settings.values.statistics.completionRate') }}</div>
-            </div>
-            <div class="stat-body p-3 text-center">
-              <div class="stat-value text-2xl font-bold">{{ formatPercentage(focusStatsStore.focusCompletionRate) }}</div>
             </div>
           </div>
         </div>
 
-        <!-- 连续专注天数 -->
-        <div class="streak-card bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm overflow-hidden mb-6">
-          <div class="streak-header bg-amber-500/10 dark:bg-amber-400/20 px-4 py-3 flex items-center">
-            <div class="streak-icon text-amber-500 dark:text-amber-400">
-              <IconFlame size="24" />
-            </div>
-            <div class="ml-2">
-              <h3 class="text-lg font-medium">{{ $t('settings.values.statistics.streak') }}</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.currentStreak') }}</p>
-            </div>
-            <div class="ml-auto">
-              <div class="text-3xl font-bold text-amber-500 dark:text-amber-400">{{ focusStatsStore.streakDays }}</div>
-              <div class="text-xs text-right text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.streakDays') }}</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <!-- 连续专注天数 - 左侧卡片 -->
+          <div class="streak-card bg-gradient-to-br from-amber-500/5 to-amber-500/15 dark:from-amber-400/10 dark:to-amber-400/25 rounded-xl shadow-sm overflow-hidden border border-amber-500/10 dark:border-amber-400/20">
+            <div class="p-5">
+              <div class="flex items-start">
+                <div class="streak-icon w-14 h-14 rounded-full bg-amber-500/20 dark:bg-amber-400/30 flex items-center justify-center text-amber-500 dark:text-amber-400 mr-4">
+                  <IconFlame size="28" />
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-lg font-medium text-gray-800 dark:text-gray-100">{{ $t('settings.values.statistics.streak') }}</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">{{ $t('settings.values.statistics.currentStreak') }}</p>
+
+                  <div class="flex items-baseline">
+                    <div class="text-4xl font-bold text-amber-500 dark:text-amber-400">{{ focusStatsStore.streakDays }}</div>
+                    <div class="text-sm ml-2 text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.streakDays') }}</div>
+                  </div>
+
+                  <!-- 连续天数可视化 -->
+                  <div class="mt-3 flex space-x-1">
+                    <div
+                      v-for="i in 7"
+                      :key="i"
+                      class="w-8 h-2 rounded-full"
+                      :class="i <= (focusStatsStore.streakDays > 7 ? 7 : focusStatsStore.streakDays)
+                        ? 'bg-amber-500 dark:bg-amber-400'
+                        : 'bg-gray-200 dark:bg-gray-700'"
+                    ></div>
+                    <div v-if="focusStatsStore.streakDays > 7" class="text-xs text-amber-500 dark:text-amber-400 ml-1">+{{ focusStatsStore.streakDays - 7 }}</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 专注习惯分析 -->
-        <div class="focus-insights p-4 rounded-xl shadow-sm bg-surface-light dark:bg-surface-dark mb-6">
-          <h3 class="text-lg font-medium mb-3 flex items-center">
-            <IconBulb size="20" class="text-primary dark:text-primary-dark mr-2" />
-            {{ $t('settings.values.statistics.insights') }}
-          </h3>
-          <ul class="space-y-3 pl-2">
-            <li class="flex items-start gap-3">
-              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 dark:bg-primary-dark/20 flex items-center justify-center text-primary dark:text-primary-dark">
-                <IconClock size="18" />
-              </div>
-              <div>
-                <div class="font-medium">{{ $t('settings.values.statistics.mostProductiveTime', { time: formatHour(focusStatsStore.mostProductiveHour) }) }}</div>
-                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.mostProductiveTimeDesc') }}</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 dark:bg-primary-dark/20 flex items-center justify-center text-primary dark:text-primary-dark">
-                <IconChartBar size="18" />
-              </div>
-              <div>
-                <div class="font-medium">{{ $t('settings.values.statistics.mostProductiveDay', { day: formatDay(focusStatsStore.mostProductiveDay) }) }}</div>
-                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.mostProductiveDayDesc') }}</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 dark:bg-primary-dark/20 flex items-center justify-center text-primary dark:text-primary-dark">
-                <IconClock size="18" />
-              </div>
-              <div>
-                <div class="font-medium">{{ $t('settings.values.statistics.averageFocusTime', { time: formatDuration(focusStatsStore.averageFocusDuration) }) }}</div>
-                <div class="text-sm text-gray-600 dark:text-gray-400">{{ $t('settings.values.statistics.averageFocusTimeDesc') }}</div>
-              </div>
-            </li>
-          </ul>
+          <!-- 专注习惯分析 - 右侧卡片 -->
+          <div class="focus-insights bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary-dark/10 dark:to-primary-dark/20 rounded-xl shadow-sm overflow-hidden border border-primary/10 dark:border-primary-dark/20">
+            <div class="insights-header bg-primary/10 dark:bg-primary-dark/20 px-4 py-3">
+              <h3 class="text-lg font-medium flex items-center">
+                <IconBulb size="20" class="text-primary dark:text-primary-dark mr-2" />
+                {{ $t('settings.values.statistics.insights') }}
+              </h3>
+            </div>
+
+            <div class="p-4">
+              <ul class="space-y-3">
+                <li class="flex items-start gap-3">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 dark:bg-blue-400/30 flex items-center justify-center text-blue-500 dark:text-blue-400">
+                    <IconClock size="20" />
+                  </div>
+                  <div>
+                    <div class="font-medium text-gray-800 dark:text-gray-100">{{ $t('settings.values.statistics.mostProductiveTime', { time: formatHour(focusStatsStore.mostProductiveHour) }) }}</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ $t('settings.values.statistics.mostProductiveTimeDesc') }}</div>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-500/20 dark:bg-green-400/30 flex items-center justify-center text-green-500 dark:text-green-400">
+                    <IconChartBar size="20" />
+                  </div>
+                  <div>
+                    <div class="font-medium text-gray-800 dark:text-gray-100">{{ $t('settings.values.statistics.mostProductiveDay', { day: formatDay(focusStatsStore.mostProductiveDay) }) }}</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ $t('settings.values.statistics.mostProductiveDayDesc') }}</div>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 dark:bg-purple-400/30 flex items-center justify-center text-purple-500 dark:text-purple-400">
+                    <IconClock size="20" />
+                  </div>
+                  <div>
+                    <div class="font-medium text-gray-800 dark:text-gray-100">{{ $t('settings.values.statistics.averageFocusTime', { time: formatDuration(focusStatsStore.averageFocusDuration) }) }}</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ $t('settings.values.statistics.averageFocusTimeDesc') }}</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -372,7 +506,7 @@ onMounted(() => {
             <!-- 时间范围选择器 -->
             <div class="time-range-selector flex flex-wrap gap-2 mt-3">
               <button
-                v-for="range in timeRanges.value"
+                v-for="range in timeRanges"
                 :key="range.value"
                 class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                 :class="{
@@ -537,11 +671,11 @@ onMounted(() => {
 
 <style scoped>
 .focus-statistics {
-  @apply w-full;
+  width: 100%;
 }
 
 .tab-content {
-  @apply animate-fadeIn;
+  animation: fadeIn 0.3s ease-out;
 }
 
 @keyframes fadeIn {
@@ -549,7 +683,13 @@ onMounted(() => {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out;
+/* 隐藏滚动条但保留滚动功能 */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }
 </style>
