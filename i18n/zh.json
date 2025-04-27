@@ -108,6 +108,20 @@
           "_description": "当 FocusTide 在后台运行的时候，其计时器的刷新频率会降低"
         }
       },
+      "sectionEndAction": {
+        "_title": "计时器结束行为",
+        "_description": "当计时器结束时应该发生什么",
+        "_values": {
+          "continue": "继续",
+          "stop": "停止",
+          "skip": "前进"
+        },
+        "_valueDescription": {
+          "continue": "继续计时",
+          "stop": "停止计时器",
+          "skip": "开始下一个部分"
+        }
+      },
       "schedule": {
         "longPauseInterval": {
           "_title": "长休息周期",
@@ -176,13 +190,15 @@
           "_description": ""
         },
         "soundSet": {
-          "_title": "Sound set",
+          "_title": "音效集",
           "_description": "用于通知的提示音",
           "_values": {
-            "musical": "Musical"
+            "musical": "音乐",
+            "sharp": "简短"
           },
           "_valueDescription": {
-            "musical": "默认提示音"
+            "musical": "默认提示音",
+            "sharp": "更短的、类似蜂鸣声的提示音，更适合训练"
           }
         }
       },
@@ -245,7 +261,9 @@
         "playDuringWork": {
           "_title": "仅在工作期间播放",
           "_description": "仅在工作会话期间播放白噪音"
-        }
+        },
+        "play": "播放白噪音",
+        "pause": "暂停白噪音"
       },
       "statistics": {
         "_section": "统计",
@@ -287,6 +305,23 @@
           "year": "年",
           "allTime": "全部"
         },
+        "categories": {
+          "overview": "概览",
+          "analysis": "分析",
+          "achievements": "成就",
+          "tools": "工具"
+        },
+        "categoryGroups": {
+          "overviewSummary": "概览与摘要",
+          "dataAnalysis": "数据分析",
+          "achievementsGoals": "成就与目标",
+          "toolsSuggestions": "工具与建议"
+        },
+        "timeRange": "时间范围",
+        "quickAccess": "快速访问",
+        "total": "总计",
+        "completed": "已完成",
+        "rate": "比率",
         "days": {
           "sunday": "周日",
           "monday": "周一",
@@ -364,6 +399,8 @@
           "title": "专注评分",
           "description": "查看您的专注质量、效率和习惯评分，了解您的专注表现。",
           "overall": "总体评分",
+          "overallRating": "总体评分",
+          "clickToViewDetails": "点击查看详细评分",
           "quality": "专注质量",
           "efficiency": "专注效率",
           "habit": "专注习惯",
