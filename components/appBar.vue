@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { IconSettings, IconChecklist } from '@tabler/icons-vue'
+import { IconSettings, IconChecklist, IconLogin } from '@tabler/icons-vue'
 import { ButtonImportance, ButtonTheme } from './base/types/button'
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import CButton from '~~/components/base/uiButton.vue'
 import ScheduleView from '@/components/schedule/scheduleDisplay.vue'
 import WhiteNoiseTopControl from '@/components/whiteNoise/whiteNoiseTopControl.vue'
+import UserMenu from '@/components/auth/userMenu.vue'
+import SignInModal from '@/components/auth/signInModal.vue'
+import SignUpModal from '@/components/auth/signUpModal.vue'
+import ResetPasswordModal from '@/components/auth/resetPasswordModal.vue'
 import { useOpenPanels } from '@/stores/openpanels'
 import { useSchedule } from '~~/stores/schedule'
 import { useSettings } from '~~/stores/settings'
@@ -18,7 +22,16 @@ const webPlatform = useWeb()
 // 白噪音播放状态
 const whiteNoiseState = ref(false)
 
-// 白噪音状态管理
+// 认证模态框状态
+const showSignInModal = ref(false)
+const showSignUpModal = ref(false)
+const showResetPasswordModal = ref(false)
+
+// 打开设置面板并切换到账户标签
+const openAccountSettings = () => {
+  openPanels.settings = true
+  openPanels.settingsTab = 'account' // 假设我们添加了一个新的账户标签
+}
 
 // 在组件挂载时检查白噪音状态
 onMounted(() => {
@@ -69,6 +82,14 @@ const toggleWhiteNoise = () => {
       <div v-show="settingsStore.schedule.visibility.enabled && settingsStore.schedule.visibility.showSectionType" class="flex-shrink overflow-hidden text-lg whitespace-pre select-none text-ellipsis text-surface-onlight dark:text-surface-ondark" v-text="$t('section.' + scheduleStore.getCurrentItem.type).toLowerCase()" />
     </ClientOnly>
     <div class="flex-grow" />
+
+    <!-- 用户菜单 -->
+    <UserMenu
+      @open-sign-in="showSignInModal = true"
+      @open-sign-up="showSignUpModal = true"
+      @open-settings="openAccountSettings"
+    />
+
     <CButton
       v-show="settingsStore.tasks.enabled"
       circle
@@ -83,12 +104,14 @@ const toggleWhiteNoise = () => {
     >
       <IconChecklist size="24" class="inline-block" />
     </CButton>
-    <!-- 白噪音控制按钮 - 始终显示，不受 enabled 设置控制 -->
+
+    <!-- 白噪音控制按钮 -->
     <WhiteNoiseTopControl
       :is-playing="whiteNoiseState"
       @toggle="toggleWhiteNoise"
       class="mr-2"
     />
+
     <CButton
       circle
       :aria-label="$t('appbar.settings')"
@@ -102,5 +125,25 @@ const toggleWhiteNoise = () => {
     >
       <IconSettings size="24" class="inline-block" />
     </CButton>
+
+    <!-- 认证模态框 -->
+    <SignInModal
+      v-if="showSignInModal"
+      @close="showSignInModal = false"
+      @open-sign-up="showSignInModal = false; showSignUpModal = true"
+      @open-reset-password="showSignInModal = false; showResetPasswordModal = true"
+    />
+
+    <SignUpModal
+      v-if="showSignUpModal"
+      @close="showSignUpModal = false"
+      @open-sign-in="showSignUpModal = false; showSignInModal = true"
+    />
+
+    <ResetPasswordModal
+      v-if="showResetPasswordModal"
+      @close="showResetPasswordModal = false"
+      @open-sign-in="showResetPasswordModal = false; showSignInModal = true"
+    />
   </div>
 </template>

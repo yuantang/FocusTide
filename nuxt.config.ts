@@ -54,7 +54,9 @@ export default defineNuxtConfig({
     public: {
       PACKAGE_VERSION: version,
       PLATFORM: AppPlatform.web,
-      URL: 'https://focustide.app'
+      URL: 'https://focustide.app',
+      SUPABASE_URL: process.env.NUXT_PUBLIC_SUPABASE_URL,
+      SUPABASE_KEY: process.env.NUXT_PUBLIC_SUPABASE_KEY
     }
   },
 
@@ -126,8 +128,18 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@pinia/nuxt',
     ['./modules/build/icon_resize', iconConfig],
-    ['./modules/build/pwa', { swPath: 'serviceworker.js' }]
+    ['./modules/build/pwa', { swPath: 'serviceworker.js' }],
+    '@nuxtjs/supabase'
   ],
+
+  supabase: {
+    redirect: false,
+    redirectOptions: {
+      login: '/auth/login',
+      callback: '/auth/confirm',
+      exclude: ['/*']
+    }
+  },
 
   /*
   ** Google Fonts
