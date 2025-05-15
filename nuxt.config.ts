@@ -138,7 +138,9 @@ export default defineNuxtConfig({
       login: '/auth/login',
       callback: '/auth/confirm',
       exclude: ['/*']
-    }
+    },
+    url: process.env.NUXT_PUBLIC_SUPABASE_URL,
+    key: process.env.NUXT_PUBLIC_SUPABASE_KEY
   },
 
   /*
