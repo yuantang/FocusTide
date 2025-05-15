@@ -25,7 +25,7 @@ const select = (key: string) => {
 </script>
 
 <template>
-  <div class="grid grid-flow-row gap-3 select-option-group" :class="[Object.keys(props.choices).length > 3 ? 'md:grid-flow-row md:grid-cols-3' : 'md:grid-flow-col md:auto-cols-auto']">
+  <div class="grid grid-flow-row gap-3 select-option-group" :class="[Object.keys(props.choices).length > 3 ? 'md:grid-flow-row md:grid-cols-3' : 'md:grid-flow-col md:auto-cols-auto']" role="radiogroup">
     <slot>
       <OptionControl
         v-for="(item, key) in props.choices"
