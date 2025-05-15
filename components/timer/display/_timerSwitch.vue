@@ -27,7 +27,7 @@ const running = computed(() => scheduleStore.timerState === TimerState.RUNNING)
 </script>
 
 <template>
-  <div class="relative grid text-black transition-opacity duration-500 select-none place-items-center dark:text-gray-100" :class="[{ 'opacity-70': !running, 'opacity-100': running }]">
+  <div class="relative grid text-black transition-opacity duration-500 select-none place-items-center dark:text-gray-100 z-[-1]" :class="[{ 'opacity-70': !running, 'opacity-100': running }]">
     <Transition name="timer-switch" mode="out-in">
       <CompleteMarker v-if="scheduleStore.getCurrentTimerState === TimerState.COMPLETED" :key="'complete'" />
       <TimerTraditional v-else-if="props.timerWidget === TimerType.Traditional" :key="'traditional'" @tick="$emit('tick', $event)" />

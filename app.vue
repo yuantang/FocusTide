@@ -161,7 +161,7 @@ const progressBarSchedules = computed(() => {
           :time-original="scheduleStore.getCurrentItem.length"
           :timer-state="scheduleStore.timerState"
           :timer-widget="settingsStore.currentTimer"
-          class="flex-grow"
+          class="flex-grow z-[-1]"
           @tick="state.timeString = $event"
         />
         <TimerControls class="mb-8" />

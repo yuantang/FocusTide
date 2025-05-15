@@ -25,6 +25,8 @@ const emit = defineEmits<{(type: 'click'): void}>()
       'hover:bg-primary-container dark:hover:bg-primary-darkcontainer bg-surface-variant text-surface-onvariant dark:text-surface-ondarkvariant dark:bg-surface-darkvariant dark:border-surface-ondark border-surface-onlight border-opacity-30': !active
     }]"
     @click="emit('click')"
+    role="radio"
+    :aria-checked="active"
   >
     <slot name="pre" />
     <div class="text-lg" :class="[{'font-bold uppercase': props.description.length > 0 }]">

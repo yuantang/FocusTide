@@ -52,6 +52,14 @@ module.exports = {
           ondarkvariant: '#d7c1c0',
           darkoutline: '#a08c8b'
         },
+        input: {
+          light: '#f5f5f5',
+          dark: '#2a2a2a'
+        },
+        border: {
+          light: '#e0e0e0',
+          dark: '#444444'
+        },
         error: {
           light: '#ba1a1a',
           onlight: '#ffffff',

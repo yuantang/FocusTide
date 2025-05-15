@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconX as CloseIcon, IconAdjustments as TabIconGeneral, IconAlarm as TabIconSchedule, IconArtboard as TabIconVisuals, IconInfoCircle as InfoIcon, IconInfoCircle as TabIconAbout, IconVolume as VolumeIcon, IconChartBar as TabIconStats } from '@tabler/icons-vue'
+import { IconX as CloseIcon, IconAdjustments as TabIconGeneral, IconAlarm as TabIconSchedule, IconArtboard as TabIconVisuals, IconInfoCircle as InfoIcon, IconInfoCircle as TabIconAbout, IconVolume as VolumeIcon, IconChartBar as TabIconStats, IconUser as TabIconAccount } from '@tabler/icons-vue'
 
 import { ButtonImportance } from '../base/types/button'
 import ThemeSettings from './theme/themeSettings.vue'
@@ -10,11 +10,13 @@ import ImportButton from '@/components/settings/importButton.vue'
 
 import AboutTab from '~~/components/settings/aboutTab.vue'
 import FocusStatistics from '~~/components/settings/statistics/focusStatistics.vue'
+import AccountTab from '~~/components/settings/accountTab.vue'
 
 import presetTimers from '~~/assets/settings/timerPresets'
 import { useSettings, WhiteNoiseType, SoundSet } from '~~/stores/settings'
 import { NotificationPermission, useNotifications } from '~~/stores/notifications'
 import { useMobileSettings } from '~~/stores/platforms/mobileSettings'
+import { useAuth } from '~~/stores/auth'
 
 import ControlButton from '~~/components/base/uiButton.vue'
 import SettingsItem from '~~/components/settings/settingsItem.vue'
@@ -29,19 +31,31 @@ const openPanels = useOpenPanels()
 const mobileSettingsStore = useMobileSettings()
 const notificationsStore = useNotifications()
 const settingsStore = useSettings()
+const authStore = useAuth()
 const isWeb = computed(() => runtimeConfig.public.PLATFORM === 'web')
 const isMobile = computed(() => runtimeConfig.public.PLATFORM === 'mobile')
 
+const emit = defineEmits(['openSignIn', 'openSignUp'])
+
 const state = reactive({
   activeTab: 1,
-  resetConfirm: false
+  resetConfirm: false,
+  showInfoBox: false,
+  infoBoxContent: ''
+})
+
+// 监听设置标签页变化
+watch(() => openPanels.settingsTab, (newTab) => {
+  if (newTab === 'account') {
+    state.activeTab = 6 // 账户标签的索引
+  }
 })
 
 notificationsStore.updateEnabled()
 </script>
 
 <template>
-  <section class="fixed z-40 w-full h-full p-0 md:p-4 md:max-w-screen-sm">
+  <section class="fixed z-[9999] w-full h-full p-0 md:p-4 md:max-w-screen-sm">
     <div class="flex flex-col h-full overflow-hidden rounded-none shadow-lg bg-surface-light text-surface-onlight md:rounded-xl md:dark:ring-1 dark:ring-surface-ondark dark:ring-opacity-20 ring-inset dark:bg-surface-dark dark:text-surface-ondark" :style="{ 'padding-top': `${mobileSettingsStore.padding.top}px`, 'padding-bottom': `${mobileSettingsStore.padding.bottom}px` }">
       <h1 class="px-4 mt-4 mb-2 text-xl font-bold uppercase">
         <span>{{ $t('settings.heading') }}</span>
@@ -199,6 +213,30 @@ notificationsStore.updateEnabled()
           <div v-else-if="state.activeTab === 5" :key="5" class="settings-tab">
             <AboutTab />
           </div>
+
+          <!-- 账户标签页 -->
+          <div v-else-if="state.activeTab === 6" :key="6" class="settings-tab">
+            <AccountTab v-if="authStore.isAuthenticated" />
+            <div v-else class="flex flex-col items-center justify-center p-6 text-center">
+              <TabIconAccount size="64" class="mb-4 text-gray-400" />
+              <h3 class="mb-2 text-xl font-bold">{{ $t('auth.not_signed_in') }}</h3>
+              <p class="mb-4 text-sm text-gray-500">{{ $t('auth.sign_in_benefits') }}</p>
+              <div class="flex gap-2">
+                <ControlButton
+                  :importance="ButtonImportance.Filled"
+                  @click="openPanels.settings = false; $emit('openSignIn')"
+                >
+                  {{ $t('auth.sign_in') }}
+                </ControlButton>
+                <ControlButton
+                  :importance="ButtonImportance.Outline"
+                  @click="openPanels.settings = false; $emit('openSignUp')"
+                >
+                  {{ $t('auth.sign_up') }}
+                </ControlButton>
+              </div>
+            </div>
+          </div>
         </Transition>
       </div>
 
@@ -222,6 +260,11 @@ notificationsStore.updateEnabled()
         <TabHeader :active="state.activeTab === 4" :text="$t('settings.tabs.statistics')" @click="state.activeTab = 4">
           <template #icon>
             <TabIconStats size="24" role="presentation" />
+          </template>
+        </TabHeader>
+        <TabHeader :active="state.activeTab === 6" :text="$t('settings.tabs.account')" @click="state.activeTab = 6">
+          <template #icon>
+            <TabIconAccount size="24" role="presentation" />
           </template>
         </TabHeader>
         <TabHeader :active="state.activeTab === 5" :text="$t('settings.tabs.about')" @click="state.activeTab = 5">
