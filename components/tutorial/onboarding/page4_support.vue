@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconHeartHandshake } from '@tabler/icons-vue'
+import { IconHeartHandshake, IconLogin } from '@tabler/icons-vue'
 import OnboardingHeader from './onboardingHeader.vue'
 import OnboardingPage from './onboardingPage.vue'
 </script>
@@ -7,11 +7,9 @@ import OnboardingPage from './onboardingPage.vue'
 <template>
   <OnboardingPage>
     <OnboardingHeader :text="$t('tutorials.onboarding.pages.support.heading')">
-      <IconHeartHandshake :size="42" />
+      <IconLogin :size="42" />
     </OnboardingHeader>
 
-    <div class="text-center" v-text="$t('tutorials.onboarding.pages.support.text')" />
-
-    <div class="text-center" v-text="$t('tutorials.onboarding.pages.support.hint')" />
+    <div class="text-center" v-text="$t('auth.sign_in_benefits')" />
   </OnboardingPage>
 </template>

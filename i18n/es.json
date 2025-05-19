@@ -79,7 +79,6 @@
     "sync_30min": "Cada 30 minutos",
     "sync_60min": "Cada hora",
     "sync_data": "Sincronizar datos",
-    "sync_interval": "Intervalo de sincronización",
     "sync_interval": {
       "_title": "Intervalo de sincronización",
       "_description": "Establecer el intervalo para la sincronización de datos",
@@ -136,7 +135,18 @@
       "support": "Apoye el proyecto",
       "supportBody": "Desarrollo FocusTide en mi tiempo libre. ¡Significaría mucho para mí si pudiera ayudarme a seguir trabajando en él!",
       "mobileSupport": "Debido a las reglas impuestas por la Google Play Store, no puedo mostrarle ningún enlace dentro de la aplicación móvil para donar al proyecto.",
-      "share": "o comparta la aplicación en redes sociales:"
+      "share": "o comparta la aplicación en redes sociales:",
+      "productIntro": "Introducción a FocusTide",
+      "productDescription": "FocusTide es una aplicación de temporizador Pomodoro enfocada en mejorar la productividad. Le ayuda a mejorar la concentración y la eficiencia dividiendo el trabajo en sesiones de concentración y descansos utilizando técnicas de gestión del tiempo.",
+      "keyFeatures": "Características Principales",
+      "feature1": "Tiempos de trabajo y descanso personalizables",
+      "feature2": "Múltiples estilos de temporizador",
+      "feature3": "Ruido blanco para mejor concentración",
+      "feature4": "Gestión de tareas",
+      "feature5": "Estadísticas detalladas de concentración",
+      "feature6": "Sincronización de datos entre dispositivos",
+      "howToUse": "Cómo Usar",
+      "howToUseDesc": "Configure su tiempo de trabajo (predeterminado 25 minutos) y tiempo de descanso (predeterminado 5 minutos), luego haga clic en el botón de inicio para entrar en modo de concentración. Después de completar una sesión de trabajo, disfrute de un breve descanso, luego continúe con la siguiente sesión de trabajo. Después de completar varias sesiones de trabajo, puede obtener un descanso más largo."
     },
     "values": {
       "manage": {
@@ -666,16 +676,16 @@
           "text": "Configure sus propios temporizadores, utilice la lista de tareas y notificaciones a su favor. ¡Revise el menú de ajustes para más oportunidades!"
         },
         "support": {
-          "heading": "Apoye el proyecto",
-          "text": "Si este proyecto te ha ayudado, considera invitar al autor un café. También puede encontrar el botón de apoyo en el menú de ajustes.",
-          "hint": "También puede encontrar opciones de asistencia en la página Configuración > Acerca de."
+          "heading": "Iniciar sesión o Registrarse",
+          "text": "Inicie sesión para sincronizar sus datos en múltiples dispositivos y nunca perder su progreso y configuración.",
+          "hint": "También puede iniciar sesión o registrarse en Configuración > Cuenta."
         }
       },
       "buttons": {
         "close": "Cerrar",
         "start": "Iniciar tutorial",
         "next": "Siguiente",
-        "support": "Apoye el proyecto"
+        "support": "Iniciar sesión o Registrarse"
       }
     },
     "olddomain": {

@@ -60,9 +60,20 @@
       "madeby": "Made by Imre Gera",
       "source": "Source code",
       "support": "Support the project",
-      "supportBody": "I develop FocusTide in my free time. It would mean a lot to me if you could help me keep working on it!",
+      "supportBody": "This is a customized version based on FocusTide, preserving the original app's powerful features while adding personalized improvements and optimizations!",
       "mobileSupport": "Due to the rules enforced by the Google Play Store, I cannot show you any links inside the mobile app to donate to the project.",
-      "share": "or share the app on social media:"
+      "share": "or share the app on social media:",
+      "productIntro": "FocusTide Introduction",
+      "productDescription": "FocusTide is a Pomodoro timer app focused on improving productivity. It helps you enhance focus and efficiency by breaking work into focused sessions and breaks using time management techniques.",
+      "keyFeatures": "Key Features",
+      "feature1": "Customizable work and break times",
+      "feature2": "Multiple timer styles",
+      "feature3": "White noise for better focus",
+      "feature4": "Task management",
+      "feature5": "Detailed focus statistics",
+      "feature6": "Multi-device data synchronization",
+      "howToUse": "How to Use",
+      "howToUseDesc": "Set your work time (default 25 minutes) and break time (default 5 minutes), then click the start button to enter focus mode. After completing a work session, enjoy a short break, then continue with the next work session. After completing several work sessions, you can get a longer break."
     },
     "values": {
       "manage": {
@@ -595,7 +606,6 @@
     "sync_30min": "Every 30 minutes",
     "sync_60min": "Every hour",
     "sync_data": "Sync Data",
-    "sync_interval": "Sync Interval",
     "sync_interval": {
       "_title": "Sync Interval",
       "_description": "Set the interval for data synchronization",
@@ -693,16 +703,16 @@
           "text": "You can always change these (and more) in the settings menu!"
         },
         "support": {
-          "heading": "Support the project",
-          "text": "If this project has helped you, consider buying the author a coffee.",
-          "hint": "You can also find support options in the Settings > About page."
+          "heading": "Sign In or Register",
+          "text": "Sign in to sync your data across multiple devices and never lose your progress and settings.",
+          "hint": "You can also sign in or register in Settings > Account."
         }
       },
       "buttons": {
         "close": "Close",
         "start": "Start setup",
         "next": "Next",
-        "support": "Support the project"
+        "support": "Sign In or Register"
       }
     },
     "olddomain": {

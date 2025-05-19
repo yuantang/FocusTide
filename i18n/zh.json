@@ -100,14 +100,18 @@
     "account": "账户",
     "member_since": "注册时间：{date}",
     "sending": "发送中...",
-    "sign_in_benefits": "登录以在多个设备上同步您的数据，永不丢失您的进度。",
+    "sign_in_benefits": "登录以在多个设备上同步您的数据，永不丢失您的进度和设置。",
+    "sign_in_benefits_title": "为什么要登录？",
+    "sign_in_success": "登录成功！",
+    "sign_up_success": "注册成功！",
     "sign_out": "退出登录",
     "not_signed_in": "未登录",
     "enter_email": "请输入您的邮箱",
     "data_sync": "数据同步",
     "sync_now": "立即同步",
     "syncing": "同步中...",
-    "danger_zone": "危险区域"
+    "danger_zone": "危险区域",
+    "account_actions": "账户操作"
   },
   "settings": {
     "heading": "设置",
@@ -140,9 +144,20 @@
       "madeby": "由 Imre Gera 开发",
       "source": "源代码",
       "support": "支持此项目",
-      "supportBody": "我在我的空余时间里开发了 FocusTide ，希望你能帮助我一起开发它！",
+      "supportBody": "这是基于 FocusTide 的二次开发版本，保留了原应用的强大功能，并添加了个性化的改进和优化！",
       "mobileSupport": "由于 Google Play 商店的规则，我无法向您展示移动应用程序中的任何链接以便向项目捐赠。",
-      "share": "或在社交媒体上分享这个应用："
+      "share": "或在社交媒体上分享这个应用：",
+      "productIntro": "FocusTide 简介",
+      "productDescription": "FocusTide 是一款专注于提高工作效率的番茄钟应用。它帮助您通过时间管理技术，将工作分解为专注时段和休息时段，从而提高专注力和工作效率。",
+      "keyFeatures": "主要功能",
+      "feature1": "自定义工作和休息时间",
+      "feature2": "多种计时器风格",
+      "feature3": "白噪音辅助专注",
+      "feature4": "任务管理",
+      "feature5": "详细的专注统计",
+      "feature6": "多设备数据同步",
+      "howToUse": "使用方法",
+      "howToUseDesc": "设置工作时间（默认25分钟）和休息时间（默认5分钟），点击开始按钮进入专注状态。完成一个工作时段后，享受短暂休息，然后继续下一个工作时段。每完成几个工作时段，可以获得一个较长的休息时间。"
     },
     "values": {
       "manage": {
@@ -706,16 +721,16 @@
           "text": "您总是可以在设置菜单中更改这些（以及其它设置） ！"
         },
         "support": {
-          "heading": "支持此项目",
-          "text": "如果这个项目可以帮到你，请考虑给我买杯咖啡。",
-          "hint": "您也可以在 设置 > 关于 中找到支持选项。"
+          "heading": "登录注册",
+          "text": "登录以在多个设备上同步您的数据，永不丢失您的进度和设置。",
+          "hint": "您也可以在 设置 > 账户 中登录或注册。"
         }
       },
       "buttons": {
         "close": "关闭",
         "start": "开始设置",
         "next": "下一步",
-        "support": "支持此项目"
+        "support": "登录注册"
       }
     },
     "olddomain": {

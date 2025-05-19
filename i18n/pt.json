@@ -79,7 +79,6 @@
     "sync_30min": "A cada 30 minutos",
     "sync_60min": "A cada hora",
     "sync_data": "Sincronizar dados",
-    "sync_interval": "Intervalo de sincronização",
     "sync_interval": {
       "_title": "Intervalo de sincronização",
       "_description": "Definir o intervalo para sincronização de dados",
@@ -136,7 +135,18 @@
       "support": "Ajude o projeto",
       "supportBody": "Eu desenvolvi o FocusTide no meu tempo livre. Significaria muito para mim se você pudesse me ajudar a continuar trabalhando nele",
       "mobileSupport": "Por causa das regras impostas pela Google Play Store, eu não posso mostrar nenhum link dentro do aplicativo móvel para doações a estre projeto",
-      "share": "ou compartilhe o aplicativo nas redes sociais:"
+      "share": "ou compartilhe o aplicativo nas redes sociais:",
+      "productIntro": "Introdução ao FocusTide",
+      "productDescription": "FocusTide é um aplicativo de cronômetro Pomodoro focado em melhorar a produtividade. Ele ajuda você a melhorar seu foco e eficiência dividindo o trabalho em sessões de concentração e pausas usando técnicas de gerenciamento de tempo.",
+      "keyFeatures": "Principais Recursos",
+      "feature1": "Tempos de trabalho e pausa personalizáveis",
+      "feature2": "Vários estilos de cronômetro",
+      "feature3": "Ruído branco para melhor concentração",
+      "feature4": "Gerenciamento de tarefas",
+      "feature5": "Estatísticas detalhadas de concentração",
+      "feature6": "Sincronização de dados entre dispositivos",
+      "howToUse": "Como Usar",
+      "howToUseDesc": "Defina seu tempo de trabalho (padrão 25 minutos) e tempo de pausa (padrão 5 minutos), depois clique no botão iniciar para entrar no modo de concentração. Após concluir uma sessão de trabalho, aproveite uma pausa curta e continue com a próxima sessão de trabalho. Após concluir várias sessões de trabalho, você pode obter uma pausa mais longa."
     },
     "values": {
       "manage": {
@@ -674,16 +684,16 @@
           "text": "Você sempre pode alterar isso (e mais) no menu de configurações!"
         },
         "support": {
-          "heading": "Apoie o projeto",
-          "text": "Se este projeto ajudou você, considere comprar um café para o autor.",
-          "hint": "Você também pode encontrar opções de suporte na página Configurações > Sobre."
+          "heading": "Faça Login ou Registre-se",
+          "text": "Faça login para sincronizar seus dados em vários dispositivos e nunca perder seu progresso e configurações.",
+          "hint": "Você também pode fazer login ou se registrar em Configurações > Conta."
         }
       },
       "buttons": {
         "close": "Fechar",
         "start": "Iniciar configuração",
         "next": "Próximo",
-        "support": "Apoie o projeto"
+        "support": "Faça Login ou Registre-se"
       }
     }
   }

@@ -13,6 +13,8 @@ import OnboardingPage4 from '~~/components/tutorial/onboarding/page4_support.vue
 const state = reactive({
   page: 0
 })
+
+const emit = defineEmits(['close', 'openSignIn', 'openSignUp'])
 </script>
 
 <template>
@@ -38,18 +40,23 @@ const state = reactive({
         <Button v-else-if="state.page < 4" class="flex-grow w-full" default-style :importance="ButtonImportance.Filled" @click="state.page += 1">
           {{ $t('tutorials.onboarding.buttons.next') }}
         </Button>
-        <Button
-          v-else-if="state.page === 4"
-          link
-          href="https://www.buymeacoffee.com/imreg?utm_source=focustide&utm_medium=cta&utm_campaign=onboarding"
-          target="_blank"
-          :importance="ButtonImportance.Filled"
-          :theme="ButtonTheme.Secondary"
-          class="flex-grow w-full"
-          @click="$emit('close')"
-        >
-          {{ $t('tutorials.onboarding.buttons.support') }}
-        </Button>
+        <div v-else-if="state.page === 4" class="flex flex-col gap-2 w-full md:flex-row">
+          <Button
+            :importance="ButtonImportance.Filled"
+            class="flex-grow w-full"
+            @click="$emit('openSignIn'); $emit('close')"
+          >
+            {{ $t('auth.sign_in') }}
+          </Button>
+
+          <Button
+            :importance="ButtonImportance.Outline"
+            class="flex-grow w-full"
+            @click="$emit('openSignUp'); $emit('close')"
+          >
+            {{ $t('auth.sign_up') }}
+          </Button>
+        </div>
       </div>
     </div>
   </popup-sheet>

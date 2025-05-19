@@ -75,7 +75,6 @@
     "sync_30min": "Toutes les 30 minutes",
     "sync_60min": "Toutes les heures",
     "sync_data": "Synchroniser les données",
-    "sync_interval": "Intervalle de synchronisation",
     "sync_interval": {
       "_title": "Intervalle de synchronisation",
       "_description": "Définir l'intervalle de synchronisation des données",
@@ -628,15 +627,16 @@
           "title": "Restez flexible"
         },
         "support": {
-          "text": "Si ce projet vous a aidé, pensez à offrir un café à l'auteur. Vous retrouverez le boutton pour supporter l'auteur dans le menu \"À propos\".",
-          "title": "Soutenir le projet"
+          "heading": "Se connecter ou S'inscrire",
+          "text": "Connectez-vous pour synchroniser vos données sur plusieurs appareils et ne jamais perdre votre progression et vos paramètres.",
+          "hint": "Vous pouvez également vous connecter ou vous inscrire dans Paramètres > Compte."
         }
       },
       "buttons": {
         "close": "Fermer",
         "next": "Suivant",
         "start": "Démarrer le tutoriel",
-        "support": "Soutenir le projet"
+        "support": "Se connecter ou S'inscrire"
       }
     }
   }

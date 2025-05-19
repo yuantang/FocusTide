@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { IconSettings, IconChecklist, IconLogin } from '@tabler/icons-vue'
+import { IconSettings, IconChecklist } from '@tabler/icons-vue'
 import { ButtonImportance, ButtonTheme } from './base/types/button'
 import { ref, watch, onMounted } from 'vue'
 import CButton from '~~/components/base/uiButton.vue'
 import ScheduleView from '@/components/schedule/scheduleDisplay.vue'
 import WhiteNoiseTopControl from '@/components/whiteNoise/whiteNoiseTopControl.vue'
 import UserMenu from '@/components/auth/userMenu.vue'
-import SignInModal from '@/components/auth/signInModal.vue'
-import SignUpModal from '@/components/auth/signUpModal.vue'
-import ResetPasswordModal from '@/components/auth/resetPasswordModal.vue'
 import { useOpenPanels } from '@/stores/openpanels'
 import { useSchedule } from '~~/stores/schedule'
 import { useSettings } from '~~/stores/settings'
@@ -22,15 +19,10 @@ const webPlatform = useWeb()
 // 白噪音播放状态
 const whiteNoiseState = ref(false)
 
-// 认证模态框状态
-const showSignInModal = ref(false)
-const showSignUpModal = ref(false)
-const showResetPasswordModal = ref(false)
-
 // 打开设置面板并切换到账户标签
 const openAccountSettings = () => {
   openPanels.settings = true
-  openPanels.settingsTab = 'account' // 假设我们添加了一个新的账户标签
+  openPanels.settingsTab = 6 // 账户标签的索引
 }
 
 // 在组件挂载时检查白噪音状态
@@ -83,13 +75,6 @@ const toggleWhiteNoise = () => {
     </ClientOnly>
     <div class="flex-grow" />
 
-    <!-- 用户菜单 -->
-    <UserMenu
-      @open-sign-in="showSignInModal = true"
-      @open-sign-up="showSignUpModal = true"
-      @open-settings="openAccountSettings"
-    />
-
     <CButton
       v-show="settingsStore.tasks.enabled"
       circle
@@ -109,41 +94,11 @@ const toggleWhiteNoise = () => {
     <WhiteNoiseTopControl
       :is-playing="whiteNoiseState"
       @toggle="toggleWhiteNoise"
-      class="mr-2"
     />
 
-    <CButton
-      circle
-      :aria-label="$t('appbar.settings')"
-      :importance="ButtonImportance.Filled"
-      :theme="ButtonTheme.Neutral"
-      class="h-11"
-      no-content-theme
-      no-padding
-      inner-class="p-1"
-      @click="openPanels.settings = !openPanels.settings"
-    >
-      <IconSettings size="24" class="inline-block" />
-    </CButton>
+    <!-- 用户菜单（设置按钮） -->
+    <UserMenu @open-settings="openAccountSettings" class="ml-2" />
 
-    <!-- 认证模态框 -->
-    <SignInModal
-      v-if="showSignInModal"
-      @close="showSignInModal = false"
-      @open-sign-up="showSignInModal = false; showSignUpModal = true"
-      @open-reset-password="showSignInModal = false; showResetPasswordModal = true"
-    />
 
-    <SignUpModal
-      v-if="showSignUpModal"
-      @close="showSignUpModal = false"
-      @open-sign-in="showSignUpModal = false; showSignInModal = true"
-    />
-
-    <ResetPasswordModal
-      v-if="showResetPasswordModal"
-      @close="showResetPasswordModal = false"
-      @open-sign-in="showResetPasswordModal = false; showSignInModal = true"
-    />
   </div>
 </template>

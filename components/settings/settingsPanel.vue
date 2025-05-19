@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconX as CloseIcon, IconAdjustments as TabIconGeneral, IconAlarm as TabIconSchedule, IconArtboard as TabIconVisuals, IconInfoCircle as InfoIcon, IconInfoCircle as TabIconAbout, IconVolume as VolumeIcon, IconChartBar as TabIconStats, IconUser as TabIconAccount } from '@tabler/icons-vue'
+import { IconX as CloseIcon, IconAdjustments as TabIconGeneral, IconAlarm as TabIconSchedule, IconArtboard as TabIconVisuals, IconInfoCircle as InfoIcon, IconVolume as VolumeIcon, IconChartBar as TabIconStats, IconUser as TabIconAccount, IconCoffee, IconBrandGithub, IconBrandTwitter, IconBrandFacebook, IconBrandReddit } from '@tabler/icons-vue'
 
 import { ButtonImportance } from '../base/types/button'
 import ThemeSettings from './theme/themeSettings.vue'
@@ -8,7 +8,6 @@ import TabHeader from '@/components/settings/panel/tabHeader.vue'
 import ExportButton from '@/components/settings/exportButton.vue'
 import ImportButton from '@/components/settings/importButton.vue'
 
-import AboutTab from '~~/components/settings/aboutTab.vue'
 import FocusStatistics from '~~/components/settings/statistics/focusStatistics.vue'
 import AccountTab from '~~/components/settings/accountTab.vue'
 
@@ -17,6 +16,7 @@ import { useSettings, WhiteNoiseType, SoundSet } from '~~/stores/settings'
 import { NotificationPermission, useNotifications } from '~~/stores/notifications'
 import { useMobileSettings } from '~~/stores/platforms/mobileSettings'
 import { useAuth } from '~~/stores/auth'
+import { useMain } from '~~/stores/main'
 
 import ControlButton from '~~/components/base/uiButton.vue'
 import SettingsItem from '~~/components/settings/settingsItem.vue'
@@ -32,10 +32,11 @@ const mobileSettingsStore = useMobileSettings()
 const notificationsStore = useNotifications()
 const settingsStore = useSettings()
 const authStore = useAuth()
+const mainStore = useMain()
 const isWeb = computed(() => runtimeConfig.public.PLATFORM === 'web')
 const isMobile = computed(() => runtimeConfig.public.PLATFORM === 'mobile')
 
-const emit = defineEmits(['openSignIn', 'openSignUp'])
+const emit = defineEmits(['open-sign-in', 'open-sign-up'])
 
 const state = reactive({
   activeTab: 1,
@@ -209,31 +210,82 @@ notificationsStore.updateEnabled()
             <FocusStatistics />
           </div>
 
-          <!-- About page -->
-          <div v-else-if="state.activeTab === 5" :key="5" class="settings-tab">
-            <AboutTab />
-          </div>
+
 
           <!-- 账户标签页 -->
           <div v-else-if="state.activeTab === 6" :key="6" class="settings-tab">
             <AccountTab v-if="authStore.isAuthenticated" />
-            <div v-else class="flex flex-col items-center justify-center p-6 text-center">
-              <TabIconAccount size="64" class="mb-4 text-gray-400" />
-              <h3 class="mb-2 text-xl font-bold">{{ $t('auth.not_signed_in') }}</h3>
-              <p class="mb-4 text-sm text-gray-500">{{ $t('auth.sign_in_benefits') }}</p>
-              <div class="flex gap-2">
-                <ControlButton
-                  :importance="ButtonImportance.Filled"
-                  @click="openPanels.settings = false; $emit('openSignIn')"
-                >
-                  {{ $t('auth.sign_in') }}
-                </ControlButton>
-                <ControlButton
-                  :importance="ButtonImportance.Outline"
-                  @click="openPanels.settings = false; $emit('openSignUp')"
-                >
-                  {{ $t('auth.sign_up') }}
-                </ControlButton>
+            <div v-else class="flex flex-col items-center justify-center p-6">
+              <!-- 登录部分 -->
+              <div class="text-center mb-8">
+                <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-lg border-2 border-red-400 bg-red-100 dark:bg-red-900 dark:bg-opacity-20">
+                  <img src="/favicon.svg" width="48" height="48" class="inline-block">
+                </div>
+                <h3 class="mb-2 text-xl font-bold">{{ $t('auth.not_signed_in') }}</h3>
+                <p class="mb-4 text-sm text-gray-500">{{ $t('auth.sign_in_benefits') }}</p>
+                <div class="flex gap-2 justify-center">
+                  <ControlButton
+                    :importance="ButtonImportance.Filled"
+                    @click="openPanels.settings = false; $emit('open-sign-in')"
+                  >
+                    {{ $t('auth.sign_in') }}
+                  </ControlButton>
+                  <ControlButton
+                    :importance="ButtonImportance.Outline"
+                    @click="openPanels.settings = false; $emit('open-sign-up')"
+                  >
+                    {{ $t('auth.sign_up') }}
+                  </ControlButton>
+                </div>
+              </div>
+
+              <!-- 关于部分 -->
+              <div class="w-full">
+                <!-- 产品简介 -->
+                <div class="w-full text-left px-4 mb-8">
+                  <h3 class="text-lg font-semibold mb-2">{{ $t('settings.about.productIntro') }}</h3>
+                  <p class="text-sm mb-4">{{ $t('settings.about.productDescription') }}</p>
+
+                  <!-- 主要功能 -->
+                  <h3 class="text-lg font-semibold mb-2">{{ $t('settings.about.keyFeatures') }}</h3>
+                  <ul class="text-sm mb-4 list-disc pl-5">
+                    <li>{{ $t('settings.about.feature1') }}</li>
+                    <li>{{ $t('settings.about.feature2') }}</li>
+                    <li>{{ $t('settings.about.feature3') }}</li>
+                    <li>{{ $t('settings.about.feature4') }}</li>
+                    <li>{{ $t('settings.about.feature5') }}</li>
+                    <li>{{ $t('settings.about.feature6') }}</li>
+                  </ul>
+
+                  <!-- 使用方法 -->
+                  <h3 class="text-lg font-semibold mb-2">{{ $t('settings.about.howToUse') }}</h3>
+                  <p class="text-sm mb-4">{{ $t('settings.about.howToUseDesc') }}</p>
+                </div>
+
+                <!-- 支持信息 -->
+                <div class="flex flex-col items-center justify-center text-center">
+                  <div class="mb-2">
+                    <span v-text="$t('settings.about.supportBody')" /> <span class="italic">&mdash; 二次开发版</span>
+                  </div>
+                  <div v-if="isMobile" class="px-4 my-2 text-sm" v-text="$t('settings.about.mobileSupport')" />
+
+                  <!-- Support links -->
+                  <div class="flex flex-row flex-wrap justify-center gap-2 mt-3 text-center">
+                    <ControlButton
+                      :importance="ButtonImportance.Filled"
+                      dark
+                      link
+                      no-default-style
+                      no-content-theme
+                      href="https://github.com/yuantang/FocusTide"
+                      inner-class="flex flex-row items-center gap-1 text-slate-50 text-gray-50"
+                      bg-class="bg-slate-900 dark:bg-slate-700"
+                    >
+                      <IconBrandGithub />
+                      <span v-text="$t('settings.about.source')" />
+                    </ControlButton>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -265,11 +317,6 @@ notificationsStore.updateEnabled()
         <TabHeader :active="state.activeTab === 6" :text="$t('settings.tabs.account')" @click="state.activeTab = 6">
           <template #icon>
             <TabIconAccount size="24" role="presentation" />
-          </template>
-        </TabHeader>
-        <TabHeader :active="state.activeTab === 5" :text="$t('settings.tabs.about')" @click="state.activeTab = 5">
-          <template #icon>
-            <TabIconAbout size="24" role="presentation" />
           </template>
         </TabHeader>
       </div>

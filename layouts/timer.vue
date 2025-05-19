@@ -10,6 +10,8 @@ const openPanels = useOpenPanels()
 const settingsStore = useSettings()
 const scheduleStore = useSchedule()
 
+const emit = defineEmits(['openSignIn', 'openSignUp'])
+
 const { locale } = useI18n()
 
 useHead(() => {
@@ -33,7 +35,12 @@ useHead(() => {
       <div v-show="openPanels.settings" class="fixed z-40 w-screen h-screen bg-black bg-opacity-40" />
     </transition>
     <transition enter-from-class="translate-x-32 opacity-0" enter-active-class="transition duration-300 ease-out" leave-to-class="scale-95 opacity-0" leave-active-class="transition ease-in">
-      <SettingsPanel v-show="openPanels.settings" class="right-0" />
+      <SettingsPanel
+        v-show="openPanels.settings"
+        class="right-0"
+        @open-sign-in="$emit('openSignIn')"
+        @open-sign-up="$emit('openSignUp')"
+      />
     </transition>
     <transition enter-from-class="translate-y-full" enter-active-class="duration-300 ease-out" leave-to-class="translate-y-full" leave-active-class="duration-150 ease-in">
       <TodoList v-if="settingsStore.tasks.enabled && openPanels.todo" class="fixed bottom-0 z-10 w-full md:max-w-lg transition-all rounded-t-xl md:right-4 md:pb-8" :editing="[0].includes(scheduleStore.timerState)" @hide="openPanels.todo = false" />

@@ -14,6 +14,10 @@ import TimerProgress from '@/components/timer/timerProgress.vue'
 import TimerControls from '@/components/timer/controls/controlsNew.vue'
 import WhiteNoiseTopControl from '@/components/whiteNoise/whiteNoiseTopControl.vue'
 import { AppPlatform } from '~~/platforms/platforms'
+import SignInModal from '@/components/auth/signInModal.vue'
+import SignUpModal from '@/components/auth/signUpModal.vue'
+import ResetPasswordModal from '@/components/auth/resetPasswordModal.vue'
+import SupportLoginModal from '@/components/tutorial/supportLoginModal.vue'
 
 import { useMobileSettings } from '~~/stores/platforms/mobileSettings'
 
@@ -22,6 +26,12 @@ import Layout from '~/layouts/timer.vue'
 // components
 const AppBar = defineAsyncComponent(() => import('@/components/appBar.vue'))
 const TutorialView = defineAsyncComponent(() => import('@/components/tutorial/_tutorialView.vue'))
+
+// 认证模态框状态
+const showSignInModal = ref(false)
+const showSignUpModal = ref(false)
+const showResetPasswordModal = ref(false)
+const showSupportLoginModal = ref(false)
 
 const settingsStore = useSettings()
 const mobileSettingsStore = useMobileSettings()
@@ -130,7 +140,10 @@ const progressBarSchedules = computed(() => {
 </script>
 
 <template>
-  <Layout>
+  <Layout
+    @open-sign-in="showSignInModal = true"
+    @open-sign-up="showSignUpModal = true"
+  >
     <section class="h-full overflow-hidden duration-300 ease-in dark:text-gray-50">
       <Title>{{ (remainingTimeString ? `(${remainingTimeString}) ` : '') + pageTitle }}</Title>
       <!-- Dark mode background override -->
@@ -170,6 +183,33 @@ const progressBarSchedules = computed(() => {
         <TutorialView />
       </client-only>
     </section>
+
+    <!-- 认证模态框 -->
+    <SignInModal
+      v-if="showSignInModal"
+      @close="showSignInModal = false"
+      @open-sign-up="showSignInModal = false; showSignUpModal = true"
+      @open-reset-password="showSignInModal = false; showResetPasswordModal = true"
+    />
+
+    <SignUpModal
+      v-if="showSignUpModal"
+      @close="showSignUpModal = false"
+      @open-sign-in="showSignUpModal = false; showSignInModal = true"
+    />
+
+    <ResetPasswordModal
+      v-if="showResetPasswordModal"
+      @close="showResetPasswordModal = false"
+      @open-sign-in="showResetPasswordModal = false; showSignInModal = true"
+    />
+
+    <SupportLoginModal
+      v-if="showSupportLoginModal"
+      @close="showSupportLoginModal = false"
+      @open-sign-in="showSupportLoginModal = false; showSignInModal = true"
+      @open-sign-up="showSupportLoginModal = false; showSignUpModal = true"
+    />
   </Layout>
 </template>
 

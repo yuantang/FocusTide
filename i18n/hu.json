@@ -79,7 +79,6 @@
     "sync_30min": "30 percenként",
     "sync_60min": "Óránként",
     "sync_data": "Adatok szinkronizálása",
-    "sync_interval": "Szinkronizálási időköz",
     "sync_interval": {
       "_title": "Szinkronizálási időköz",
       "_description": "Adatok szinkronizálásának időköze",
@@ -136,7 +135,18 @@
       "support": "Támogasd a projektet",
       "supportBody": "Az FocusTidet a szabadidőmben fejlesztem, sokat jelentene, ha segítenél továbbfejleszteni!",
       "mobileSupport": "A Google Play áruház szabályai miatt nem jeleníthetek meg semmilyen hivatkozást az anyagi támogatáshoz.",
-      "share": "vagy oszd meg ismerőseiddel az alkalmazást:"
+      "share": "vagy oszd meg ismerőseiddel az alkalmazást:",
+      "productIntro": "FocusTide Bemutató",
+      "productDescription": "A FocusTide egy Pomodoro időzítő alkalmazás, amely a produktivitás növelésére összpontosít. Segít javítani a koncentrációt és a hatékonyságot azáltal, hogy a munkát fókuszált szakaszokra és szünetekre bontja időgazdálkodási technikák segítségével.",
+      "keyFeatures": "Főbb Funkciók",
+      "feature1": "Testreszabható munka- és szünetidők",
+      "feature2": "Többféle időzítő stílus",
+      "feature3": "Fehér zaj a jobb koncentrációért",
+      "feature4": "Feladatkezelés",
+      "feature5": "Részletes fókusz statisztikák",
+      "feature6": "Több eszközön történő adatszinkronizálás",
+      "howToUse": "Használati Útmutató",
+      "howToUseDesc": "Állítsd be a munkaidőt (alapértelmezetten 25 perc) és a szünetidőt (alapértelmezetten 5 perc), majd kattints a start gombra a fókusz módba lépéshez. Egy munkaszakasz befejezése után élvezz egy rövid szünetet, majd folytasd a következő munkaszakasszal. Több munkaszakasz befejezése után hosszabb szünetet kaphatsz."
     },
     "values": {
       "manage": {
@@ -517,16 +527,16 @@
           "text": "Ezeket (és sok mást is) megváltoztathatsz a beállításokban."
         },
         "support": {
-          "heading": "Támogasd a projektet",
-          "text": "Ha segít neked ez az alkalmazás, hívd meg a fejlesztőt egy kávéra.",
-          "hint": "Később a Beállítások > Névjegy lapon is megtalálod a támogatási lehetőségeket."
+          "heading": "Jelentkezz be vagy Regisztrálj",
+          "text": "Jelentkezz be, hogy szinkronizáld adataidat több eszközön, és soha ne veszítsd el az előrehaladásodat és beállításaidat.",
+          "hint": "A Beállítások > Fiók menüpontban is bejelentkezhetsz vagy regisztrálhatsz."
         }
       },
       "buttons": {
         "close": "Bezárás",
         "start": "Beállítás",
         "next": "Következő",
-        "support": "Projekt támogatása"
+        "support": "Bejelentkezés vagy Regisztráció"
       }
     },
     "olddomain": {
