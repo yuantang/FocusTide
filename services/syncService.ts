@@ -25,9 +25,26 @@ export class SyncService {
     }, 0);
   }
 
+  // 确保stores已初始化
+  private ensureStoresInitialized() {
+    if (!this.authStore || !this.settingsStore || !this.focusStatsStore || !this.tasklistStore || !this.focusGoalsStore) {
+      this.authStore = useAuth();
+      this.settingsStore = useSettings();
+      this.focusStatsStore = useFocusStats();
+      this.tasklistStore = useTasklist();
+      this.focusGoalsStore = useFocusGoals();
+      this.supabase = useSupabaseClient();
+    }
+  }
+
   // 初始同步 - 首次登录时调用
   async initialSync() {
-    if (!this.authStore?.user) return
+    this.ensureStoresInitialized();
+
+    if (!this.authStore?.user) {
+      console.warn('Cannot perform initial sync: User not authenticated');
+      return;
+    }
 
     this.authStore.syncStatus = 'syncing'
 
@@ -46,6 +63,8 @@ export class SyncService {
 
       this.authStore.lastSynced = new Date().toISOString()
       this.authStore.syncStatus = 'idle'
+
+      console.log('Initial sync completed successfully')
     } catch (error) {
       console.error('Initial sync failed:', error)
       this.authStore.syncStatus = 'error'
@@ -54,7 +73,12 @@ export class SyncService {
 
   // 增量同步 - 定期调用或手动触发
   async syncData() {
-    if (!this.authStore?.user) return
+    this.ensureStoresInitialized();
+
+    if (!this.authStore?.user) {
+      console.warn('Cannot sync: User not authenticated');
+      return;
+    }
 
     this.authStore.syncStatus = 'syncing'
 
@@ -322,80 +346,109 @@ export class SyncService {
 
   // 导出数据
   async exportData() {
-    const data = {
-      settings: this.settingsStore.$state,
-      sessions: this.focusStatsStore.sessions,
-      tasks: this.tasklistStore.tasks,
-      goals: {
-        dailyGoalMinutes: this.focusGoalsStore.dailyGoalMinutes,
-        weeklyGoalMinutes: this.focusGoalsStore.weeklyGoalMinutes,
-        dailyGoalSessions: this.focusGoalsStore.dailyGoalSessions,
-        weeklyGoalSessions: this.focusGoalsStore.weeklyGoalSessions,
-        streakDays: this.focusGoalsStore.streakDays,
-        lastCompletedDay: this.focusGoalsStore.lastCompletedDay
+    this.ensureStoresInitialized();
+
+    try {
+      const data = {
+        settings: this.settingsStore.$state,
+        sessions: this.focusStatsStore.sessions,
+        tasks: this.tasklistStore.tasks,
+        goals: {
+          dailyGoalMinutes: this.focusGoalsStore.dailyGoalMinutes,
+          weeklyGoalMinutes: this.focusGoalsStore.weeklyGoalMinutes,
+          dailyGoalSessions: this.focusGoalsStore.dailyGoalSessions,
+          weeklyGoalSessions: this.focusGoalsStore.weeklyGoalSessions,
+          streakDays: this.focusGoalsStore.streakDays,
+          lastCompletedDay: this.focusGoalsStore.lastCompletedDay
+        }
       }
+
+      const dataStr = JSON.stringify(data)
+      const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`
+
+      const exportFileDefaultName = `focustide_backup_${new Date().toISOString().slice(0, 10)}.json`
+
+      const linkElement = document.createElement('a')
+      linkElement.setAttribute('href', dataUri)
+      linkElement.setAttribute('download', exportFileDefaultName)
+      document.body.appendChild(linkElement) // 确保在所有浏览器中都能正常工作
+      linkElement.click()
+      document.body.removeChild(linkElement) // 清理DOM
+
+      console.log('Data exported successfully')
+    } catch (error) {
+      console.error('Failed to export data:', error)
     }
-
-    const dataStr = JSON.stringify(data)
-    const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`
-
-    const exportFileDefaultName = `focustide_backup_${new Date().toISOString().slice(0, 10)}.json`
-
-    const linkElement = document.createElement('a')
-    linkElement.setAttribute('href', dataUri)
-    linkElement.setAttribute('download', exportFileDefaultName)
-    linkElement.click()
   }
 
   // 导入数据
   async importData() {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = 'application/json'
+    this.ensureStoresInitialized();
 
-    input.onchange = async (event) => {
-      const file = (event.target as HTMLInputElement).files?.[0]
-      if (!file) return
+    try {
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'application/json'
+      document.body.appendChild(input) // 确保在所有浏览器中都能正常工作
 
-      const reader = new FileReader()
-
-      reader.onload = async (e) => {
-        try {
-          const data = JSON.parse(e.target?.result as string)
-
-          // 导入设置
-          if (data.settings) {
-            this.settingsStore.$patch(data.settings)
-          }
-
-          // 导入会话
-          if (data.sessions) {
-            this.focusStatsStore.importSessions(data.sessions)
-          }
-
-          // 导入任务
-          if (data.tasks) {
-            this.tasklistStore.tasks = data.tasks
-          }
-
-          // 导入目标
-          if (data.goals) {
-            this.focusGoalsStore.$patch(data.goals)
-          }
-
-          // 如果用户已登录，同步到云端
-          if (this.authStore?.isAuthenticated) {
-            await this.syncData()
-          }
-        } catch (error) {
-          console.error('Failed to import data:', error)
+      input.onchange = async (event) => {
+        const file = (event.target as HTMLInputElement).files?.[0]
+        if (!file) {
+          document.body.removeChild(input)
+          return
         }
+
+        const reader = new FileReader()
+
+        reader.onload = async (e) => {
+          try {
+            const data = JSON.parse(e.target?.result as string)
+
+            // 导入设置
+            if (data.settings) {
+              this.settingsStore.$patch(data.settings)
+            }
+
+            // 导入会话
+            if (data.sessions) {
+              this.focusStatsStore.importSessions(data.sessions)
+            }
+
+            // 导入任务
+            if (data.tasks) {
+              this.tasklistStore.tasks = data.tasks
+            }
+
+            // 导入目标
+            if (data.goals) {
+              this.focusGoalsStore.$patch(data.goals)
+            }
+
+            console.log('Data imported successfully')
+
+            // 如果用户已登录，同步到云端
+            if (this.authStore?.isAuthenticated) {
+              await this.syncData()
+            }
+          } catch (error) {
+            console.error('Failed to import data:', error)
+          } finally {
+            document.body.removeChild(input) // 清理DOM
+          }
+        }
+
+        reader.onerror = () => {
+          console.error('Error reading file')
+          document.body.removeChild(input)
+        }
+
+        reader.readAsText(file)
       }
 
-      reader.readAsText(file)
+      input.click()
+    } catch (error) {
+      console.error('Failed to import data:', error)
     }
-
-    input.click()
   }
 }
 

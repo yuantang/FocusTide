@@ -177,6 +177,24 @@ const deleteAccount = async () => {
 const signOut = async () => {
   await authStore.signOut()
 }
+
+// 导出用户数据
+const exportUserData = async () => {
+  try {
+    await syncService.exportData()
+  } catch (error) {
+    console.error('Error exporting data:', error)
+  }
+}
+
+// 导入用户数据
+const importUserData = async () => {
+  try {
+    await syncService.importData()
+  } catch (error) {
+    console.error('Error importing data:', error)
+  }
+}
 </script>
 
 <template>
@@ -330,18 +348,20 @@ const signOut = async () => {
         </CButton>
 
         <CButton
+          :disabled="isSyncing"
           :importance="ButtonImportance.Outline"
           :theme="ButtonTheme.Neutral"
-          @click="syncService.exportData"
+          @click="exportUserData"
         >
           <IconDownload size="20" class="mr-2" />
           <span>{{ t('auth.export_data') }}</span>
         </CButton>
 
         <CButton
+          :disabled="isSyncing"
           :importance="ButtonImportance.Outline"
           :theme="ButtonTheme.Neutral"
-          @click="syncService.importData"
+          @click="importUserData"
         >
           <IconUpload size="20" class="mr-2" />
           <span>{{ t('auth.import_data') }}</span>
@@ -490,7 +510,7 @@ const signOut = async () => {
 
         <div class="flex flex-col items-center justify-center text-center">
           <div class="mb-2">
-            <span v-text="$t('settings.about.supportBody')" /> 
+            <span v-text="$t('settings.about.supportBody')" />
           </div>
           <div v-if="isMobile" class="px-4 my-2 text-sm" v-text="$t('settings.about.mobileSupport')" />
 
