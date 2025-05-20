@@ -57,10 +57,6 @@ Production deployments may use privacy-friendly third-party tools to measure sit
 
 ![The traditional timer with the to-do panel open](./public/assets/img/ProductImg_TodoOpen.png)
 
-## 🏗 For Developers
-
-This project welcomes contributions. Please check the [**contribution guidelines**](./CONTRIBUTING.md) before opening issues, discussions, or pull requests.
-
 ### ❤ Technology Stack
 * [**NuxtJS**](https://nuxtjs.org/) (and [**VueJS**](https://vuejs.org/))
   * [`vue-i18n`](https://kazupon.github.io/vue-i18n/) for localization
