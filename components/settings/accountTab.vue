@@ -490,7 +490,7 @@ const signOut = async () => {
 
         <div class="flex flex-col items-center justify-center text-center">
           <div class="mb-2">
-            <span v-text="$t('settings.about.supportBody')" /> <span class="italic">&mdash; 二次开发版</span>
+            <span v-text="$t('settings.about.supportBody')" /> 
           </div>
           <div v-if="isMobile" class="px-4 my-2 text-sm" v-text="$t('settings.about.mobileSupport')" />
 
