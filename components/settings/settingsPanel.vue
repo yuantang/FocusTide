@@ -202,7 +202,6 @@ notificationsStore.updateEnabled()
             <Divider />
             <SettingsItem :type="Control.Check" path="performance.showProgressBar" />
             <SettingsItem v-if="isWeb" :type="Control.Check" path="pageTitle.useTickEmoji" />
-            <!-- TODO Audio volume control -->
           </div>
 
           <!-- 统计页面 -->

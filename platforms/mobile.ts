@@ -70,8 +70,8 @@ export function useMobile () {
         window.NativeFramework.postMessage(JSON.stringify({
           type: FlutterMessageType.showNotification,
           payload: {
-            title: 'Hello',
-            description: 'This is a test notification :)'
+            title: scheduleStore.getCurrentItem.type,
+            description: 'Your session has ended'
           }
         } as FlutterMessage))
       }

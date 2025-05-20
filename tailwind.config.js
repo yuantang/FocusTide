@@ -79,8 +79,7 @@ module.exports = {
     }
   },
   future: {
-    // TODO only in Tailwind 3.1
-    // only apply hover classes when @media hover:hover and pointer:fine
+    // Only apply hover classes when @media hover:hover and pointer:fine
     hoverOnlyWhenSupported: true
   }
 }

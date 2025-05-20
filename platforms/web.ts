@@ -263,7 +263,7 @@ export function useWeb () {
   const showNotification = (nextState: keyof typeof state.sounds) => {
     playSound(nextState)
 
-    // TODO Firefox does not support actions
+    // Note: Firefox does not support notification actions
     if (window.Notification.permission !== 'granted' || settingsStore.permissions.notifications !== true) { return }
 
     try {

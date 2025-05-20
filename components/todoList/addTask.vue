@@ -13,14 +13,10 @@ const addtaskInput: Ref<HTMLElement | null> = ref(null)
 const data = reactive({
   taskTitle: '',
   taskState: TaskState.inProgress,
-  valid: false,
-  debug_lastinput: ''
+  valid: false
 })
 
-// computed: {
-//   ...mapState(useTasklist, ['tasks']),
-//   ...mapState(useSchedule, ['getCurrentItem', 'currentScheduleColourModern'])
-// },
+
 
 watch(() => data.taskTitle, (newValue) => {
   if (newValue.length < 1) {
