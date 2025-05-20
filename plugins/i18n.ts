@@ -47,6 +47,14 @@ export const languages : LanguageStore = {
   zh: {
     name: '简体中文',
     iso: 'zh-CN'
+  },
+  ja: {
+    name: '日本語',
+    iso: 'ja-JP'
+  },
+  ko: {
+    name: '한국어',
+    iso: 'ko-KR'
   }
 }
 

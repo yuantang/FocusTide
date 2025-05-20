@@ -1,0 +1,430 @@
+{
+  "support": {
+    "source": "GitHubで見る",
+    "support": "開発者にコーヒーを奢る",
+    "share": {
+      "twitter": "Twitterでアプリをフォロー",
+      "facebook": "Facebookでアプリをシェア",
+      "reddit": "Redditでアプリをシェア"
+    }
+  },
+  "section": {
+    "work": "作業",
+    "shortpause": "休憩",
+    "longpause": "長い休憩",
+    "wait": "待機中"
+  },
+  "controls": {
+    "play": "タイマーを開始または一時停止",
+    "stop": "タイマーをリセット",
+    "advance": "次のセクションへ"
+  },
+  "appbar": {
+    "settings": "設定を開く",
+    "todo": "タスクリストを開く"
+  },
+  "timer": {
+    "approximate": {
+      "hours": "時間 | 時間",
+      "minutes": "分 | 分"
+    }
+  },
+  "settings": {
+    "heading": "設定",
+    "tabs": {
+      "main": "メイン",
+      "timer": "スケジュール",
+      "display": "表示",
+      "audio": "音声",
+      "statistics": "統計",
+      "account": "アカウント",
+      "about": "情報"
+    },
+    "buttons": {
+      "close": "閉じる",
+      "reset": "リセット"
+    },
+    "reset": {
+      "title": "設定をリセット",
+      "confirm": "リセット",
+      "cancel": "キャンセル"
+    },
+    "manage": {
+      "buttons": {
+        "save": "保存",
+        "load": "読み込み"
+      }
+    },
+    "scheduleMinTime": "最小許容時間は5秒です",
+    "about": {
+      "madeby": "作者：Imre Gera",
+      "source": "ソースコード",
+      "support": "ログインまたは登録",
+      "supportBody": "FocusTideは私の空き時間に開発しています。ログインまたは登録して、プロジェクトの継続的な開発をサポートしていただけると嬉しいです！",
+      "mobileSupport": "Google Play Storeのルールにより、モバイルアプリ内でプロジェクトに寄付するためのリンクを表示することができません。",
+      "share": "またはソーシャルメディアでアプリをシェア：",
+      "productIntro": "FocusTideの紹介",
+      "productDescription": "FocusTideは生産性向上に焦点を当てたポモドーロタイマーアプリです。時間管理テクニックを使用して、作業を集中セッションと休憩に分割し、集中力と効率性を高めるのに役立ちます。",
+      "keyFeatures": "主な機能",
+      "feature1": "カスタマイズ可能な作業時間と休憩時間",
+      "feature2": "複数のタイマースタイル",
+      "feature3": "より良い集中のためのホワイトノイズ",
+      "feature4": "タスク管理",
+      "feature5": "詳細な集中統計",
+      "feature6": "複数デバイス間のデータ同期",
+      "howToUse": "使用方法",
+      "howToUseDesc": "作業時間（デフォルト25分）と休憩時間（デフォルト5分）を設定し、スタートボタンをクリックして集中モードに入ります。作業セッションを完了した後、短い休憩を楽しみ、次の作業セッションに進みます。いくつかの作業セッションを完了した後、より長い休憩を取ることができます。"
+    },
+    "values": {
+      "manage": {
+        "_title": "設定を管理",
+        "_description": "現在の設定をダウンロードするか、ファイルから読み込む"
+      },
+      "mobile": {
+        "notifications": {
+          "sectionOver": {
+            "_title": "セクション終了通知",
+            "_description": "セクションが終了したときに通知を表示する"
+          },
+          "persistent": {
+            "_title": "常時表示通知",
+            "_description": "現在のタイマーの進行状況を表示する"
+          }
+        }
+      },
+      "lang": {
+        "_title": "言語",
+        "_description": ""
+      },
+      "eventLoggingEnabled": {
+        "_title": "イベントログを有効にする",
+        "_description": ""
+      },
+      "currentTimer": {
+        "_title": "タイマースタイル",
+        "_description": "",
+        "_values": {
+          "traditional": "従来型",
+          "approximate": "概算",
+          "percentage": "パーセンテージ"
+        },
+        "_valueDescription": {
+          "traditional": "12:34",
+          "approximate": "13分",
+          "percentage": "50%"
+        }
+      },
+      "adaptiveTicking": {
+        "enabled": {
+          "_title": "適応的なティックを有効にする",
+          "_description": "バックグラウンドにある間、タイマーの更新頻度が低くなります"
+        }
+      },
+      "sectionEndAction": {
+        "_title": "セクション終了時の動作",
+        "_description": "タイマーが終了したときに何が起こるべきか",
+        "_values": {
+          "continue": "継続",
+          "stop": "停止",
+          "skip": "進む"
+        },
+        "_valueDescription": {
+          "continue": "カウントを続ける",
+          "stop": "タイマーを停止する",
+          "skip": "次のセクションを開始する"
+        }
+      },
+      "schedule": {
+        "longPauseInterval": {
+          "_title": "長い休憩の間隔",
+          "_description": ""
+        },
+        "numScheduleEntries": {
+          "_title": "スケジュールのエントリ数",
+          "_description": ""
+        },
+        "visibility": {
+          "enabled": {
+            "_title": "スケジュールを表示",
+            "_description": ""
+          },
+          "showSectionType": {
+            "_title": "スケジュールにセクションタイプを表示",
+            "_description": "スケジュールの下に現在のセクションタイプを表示します"
+          }
+        },
+        "lengths": {
+          "_title": "スケジュールプリセット",
+          "_description": "",
+          "_values": {
+            "default": "デフォルト",
+            "debug": "デバッグ",
+            "custom": "カスタム"
+          },
+          "_valueDescription": {
+            "default": "25分作業、5分休憩",
+            "debug": "デバッグ目的",
+            "custom": "自分で設定"
+          },
+          "work": {
+            "_title": "作業",
+            "_description": ""
+          },
+          "shortpause": {
+            "_title": "休憩",
+            "_description": ""
+          },
+          "longpause": {
+            "_title": "長い休憩",
+            "_description": ""
+          }
+        }
+      },
+      "performance": {
+        "showProgressBar": {
+          "_title": "進捗バーを表示",
+          "_description": "タイマーの背後に進捗を表示"
+        }
+      },
+      "permissions": {
+        "audio": {
+          "_title": "音声を再生",
+          "_description": "セクションが終了したときにアプリが音を再生できるようにする"
+        },
+        "notifications": {
+          "_title": "通知権限",
+          "_description": "セクションが終了したときにアプリが通知を送信できるようにする"
+        }
+      },
+      "audio": {
+        "volume": {
+          "_title": "音量",
+          "_description": ""
+        },
+        "soundSet": {
+          "_title": "サウンドセット",
+          "_description": "各セッション終了時に再生される音",
+          "_values": {
+            "musical": "ミュージカル",
+            "sharp": "シャープ"
+          },
+          "_valueDescription": {
+            "musical": "デフォルトの音",
+            "sharp": "トレーニングに適した短いビープ音"
+          }
+        }
+      },
+      "timerControls": {
+        "enableKeyboardShortcuts": {
+          "_title": "キーボードショートカットを有効にする",
+          "_description": "スペースキーでタイマーを開始/一時停止"
+        }
+      },
+      "tasks": {
+        "enabled": {
+          "_title": "タスクリストを有効にする",
+          "_description": "アプリから直接作業を管理する"
+        },
+        "maxActiveTasks": {
+          "_title": "表示するアクティブタスクの最大数",
+          "_description": "最大でこの数のアクティブタスクしか表示されません"
+        },
+        "removeCompletedTasks": {
+          "_title": "完了したタスクを削除",
+          "_description": "新しいセクションが始まると、完了したタスクは削除されます"
+        }
+      },
+      "pageTitle": {
+        "useTickEmoji": {
+          "_title": "タイトルでチェックマーク絵文字を使用",
+          "_description": "「完了」の代わりに ✔ を表示"
+        }
+      },
+      "whiteNoise": {
+        "_section": "ホワイトノイズ",
+        "enabled": {
+          "_title": "ホワイトノイズを有効にする",
+          "_description": "集中を助けるための環境音を再生"
+        },
+        "type": {
+          "_title": "ホワイトノイズの種類",
+          "_description": "環境音の種類を選択",
+          "_values": {
+            "rain": "雨",
+            "forest": "森",
+            "ocean": "海",
+            "fan": "扇風機",
+            "fireplace": "暖炉",
+            "cafe": "カフェ"
+          },
+          "_valueDescription": {
+            "rain": "穏やかな雨音",
+            "forest": "森の環境音",
+            "ocean": "海の波音",
+            "fan": "扇風機の音",
+            "fireplace": "暖炉のパチパチ音",
+            "cafe": "カフェの環境音"
+          }
+        },
+        "volume": {
+          "_title": "ホワイトノイズの音量",
+          "_description": "ホワイトノイズの音量を調整"
+        },
+        "playDuringWork": {
+          "_title": "作業中のみ再生",
+          "_description": "作業セッション中のみホワイトノイズを再生"
+        },
+        "play": "ホワイトノイズを再生",
+        "pause": "ホワイトノイズを一時停止"
+      },
+      "statistics": {
+        "_section": "統計",
+        "title": "集中統計",
+        "totalFocusTime": "総集中時間",
+        "totalSessions": "総セッション数",
+        "completedSessions": "完了セッション数",
+        "completionRate": "完了率",
+        "streak": "連続集中",
+        "currentStreak": "現在の連続日数",
+        "streakDays": "日",
+        "averageFocusTime": "平均集中時間: {time}",
+        "averageFocusTimeDesc": "あなたの平均集中時間は、集中力の持続性を反映しています。",
+        "mostProductiveTime": "最も生産的な時間: {time}",
+        "mostProductiveTimeDesc": "この時間帯はあなたが最も効率的です。重要なタスクをこの時間に予定しましょう。",
+        "mostProductiveDay": "最も生産的な曜日: {day}",
+        "mostProductiveDayDesc": "この曜日はあなたが最も効率的です。重要な作業をこの日に予定することを検討してください。",
+        "insights": "集中の洞察",
+        "noData": "データがありません",
+        "noDataMessage": "集中を始めて、ここに統計を表示しましょう！",
+        "hours": "時間",
+        "minutes": "分"
+      },
+      "visuals": {
+        "theme": {
+          "_title": "テーマ設定",
+          "_description": "プリセットテーマカラーを選択するか、独自のテーマカラーを設定します",
+          "custom": "カスタム"
+        },
+        "darkMode": {
+          "_title": "ダークモードを有効にする",
+          "_description": "暗闇は生産性そのものです"
+        }
+      },
+      "reset": {
+        "_title": "すべての設定をリセット",
+        "_description": "すべての設定がリセットされ、アプリは自動的に再読み込みされます"
+      }
+    }
+  },
+  "notification": {
+    "action": {
+      "ready": "始めましょう！"
+    },
+    "work": {
+      "title": "作業に戻る時間です！",
+      "body": "休憩時間が終わりました。作業を続けて、また休憩時間を得ましょう。"
+    },
+    "shortpause": {
+      "title": "少し休憩しましょう",
+      "body": "よくできました、短い休憩時間を獲得しました。"
+    },
+    "longpause": {
+      "title": "わあ！もっと休憩時間！",
+      "body": "これだけ長く作業した後は、より長い休憩を取るべきです。"
+    }
+  },
+  "error": {
+    "format_invalid": "無効な入力形式",
+    "range_invalid": "値は {min} から {max} の間でなければなりません",
+    "required": "すべてのパラメータを入力する必要があります",
+    "numeric": "値は数値でなければなりません",
+    "min": "値は少なくとも {min} でなければなりません",
+    "max": "値は最大で {max} でなければなりません",
+    "time_format": "時間の形式が正しくありません (MM:SS)",
+    "min_time": "時間が短すぎます",
+    "undefined": "未定義のエラー"
+  },
+  "tasks": {
+    "title": "タスク",
+    "empty": "タスクはまだありません",
+    "manage": "管理",
+    "addPlaceholder": "やるべきことを入力してください"
+  },
+  "ready": "完了",
+  "close": "閉じる",
+  "auth": {
+    "sign_in": "ログイン",
+    "sign_up": "登録",
+    "signing_in": "ログイン中...",
+    "signing_up": "登録中...",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "confirm_password": "パスワードを確認",
+    "email_placeholder": "メールアドレスを入力してください",
+    "password_placeholder": "パスワードを入力してください",
+    "confirm_password_placeholder": "パスワードを確認してください",
+    "forgot_password": "パスワードをお忘れですか？",
+    "no_account": "アカウントをお持ちでないですか？登録",
+    "already_have_account": "すでにアカウントをお持ちですか？ログイン",
+    "reset_password": "パスワードをリセット",
+    "reset_password_instructions": "メールアドレスを入力すると、パスワードリセットリンクを送信します",
+    "send_reset_link": "リセットリンクを送信",
+    "back_to_sign_in": "ログインに戻る",
+    "back_to_login": "ログインに戻る",
+    "fill_all_fields": "すべてのフィールドに入力してください",
+    "passwords_dont_match": "パスワードが一致しません",
+    "reset_link_sent": "リセットリンクがメールアドレスに送信されました",
+    "reset_email_sent": "リセットリンクがメールアドレスに送信されました",
+    "account_settings": "アカウント設定",
+    "change_password": "パスワードを変更",
+    "current_password": "現在のパスワード",
+    "current_password_placeholder": "現在のパスワードを入力",
+    "new_password": "新しいパスワード",
+    "new_password_placeholder": "新しいパスワードを入力",
+    "confirm_new_password": "新しいパスワードを確認",
+    "update_password": "パスワードを更新",
+    "updating_password": "パスワードを更新中...",
+    "password_updated": "パスワードが更新されました",
+    "delete_account": "アカウントを削除",
+    "delete_account_warning": "アカウントを削除すると、すべてのデータが永久に削除されます。この操作は元に戻せません。",
+    "confirm_delete_account": "本当にアカウントを削除しますか？この操作は元に戻せません。",
+    "delete": "削除",
+    "cancel": "キャンセル",
+    "sync_data": "データを同期",
+    "last_synced": "最終同期: {time}",
+    "never_synced": "同期したことがありません",
+    "sync_interval": {
+      "_title": "同期間隔",
+      "_description": "データ同期の時間間隔を設定",
+      "_values": {
+        "manual": "手動",
+        "5min": "5分",
+        "15min": "15分",
+        "30min": "30分",
+        "60min": "60分"
+      },
+      "_valueDescription": {
+        "manual": "手動でトリガーされた場合のみ同期",
+        "5min": "5分ごとに自動同期",
+        "15min": "15分ごとに自動同期",
+        "30min": "30分ごとに自動同期",
+        "60min": "60分ごとに自動同期"
+      }
+    },
+    "account": "アカウント",
+    "member_since": "登録日: {date}",
+    "sending": "送信中...",
+    "sign_in_benefits": "ログインして複数のデバイス間でデータを同期し、進捗と設定を失わないようにしましょう。",
+    "sign_in_benefits_title": "なぜログインするのか？",
+    "sign_in_success": "ログイン成功！",
+    "sign_up_success": "登録成功！",
+    "sign_out": "ログアウト",
+    "not_signed_in": "ログインしていません",
+    "enter_email": "メールアドレスを入力してください",
+    "data_sync": "データ同期",
+    "sync_now": "今すぐ同期",
+    "syncing": "同期中...",
+    "danger_zone": "危険ゾーン",
+    "account_actions": "アカウント操作"
+  }
+}

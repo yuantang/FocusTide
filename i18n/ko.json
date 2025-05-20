@@ -1,0 +1,430 @@
+{
+  "support": {
+    "source": "GitHub에서 보기",
+    "support": "개발자에게 커피 사주기",
+    "share": {
+      "twitter": "Twitter에서 앱 팔로우하기",
+      "facebook": "Facebook에서 앱 공유하기",
+      "reddit": "Reddit에서 앱 공유하기"
+    }
+  },
+  "section": {
+    "work": "작업",
+    "shortpause": "휴식",
+    "longpause": "긴 휴식",
+    "wait": "대기 중"
+  },
+  "controls": {
+    "play": "타이머 시작 또는 일시 정지",
+    "stop": "타이머 재설정",
+    "advance": "다음 섹션으로 이동"
+  },
+  "appbar": {
+    "settings": "설정 열기",
+    "todo": "작업 목록 열기"
+  },
+  "timer": {
+    "approximate": {
+      "hours": "시간 | 시간",
+      "minutes": "분 | 분"
+    }
+  },
+  "settings": {
+    "heading": "설정",
+    "tabs": {
+      "main": "메인",
+      "timer": "일정",
+      "display": "표시",
+      "audio": "오디오",
+      "statistics": "통계",
+      "account": "계정",
+      "about": "정보"
+    },
+    "buttons": {
+      "close": "닫기",
+      "reset": "재설정"
+    },
+    "reset": {
+      "title": "설정 재설정",
+      "confirm": "재설정",
+      "cancel": "취소"
+    },
+    "manage": {
+      "buttons": {
+        "save": "저장",
+        "load": "불러오기"
+      }
+    },
+    "scheduleMinTime": "최소 허용 시간은 5초입니다",
+    "about": {
+      "madeby": "제작자: Imre Gera",
+      "source": "소스 코드",
+      "support": "로그인 또는 등록",
+      "supportBody": "FocusTide는 제가 여가 시간에 개발하고 있습니다. 로그인하거나 등록하여 프로젝트의 지속적인 개발을 지원해 주시면 정말 감사하겠습니다!",
+      "mobileSupport": "Google Play 스토어 규칙으로 인해 모바일 앱 내에서 프로젝트에 기부할 수 있는 링크를 표시할 수 없습니다.",
+      "share": "또는 소셜 미디어에서 앱 공유하기:",
+      "productIntro": "FocusTide 소개",
+      "productDescription": "FocusTide는 생산성 향상에 중점을 둔 포모도로 타이머 앱입니다. 시간 관리 기술을 사용하여 작업을 집중 세션과 휴식으로 나누어 집중력과 효율성을 높이는 데 도움을 줍니다.",
+      "keyFeatures": "주요 기능",
+      "feature1": "맞춤형 작업 및 휴식 시간",
+      "feature2": "다양한 타이머 스타일",
+      "feature3": "더 나은 집중을 위한 백색 소음",
+      "feature4": "작업 관리",
+      "feature5": "상세한 집중 통계",
+      "feature6": "여러 기기 간 데이터 동기화",
+      "howToUse": "사용 방법",
+      "howToUseDesc": "작업 시간(기본 25분)과 휴식 시간(기본 5분)을 설정한 다음 시작 버튼을 클릭하여 집중 모드로 들어갑니다. 작업 세션을 완료한 후 짧은 휴식을 취하고 다음 작업 세션으로 계속합니다. 여러 작업 세션을 완료한 후에는 더 긴 휴식을 취할 수 있습니다."
+    },
+    "values": {
+      "manage": {
+        "_title": "설정 관리",
+        "_description": "현재 설정을 다운로드하거나 파일에서 불러오기"
+      },
+      "mobile": {
+        "notifications": {
+          "sectionOver": {
+            "_title": "섹션 종료 알림",
+            "_description": "섹션이 끝날 때 알림 표시"
+          },
+          "persistent": {
+            "_title": "지속적인 알림",
+            "_description": "현재 타이머의 진행 상황 표시"
+          }
+        }
+      },
+      "lang": {
+        "_title": "언어",
+        "_description": ""
+      },
+      "eventLoggingEnabled": {
+        "_title": "이벤트 로깅 활성화",
+        "_description": ""
+      },
+      "currentTimer": {
+        "_title": "타이머 스타일",
+        "_description": "",
+        "_values": {
+          "traditional": "전통적",
+          "approximate": "대략적",
+          "percentage": "백분율"
+        },
+        "_valueDescription": {
+          "traditional": "12:34",
+          "approximate": "13분",
+          "percentage": "50%"
+        }
+      },
+      "adaptiveTicking": {
+        "enabled": {
+          "_title": "적응형 틱 활성화",
+          "_description": "백그라운드에 있을 때 타이머가 덜 자주 틱합니다"
+        }
+      },
+      "sectionEndAction": {
+        "_title": "섹션 종료 동작",
+        "_description": "타이머가 종료될 때 어떻게 할지",
+        "_values": {
+          "continue": "계속",
+          "stop": "정지",
+          "skip": "다음으로"
+        },
+        "_valueDescription": {
+          "continue": "계속 진행",
+          "stop": "타이머 정지",
+          "skip": "다음 섹션 시작"
+        }
+      },
+      "schedule": {
+        "longPauseInterval": {
+          "_title": "긴 휴식 간격",
+          "_description": ""
+        },
+        "numScheduleEntries": {
+          "_title": "일정의 항목 수",
+          "_description": ""
+        },
+        "visibility": {
+          "enabled": {
+            "_title": "일정 표시",
+            "_description": ""
+          },
+          "showSectionType": {
+            "_title": "일정에 섹션 유형 표시",
+            "_description": "일정 아래에 현재 섹션 유형을 표시합니다"
+          }
+        },
+        "lengths": {
+          "_title": "일정 프리셋",
+          "_description": "",
+          "_values": {
+            "default": "기본값",
+            "debug": "디버그",
+            "custom": "사용자 정의"
+          },
+          "_valueDescription": {
+            "default": "25분 작업, 5분 휴식",
+            "debug": "디버깅 목적",
+            "custom": "사용자 설정"
+          },
+          "work": {
+            "_title": "작업",
+            "_description": ""
+          },
+          "shortpause": {
+            "_title": "휴식",
+            "_description": ""
+          },
+          "longpause": {
+            "_title": "긴 휴식",
+            "_description": ""
+          }
+        }
+      },
+      "performance": {
+        "showProgressBar": {
+          "_title": "진행 막대 표시",
+          "_description": "타이머 뒤에 진행 상황 표시"
+        }
+      },
+      "permissions": {
+        "audio": {
+          "_title": "오디오 재생",
+          "_description": "섹션이 끝날 때 앱이 소리를 재생할 수 있도록 허용"
+        },
+        "notifications": {
+          "_title": "알림 권한",
+          "_description": "섹션이 끝날 때 앱이 알림을 보낼 수 있도록 허용"
+        }
+      },
+      "audio": {
+        "volume": {
+          "_title": "오디오 볼륨",
+          "_description": ""
+        },
+        "soundSet": {
+          "_title": "사운드 세트",
+          "_description": "각 세션 종료 시 재생되는 소리",
+          "_values": {
+            "musical": "음악적",
+            "sharp": "날카로운"
+          },
+          "_valueDescription": {
+            "musical": "기본 소리",
+            "sharp": "훈련에 더 적합한 짧은 비프음"
+          }
+        }
+      },
+      "timerControls": {
+        "enableKeyboardShortcuts": {
+          "_title": "키보드 단축키 활성화",
+          "_description": "스페이스 키로 타이머 시작/일시 정지"
+        }
+      },
+      "tasks": {
+        "enabled": {
+          "_title": "작업 목록 활성화",
+          "_description": "앱에서 직접 작업 관리"
+        },
+        "maxActiveTasks": {
+          "_title": "표시할 최대 활성 작업 수",
+          "_description": "최대 이 수의 활성 작업만 볼 수 있습니다"
+        },
+        "removeCompletedTasks": {
+          "_title": "완료된 작업 제거",
+          "_description": "새 섹션이 시작될 때 완료된 작업이 제거됩니다"
+        }
+      },
+      "pageTitle": {
+        "useTickEmoji": {
+          "_title": "제목에 체크 이모티콘 사용",
+          "_description": "\"완료\" 대신 ✔ 표시"
+        }
+      },
+      "whiteNoise": {
+        "_section": "백색 소음",
+        "enabled": {
+          "_title": "백색 소음 활성화",
+          "_description": "집중을 돕기 위한 환경 소리 재생"
+        },
+        "type": {
+          "_title": "백색 소음 유형",
+          "_description": "환경 소리 유형 선택",
+          "_values": {
+            "rain": "비",
+            "forest": "숲",
+            "ocean": "바다",
+            "fan": "선풍기",
+            "fireplace": "벽난로",
+            "cafe": "카페"
+          },
+          "_valueDescription": {
+            "rain": "부드러운 빗소리",
+            "forest": "숲 환경 소리",
+            "ocean": "바다 파도 소리",
+            "fan": "선풍기 소리",
+            "fireplace": "벽난로 타닥거리는 소리",
+            "cafe": "카페 환경 소리"
+          }
+        },
+        "volume": {
+          "_title": "백색 소음 볼륨",
+          "_description": "백색 소음의 볼륨 조정"
+        },
+        "playDuringWork": {
+          "_title": "작업 중에만 재생",
+          "_description": "작업 세션 중에만 백색 소음 재생"
+        },
+        "play": "백색 소음 재생",
+        "pause": "백색 소음 일시 정지"
+      },
+      "statistics": {
+        "_section": "통계",
+        "title": "집중 통계",
+        "totalFocusTime": "총 집중 시간",
+        "totalSessions": "총 세션 수",
+        "completedSessions": "완료된 세션 수",
+        "completionRate": "완료율",
+        "streak": "연속 집중",
+        "currentStreak": "현재 연속 일수",
+        "streakDays": "일",
+        "averageFocusTime": "평균 집중 시간: {time}",
+        "averageFocusTimeDesc": "귀하의 평균 집중 시간은 집중력 지속성을 반영합니다.",
+        "mostProductiveTime": "가장 생산적인 시간: {time}",
+        "mostProductiveTimeDesc": "이 시간대에 가장 효율적입니다. 중요한 작업을 이 시간에 예약하세요.",
+        "mostProductiveDay": "가장 생산적인 요일: {day}",
+        "mostProductiveDayDesc": "이 요일에 가장 효율적입니다. 중요한 작업을 이 날에 예약하는 것을 고려하세요.",
+        "insights": "집중 인사이트",
+        "noData": "데이터 없음",
+        "noDataMessage": "집중을 시작하여 여기에 통계를 표시하세요!",
+        "hours": "시간",
+        "minutes": "분"
+      },
+      "visuals": {
+        "theme": {
+          "_title": "테마 설정",
+          "_description": "프리셋 테마 색상을 선택하거나 자신만의 테마 색상을 설정합니다",
+          "custom": "사용자 정의"
+        },
+        "darkMode": {
+          "_title": "다크 모드 활성화",
+          "_description": "어둠은 생산성 그 자체입니다"
+        }
+      },
+      "reset": {
+        "_title": "모든 설정 재설정",
+        "_description": "모든 설정이 재설정되고 앱이 자동으로 다시 로드됩니다"
+      }
+    }
+  },
+  "notification": {
+    "action": {
+      "ready": "시작합시다!"
+    },
+    "work": {
+      "title": "작업으로 돌아갈 시간입니다!",
+      "body": "휴식 시간이 끝났습니다. 계속 작업하고 다시 휴식 시간을 얻으세요."
+    },
+    "shortpause": {
+      "title": "잠시 휴식을 취하세요",
+      "body": "잘 했습니다, 짧은 휴식 시간을 얻었습니다."
+    },
+    "longpause": {
+      "title": "와! 더 많은 휴식 시간!",
+      "body": "이렇게 오래 작업한 후에는 더 긴 휴식을 취해야 합니다."
+    }
+  },
+  "error": {
+    "format_invalid": "잘못된 입력 형식",
+    "range_invalid": "값은 {min}에서 {max} 사이여야 합니다",
+    "required": "모든 매개변수를 입력해야 합니다",
+    "numeric": "값은 숫자여야 합니다",
+    "min": "값은 최소 {min}이어야 합니다",
+    "max": "값은 최대 {max}이어야 합니다",
+    "time_format": "시간 형식이 올바르지 않습니다 (MM:SS)",
+    "min_time": "시간이 너무 짧습니다",
+    "undefined": "정의되지 않은 오류"
+  },
+  "tasks": {
+    "title": "작업",
+    "empty": "작업이 아직 없습니다",
+    "manage": "관리",
+    "addPlaceholder": "해야 할 일을 입력하세요"
+  },
+  "ready": "완료",
+  "close": "닫기",
+  "auth": {
+    "sign_in": "로그인",
+    "sign_up": "가입",
+    "signing_in": "로그인 중...",
+    "signing_up": "가입 중...",
+    "email": "이메일",
+    "password": "비밀번호",
+    "confirm_password": "비밀번호 확인",
+    "email_placeholder": "이메일을 입력하세요",
+    "password_placeholder": "비밀번호를 입력하세요",
+    "confirm_password_placeholder": "비밀번호를 확인하세요",
+    "forgot_password": "비밀번호를 잊으셨나요?",
+    "no_account": "계정이 없으신가요? 가입하기",
+    "already_have_account": "이미 계정이 있으신가요? 로그인",
+    "reset_password": "비밀번호 재설정",
+    "reset_password_instructions": "이메일을 입력하시면 비밀번호 재설정 링크를 보내드립니다",
+    "send_reset_link": "재설정 링크 보내기",
+    "back_to_sign_in": "로그인으로 돌아가기",
+    "back_to_login": "로그인으로 돌아가기",
+    "fill_all_fields": "모든 필드를 입력하세요",
+    "passwords_dont_match": "비밀번호가 일치하지 않습니다",
+    "reset_link_sent": "재설정 링크가 이메일로 전송되었습니다",
+    "reset_email_sent": "재설정 링크가 이메일로 전송되었습니다",
+    "account_settings": "계정 설정",
+    "change_password": "비밀번호 변경",
+    "current_password": "현재 비밀번호",
+    "current_password_placeholder": "현재 비밀번호 입력",
+    "new_password": "새 비밀번호",
+    "new_password_placeholder": "새 비밀번호 입력",
+    "confirm_new_password": "새 비밀번호 확인",
+    "update_password": "비밀번호 업데이트",
+    "updating_password": "비밀번호 업데이트 중...",
+    "password_updated": "비밀번호가 업데이트되었습니다",
+    "delete_account": "계정 삭제",
+    "delete_account_warning": "계정을 삭제하면 모든 데이터가 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 없습니다.",
+    "confirm_delete_account": "정말로 계정을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+    "delete": "삭제",
+    "cancel": "취소",
+    "sync_data": "데이터 동기화",
+    "last_synced": "마지막 동기화: {time}",
+    "never_synced": "동기화한 적 없음",
+    "sync_interval": {
+      "_title": "동기화 간격",
+      "_description": "데이터 동기화 시간 간격 설정",
+      "_values": {
+        "manual": "수동",
+        "5min": "5분",
+        "15min": "15분",
+        "30min": "30분",
+        "60min": "60분"
+      },
+      "_valueDescription": {
+        "manual": "수동으로 트리거된 경우에만 동기화",
+        "5min": "5분마다 자동 동기화",
+        "15min": "15분마다 자동 동기화",
+        "30min": "30분마다 자동 동기화",
+        "60min": "60분마다 자동 동기화"
+      }
+    },
+    "account": "계정",
+    "member_since": "가입일: {date}",
+    "sending": "전송 중...",
+    "sign_in_benefits": "로그인하여 여러 기기 간에 데이터를 동기화하고 진행 상황과 설정을 잃지 않도록 하세요.",
+    "sign_in_benefits_title": "왜 로그인해야 하나요?",
+    "sign_in_success": "로그인 성공!",
+    "sign_up_success": "가입 성공!",
+    "sign_out": "로그아웃",
+    "not_signed_in": "로그인하지 않음",
+    "enter_email": "이메일을 입력하세요",
+    "data_sync": "데이터 동기화",
+    "sync_now": "지금 동기화",
+    "syncing": "동기화 중...",
+    "danger_zone": "위험 구역",
+    "account_actions": "계정 작업"
+  }
+}
